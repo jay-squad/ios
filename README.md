@@ -13,4 +13,8 @@ pod install
 ```
 4. You can now dive into the project by opening up `foodie.xcworkspace` (not `foodie.xcodeproj`)
 
+## References
 
+Zeplin: https://zpl.io/29Dg7Oe
+
+Drive: https://drive.google.com/drive/folders/1bbgpnBTfIbCQREScvKhMrwMMcgxn38zn
