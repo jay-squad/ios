@@ -3,5 +3,4 @@ use_frameworks!
 
 target 'foodie' do
   pod 'Alamofire', '~> 4.7'
-  pod 'SwiftyJSON', '~> 2.3'
 end

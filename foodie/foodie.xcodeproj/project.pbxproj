@@ -8,12 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623B9EA20BF660200AD5605 /* AppDelegate.swift */; };
-		2623B9ED20BF660200AD5605 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623B9EC20BF660200AD5605 /* ViewController.swift */; };
 		2623B9F020BF660200AD5605 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2623B9EE20BF660200AD5605 /* Main.storyboard */; };
 		2623B9F220BF660200AD5605 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2623B9F120BF660200AD5605 /* Assets.xcassets */; };
 		2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */; };
 		2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623B9FF20BF660200AD5605 /* foodieTests.swift */; };
 		2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BA0A20BF660200AD5605 /* foodieUITests.swift */; };
+		26C716EB20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */; };
+		26C716EC20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */; };
+		26C716ED20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */; };
+		26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
+		26C716F120C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
+		26C716F220C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
+		26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */; };
+		26C716F420C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */; };
+		26C716F520C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */; };
+		26C716F720C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */; };
+		26C716F820C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */; };
+		26C716F920C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */; };
+		26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */; };
+		26C716FC20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */; };
+		26C716FD20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */; };
+		26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716FF20C0F7890026C4EF /* Restaurant.swift */; };
+		26C7170120C0F7890026C4EF /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716FF20C0F7890026C4EF /* Restaurant.swift */; };
+		26C7170220C0F7890026C4EF /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716FF20C0F7890026C4EF /* Restaurant.swift */; };
+		26C7170420C0F7A00026C4EF /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170320C0F7A00026C4EF /* Dish.swift */; };
+		26C7170520C0F7A00026C4EF /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170320C0F7A00026C4EF /* Dish.swift */; };
+		26C7170620C0F7A00026C4EF /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170320C0F7A00026C4EF /* Dish.swift */; };
+		26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */; };
+		26C7170E20C0F8830026C4EF /* RestaurantMedal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */; };
+		26C7170F20C0F8830026C4EF /* RestaurantMedal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */; };
+		26C7171120C0FA190026C4EF /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7171020C0FA190026C4EF /* Menu.swift */; };
+		26C7171220C0FA190026C4EF /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7171020C0FA190026C4EF /* Menu.swift */; };
+		26C7171320C0FA190026C4EF /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7171020C0FA190026C4EF /* Menu.swift */; };
 		BCA78E337EFBC28871942FBB /* Pods_foodie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC14FEBF6794AE1DBFA8978 /* Pods_foodie.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +65,6 @@
 		1FC14FEBF6794AE1DBFA8978 /* Pods_foodie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_foodie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2623B9E720BF660200AD5605 /* foodie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = foodie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2623B9EA20BF660200AD5605 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2623B9EC20BF660200AD5605 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2623B9EF20BF660200AD5605 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2623B9F120BF660200AD5605 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2623B9F420BF660200AD5605 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,6 +75,15 @@
 		2623BA0620BF660200AD5605 /* foodieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = foodieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2623BA0A20BF660200AD5605 /* foodieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodieUITests.swift; sourceTree = "<group>"; };
 		2623BA0C20BF660200AD5605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailMedalView.xib; sourceTree = "<group>"; };
+		26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
+		26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailTableViewCell.xib; sourceTree = "<group>"; };
+		26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMedalView.swift; sourceTree = "<group>"; };
+		26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
+		26C716FF20C0F7890026C4EF /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		26C7170320C0F7A00026C4EF /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
+		26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMedal.swift; sourceTree = "<group>"; };
+		26C7171020C0FA190026C4EF /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		BC0E7E9CCAF3F16B51B11042 /* Pods-foodie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-foodie/Pods-foodie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,8 +139,9 @@
 			isa = PBXGroup;
 			children = (
 				2623B9EA20BF660200AD5605 /* AppDelegate.swift */,
-				2623B9EC20BF660200AD5605 /* ViewController.swift */,
 				2623B9EE20BF660200AD5605 /* Main.storyboard */,
+				26C7170720C0F7A80026C4EF /* Model */,
+				26C716FE20C0F6F60026C4EF /* RestaurantDetail */,
 				2623B9F120BF660200AD5605 /* Assets.xcassets */,
 				2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */,
 				2623B9F620BF660200AD5605 /* Info.plist */,
@@ -130,6 +165,29 @@
 				2623BA0C20BF660200AD5605 /* Info.plist */,
 			);
 			path = foodieUITests;
+			sourceTree = "<group>";
+		};
+		26C716FE20C0F6F60026C4EF /* RestaurantDetail */ = {
+			isa = PBXGroup;
+			children = (
+				26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */,
+				26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */,
+				26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */,
+				26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */,
+				26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */,
+			);
+			path = RestaurantDetail;
+			sourceTree = "<group>";
+		};
+		26C7170720C0F7A80026C4EF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				26C716FF20C0F7890026C4EF /* Restaurant.swift */,
+				26C7171020C0FA190026C4EF /* Menu.swift */,
+				26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */,
+				26C7170320C0F7A00026C4EF /* Dish.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		75B573863A930851082E2F26 /* Pods */ = {
@@ -258,8 +316,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26C716EB20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */,
 				2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */,
 				2623B9F220BF660200AD5605 /* Assets.xcassets in Resources */,
+				26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
 				2623B9F020BF660200AD5605 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +328,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26C716F420C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
+				26C716EC20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +337,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26C716F520C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
+				26C716ED20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,12 +353,10 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-foodie/Pods-foodie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -326,7 +388,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2623B9ED20BF660200AD5605 /* ViewController.swift in Sources */,
+				26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */,
+				26C716F720C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				26C7171120C0FA190026C4EF /* Menu.swift in Sources */,
+				26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
+				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
+				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +403,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26C7170120C0F7890026C4EF /* Restaurant.swift in Sources */,
 				2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */,
+				26C7171220C0FA190026C4EF /* Menu.swift in Sources */,
+				26C716F820C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				26C7170520C0F7A00026C4EF /* Dish.swift in Sources */,
+				26C7170E20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26C716FC20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
+				26C716F120C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,7 +418,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26C7170220C0F7890026C4EF /* Restaurant.swift in Sources */,
 				2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */,
+				26C7171320C0FA190026C4EF /* Menu.swift in Sources */,
+				26C716F920C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				26C7170620C0F7A00026C4EF /* Dish.swift in Sources */,
+				26C7170F20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26C716FD20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
+				26C716F220C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
