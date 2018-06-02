@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 let RestaurantDetailTableViewCellId = "RestaurantDetailTableViewCellId"
 
@@ -30,8 +31,9 @@ class RestaurantDetailViewController: UIViewController {
         self.restaurant = Restaurant(name: "Seoul Soul",
                                      cuisine: ["Korean, Asian"],
                                      priceRange: [10, 20],
+                                     location: CLLocationCoordinate2D(latitude: 43.4752071, longitude: -80.5395287),
                                      description: "Authentic homestyle Korean cuisine, made with care by chef Kim.",
-                                     medals: [],
+                                     medals: [RestaurantMedal(type: .highRating, description: "86% of customers enjoyed their dish")],
                                      website: "www.seoulsoulkoreanrestaurant.ca",
                                      phoneNum: 6506953997)
     }

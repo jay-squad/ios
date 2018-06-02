@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class Restaurant {
     var name: String
@@ -16,10 +17,12 @@ class Restaurant {
     var medals: [RestaurantMedal] = []
     var website: String?
     var phoneNum: Int?
+    var location: CLLocationCoordinate2D
     
     init(name: String,
          cuisine: [String],
          priceRange: [Int],
+         location: CLLocationCoordinate2D,
          description: String? = nil,
          medals: [RestaurantMedal] = [],
          website: String? = nil,
@@ -27,6 +30,7 @@ class Restaurant {
         self.name = name
         self.cuisine = cuisine
         self.priceRange = priceRange
+        self.location = location
         self.description = description
         self.medals = medals
         self.website = website

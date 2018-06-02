@@ -13,9 +13,21 @@
 		2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */; };
 		2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623B9FF20BF660200AD5605 /* foodieTests.swift */; };
 		2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BA0A20BF660200AD5605 /* foodieUITests.swift */; };
-		26C716EB20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */; };
-		26C716EC20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */; };
-		26C716ED20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */; };
+		2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
+		2652649D20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
+		2652649E20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
+		265264A120C272E300D97EE8 /* UUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265264A020C272E300D97EE8 /* UUIColor.swift */; };
+		265264A220C272E300D97EE8 /* UUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265264A020C272E300D97EE8 /* UUIColor.swift */; };
+		265264A320C272E300D97EE8 /* UUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265264A020C272E300D97EE8 /* UUIColor.swift */; };
+		26BBF9FB20C2791F00EC75C3 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9F820C2791F00EC75C3 /* Font.swift */; };
+		26BBF9FC20C2791F00EC75C3 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9F820C2791F00EC75C3 /* Font.swift */; };
+		26BBF9FD20C2791F00EC75C3 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9F820C2791F00EC75C3 /* Font.swift */; };
+		26BBF9FE20C2791F00EC75C3 /* FontRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9F920C2791F00EC75C3 /* FontRepresentable.swift */; };
+		26BBF9FF20C2791F00EC75C3 /* FontRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9F920C2791F00EC75C3 /* FontRepresentable.swift */; };
+		26BBFA0020C2791F00EC75C3 /* FontRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9F920C2791F00EC75C3 /* FontRepresentable.swift */; };
+		26BBFA0120C2791F00EC75C3 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9FA20C2791F00EC75C3 /* UIFont+Extension.swift */; };
+		26BBFA0220C2791F00EC75C3 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9FA20C2791F00EC75C3 /* UIFont+Extension.swift */; };
+		26BBFA0320C2791F00EC75C3 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BBF9FA20C2791F00EC75C3 /* UIFont+Extension.swift */; };
 		26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
 		26C716F120C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
 		26C716F220C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
@@ -75,7 +87,11 @@
 		2623BA0620BF660200AD5605 /* foodieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = foodieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2623BA0A20BF660200AD5605 /* foodieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodieUITests.swift; sourceTree = "<group>"; };
 		2623BA0C20BF660200AD5605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailMedalView.xib; sourceTree = "<group>"; };
+		2652649B20C2727D00D97EE8 /* CommonColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColours.swift; sourceTree = "<group>"; };
+		265264A020C272E300D97EE8 /* UUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIColor.swift; sourceTree = "<group>"; };
+		26BBF9F820C2791F00EC75C3 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		26BBF9F920C2791F00EC75C3 /* FontRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontRepresentable.swift; sourceTree = "<group>"; };
+		26BBF9FA20C2791F00EC75C3 /* UIFont+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
 		26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailTableViewCell.xib; sourceTree = "<group>"; };
 		26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMedalView.swift; sourceTree = "<group>"; };
@@ -140,8 +156,11 @@
 			children = (
 				2623B9EA20BF660200AD5605 /* AppDelegate.swift */,
 				2623B9EE20BF660200AD5605 /* Main.storyboard */,
+				2652649F20C2728400D97EE8 /* Common */,
 				26C7170720C0F7A80026C4EF /* Model */,
 				26C716FE20C0F6F60026C4EF /* RestaurantDetail */,
+				2652649A20C2629300D97EE8 /* Util */,
+				26BBFA0420C2792300EC75C3 /* UIFontComplete */,
 				2623B9F120BF660200AD5605 /* Assets.xcassets */,
 				2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */,
 				2623B9F620BF660200AD5605 /* Info.plist */,
@@ -167,13 +186,38 @@
 			path = foodieUITests;
 			sourceTree = "<group>";
 		};
+		2652649A20C2629300D97EE8 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				265264A020C272E300D97EE8 /* UUIColor.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		2652649F20C2728400D97EE8 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2652649B20C2727D00D97EE8 /* CommonColours.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		26BBFA0420C2792300EC75C3 /* UIFontComplete */ = {
+			isa = PBXGroup;
+			children = (
+				26BBF9F820C2791F00EC75C3 /* Font.swift */,
+				26BBF9F920C2791F00EC75C3 /* FontRepresentable.swift */,
+				26BBF9FA20C2791F00EC75C3 /* UIFont+Extension.swift */,
+			);
+			path = UIFontComplete;
+			sourceTree = "<group>";
+		};
 		26C716FE20C0F6F60026C4EF /* RestaurantDetail */ = {
 			isa = PBXGroup;
 			children = (
 				26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */,
 				26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */,
 				26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */,
-				26C716EA20C0D2450026C4EF /* RestaurantDetailMedalView.xib */,
 				26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */,
 			);
 			path = RestaurantDetail;
@@ -272,7 +316,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = JAY;
 				TargetAttributes = {
 					2623B9E620BF660100AD5605 = {
@@ -316,7 +360,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26C716EB20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */,
 				2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */,
 				2623B9F220BF660200AD5605 /* Assets.xcassets in Resources */,
 				26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
@@ -329,7 +372,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C716F420C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
-				26C716EC20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +380,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C716F520C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
-				26C716ED20C0D2450026C4EF /* RestaurantDetailMedalView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,11 +430,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */,
+				26BBF9FB20C2791F00EC75C3 /* Font.swift in Sources */,
 				26C716F720C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
 				26C7171120C0FA190026C4EF /* Menu.swift in Sources */,
+				265264A120C272E300D97EE8 /* UUIColor.swift in Sources */,
 				26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
+				2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26BBF9FE20C2791F00EC75C3 /* FontRepresentable.swift in Sources */,
+				26BBFA0120C2791F00EC75C3 /* UIFont+Extension.swift in Sources */,
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */,
 			);
@@ -404,11 +450,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C7170120C0F7890026C4EF /* Restaurant.swift in Sources */,
+				26BBF9FC20C2791F00EC75C3 /* Font.swift in Sources */,
 				2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */,
 				26C7171220C0FA190026C4EF /* Menu.swift in Sources */,
+				265264A220C272E300D97EE8 /* UUIColor.swift in Sources */,
 				26C716F820C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				2652649D20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26C7170520C0F7A00026C4EF /* Dish.swift in Sources */,
 				26C7170E20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26BBF9FF20C2791F00EC75C3 /* FontRepresentable.swift in Sources */,
+				26BBFA0220C2791F00EC75C3 /* UIFont+Extension.swift in Sources */,
 				26C716FC20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				26C716F120C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 			);
@@ -419,11 +470,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C7170220C0F7890026C4EF /* Restaurant.swift in Sources */,
+				26BBF9FD20C2791F00EC75C3 /* Font.swift in Sources */,
 				2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */,
 				26C7171320C0FA190026C4EF /* Menu.swift in Sources */,
+				265264A320C272E300D97EE8 /* UUIColor.swift in Sources */,
 				26C716F920C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				2652649E20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26C7170620C0F7A00026C4EF /* Dish.swift in Sources */,
 				26C7170F20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26BBFA0020C2791F00EC75C3 /* FontRepresentable.swift in Sources */,
+				26BBFA0320C2791F00EC75C3 /* UIFont+Extension.swift in Sources */,
 				26C716FD20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				26C716F220C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 			);
