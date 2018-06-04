@@ -17,11 +17,11 @@ class RestaurantMedal {
     var name: String
     var img: UIImage
     var description: String
-    
+
     init(type: RestaurantMedalType, description: String) {
         self.name = type.rawValue
         self.description = description
-        
+
         switch type {
         case .highRating:
             self.img = UIImage(named: "img_medal")!

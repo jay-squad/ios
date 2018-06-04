@@ -3,4 +3,6 @@ use_frameworks!
 
 target 'foodie' do
   pod 'Alamofire', '~> 4.7'
+  pod 'SwiftLint', '~> 0.25'
+  pod 'UIFontComplete', '~> 3.0'
 end

@@ -1,16 +1,24 @@
 PODS:
   - Alamofire (4.7.2)
+  - SwiftLint (0.25.1)
+  - UIFontComplete (3.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - SwiftLint (~> 0.25)
+  - UIFontComplete (~> 3.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - SwiftLint
+    - UIFontComplete
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
+  UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
 
-PODFILE CHECKSUM: 534873250794a8701f372d5c219965b56498c3b8
+PODFILE CHECKSUM: 3202160e770c9685b4fc26bdaa3bf37837280173
 
 COCOAPODS: 1.5.3

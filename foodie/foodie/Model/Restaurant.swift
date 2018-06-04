@@ -18,7 +18,7 @@ class Restaurant {
     var website: String?
     var phoneNum: Int?
     var location: CLLocationCoordinate2D
-    
+
     init(name: String,
          cuisine: [String],
          priceRange: [Int],
