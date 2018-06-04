@@ -13,6 +13,21 @@ pod install
 ```
 4. You can now dive into the project by opening up `foodie.xcworkspace` (not `foodie.xcodeproj`)
 
+## Style Guide
+
+We follow SwiftLint, which can be found here: https://github.com/realm/SwiftLint
+It is packaged as a pod in Xcode, which will run for every local build.
+
+You should also install it in your CLI with
+```
+brew install swiftlint
+```
+and run
+```
+swiftlint autocorrect
+```
+before committing.
+
 ## References
 
 Zeplin: https://zpl.io/29Dg7Oe
