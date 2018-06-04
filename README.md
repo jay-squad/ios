@@ -16,6 +16,7 @@ $ pod install
 ## Style Guide
 
 We follow SwiftLint, which can be found here: https://github.com/realm/SwiftLint
+
 It is packaged as a pod in Xcode, which will run for every local build.
 
 You should also install it in your CLI by running:
