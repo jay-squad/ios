@@ -10,4 +10,22 @@ import Foundation
 
 class Menu {
 
+    var displayOption: RestaurantDetailDisplayOption = .grid
+
+    init() {
+
+    }
+}
+
+class MenuSection {
+
+    var dishes: [Dish] = []
+
+    init() {
+
+    }
+
+    init(dishes: [Dish]) {
+        self.dishes = dishes
+    }
 }

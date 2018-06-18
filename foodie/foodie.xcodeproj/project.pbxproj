@@ -13,6 +13,24 @@
 		2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */; };
 		2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623B9FF20BF660200AD5605 /* foodieTests.swift */; };
 		2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BA0A20BF660200AD5605 /* foodieUITests.swift */; };
+		2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
+		2651C7FA20D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
+		2651C7FB20D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
+		2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */; };
+		2651C80120D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */; };
+		2651C80220D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */; };
+		2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */; };
+		2651C80520D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */; };
+		2651C80620D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */; };
+		2651C80820D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80720D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift */; };
+		2651C80920D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80720D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift */; };
+		2651C80A20D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80720D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift */; };
+		2651C80C20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80B20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift */; };
+		2651C80D20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80B20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift */; };
+		2651C80E20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80B20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift */; };
+		2651C81020D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80F20D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift */; };
+		2651C81120D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80F20D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift */; };
+		2651C81220D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80F20D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift */; };
 		2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
 		2652649D20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
 		2652649E20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
@@ -78,6 +96,12 @@
 		2623BA0620BF660200AD5605 /* foodieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = foodieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2623BA0A20BF660200AD5605 /* foodieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodieUITests.swift; sourceTree = "<group>"; };
 		2623BA0C20BF660200AD5605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailDisplayOptionsTableViewCell.swift; sourceTree = "<group>"; };
+		2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUISegmentedControl.swift; sourceTree = "<group>"; };
+		2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenu3ColumnGridTableViewCell.swift; sourceTree = "<group>"; };
+		2651C80720D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenu1ColumnGridTableViewCell.swift; sourceTree = "<group>"; };
+		2651C80B20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenuExpandedTableViewCell.swift; sourceTree = "<group>"; };
+		2651C80F20D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenuListTableViewCell.swift; sourceTree = "<group>"; };
 		2652649B20C2727D00D97EE8 /* CommonColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColours.swift; sourceTree = "<group>"; };
 		265264A020C272E300D97EE8 /* UUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIColor.swift; sourceTree = "<group>"; };
 		26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -177,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				265264A020C272E300D97EE8 /* UUIColor.swift */,
+				2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -192,6 +217,11 @@
 		26C716FE20C0F6F60026C4EF /* RestaurantDetail */ = {
 			isa = PBXGroup;
 			children = (
+				2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */,
+				2651C80720D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift */,
+				2651C80B20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift */,
+				2651C80F20D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift */,
+				2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */,
 				26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */,
 				26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */,
 				26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */,
@@ -424,11 +454,17 @@
 			files = (
 				26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */,
 				26C716F720C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				2651C80C20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */,
+				2651C80820D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */,
+				2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */,
 				26C7171120C0FA190026C4EF /* Menu.swift in Sources */,
+				2651C81020D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */,
 				265264A120C272E300D97EE8 /* UUIColor.swift in Sources */,
 				26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
+				2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
 				2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
+				2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */,
@@ -441,11 +477,17 @@
 			files = (
 				26C7170120C0F7890026C4EF /* Restaurant.swift in Sources */,
 				2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */,
+				2651C80D20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */,
+				2651C80920D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */,
+				2651C7FA20D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */,
 				26C7171220C0FA190026C4EF /* Menu.swift in Sources */,
+				2651C81120D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */,
 				265264A220C272E300D97EE8 /* UUIColor.swift in Sources */,
 				26C716F820C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				2651C80520D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
 				2652649D20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26C7170520C0F7A00026C4EF /* Dish.swift in Sources */,
+				2651C80120D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26C7170E20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26C716FC20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				26C716F120C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
@@ -458,11 +500,17 @@
 			files = (
 				26C7170220C0F7890026C4EF /* Restaurant.swift in Sources */,
 				2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */,
+				2651C80E20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */,
+				2651C80A20D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */,
+				2651C7FB20D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */,
 				26C7171320C0FA190026C4EF /* Menu.swift in Sources */,
+				2651C81220D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */,
 				265264A320C272E300D97EE8 /* UUIColor.swift in Sources */,
 				26C716F920C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
+				2651C80620D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
 				2652649E20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26C7170620C0F7A00026C4EF /* Dish.swift in Sources */,
+				2651C80220D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26C7170F20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26C716FD20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				26C716F220C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,

@@ -7,3 +7,11 @@
 //
 
 import Foundation
+import UIKit
+
+class Dish {
+    var name: String = ""
+    var image: UIImage?
+    var price: Float = 0
+    var description: String = ""
+}
