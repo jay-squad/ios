@@ -331,8 +331,8 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
         if let model = menuView {
             switch model.activeMenuType {
             case .grid:
-                // should never reach here, grid taps are handled by gridTapGestureRecognizer
-                assert(false)
+                // grid taps are handled by gridTapGestureRecognizer
+                break
             case .list:
                 switch indexPath.section {
                 case 0, 1:
