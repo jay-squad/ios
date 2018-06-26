@@ -9,16 +9,62 @@
 import UIKit
 
 class RestaurantDetailMenu1ColumnGridTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    let dishImageView = UIImageView()
+    var dish: Dish?
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        buildComponents()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        buildComponents()
+    }
+    
+    func configureCell(dish: Dish?) {
+        self.dish = dish
+        if let imageUrl = dish?.image {
+            dishImageView.sd_setImage(with: URL(string: imageUrl))
+        } else {
+            dishImageView.image = nil
+        }
+    }
+    
+    private func buildComponents() {
+        selectionStyle = .none
+        
+        let externalContainerView = UIView()
+        externalContainerView.translatesAutoresizingMaskIntoConstraints = false
+        externalContainerView.backgroundColor = UIColor.cc253UltraLightGrey
+        
+        let dishStackView = UIStackView()
+        dishStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        dishImageView.translatesAutoresizingMaskIntoConstraints = false
+        dishImageView.contentMode = .scaleAspectFill
+        dishImageView.clipsToBounds = true
+        
+        contentView.addSubview(externalContainerView)
+        externalContainerView.addSubview(dishStackView)
+        dishStackView.addArrangedSubview(dishImageView)
+        dishStackView.axis = .horizontal
+        dishStackView.spacing = 2
+        
+        externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        externalContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        externalContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2.0).isActive = true
+        
+        dishStackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor).isActive = true
+        dishStackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor,
+                                               constant: 5.0).isActive = true
+        dishStackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
+                                                constant: -5.0).isActive = true
+        dishStackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor).isActive = true
+        
+        dishImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width/3.0).isActive = true
     }
 
 }

@@ -8,10 +8,18 @@
 
 import Foundation
 import UIKit
+import SwiftyJSON
 
 class Dish {
     var name: String = ""
-    var image: UIImage?
+    var image: String?
     var price: Float = 0
     var description: String = ""
+    
+    init(json: JSON) {
+        name = json["name"].string ?? ""
+        image = json["image_link"].string
+        price = json["price"].float ?? 0
+        description = json["description"].string ?? ""
+    }
 }

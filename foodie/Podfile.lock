@@ -1,24 +1,34 @@
 PODS:
   - Alamofire (4.7.2)
+  - SDWebImage (4.4.0):
+    - SDWebImage/Core (= 4.4.0)
+  - SDWebImage/Core (4.4.0)
   - SwiftLint (0.25.1)
+  - SwiftyJSON (4.1.0)
   - UIFontComplete (3.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
+  - SwiftyJSON (~> 4.0)
   - UIFontComplete (~> 3.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - SDWebImage
     - SwiftLint
+    - SwiftyJSON
     - UIFontComplete
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  SDWebImage: b534502786e43dde36dfcaee89356fe6df30e203
   SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
 
-PODFILE CHECKSUM: 3202160e770c9685b4fc26bdaa3bf37837280173
+PODFILE CHECKSUM: a235710272f4e0be5e2ac725bf3669b6b8ea2f26
 
 COCOAPODS: 1.5.3

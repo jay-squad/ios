@@ -5,4 +5,6 @@ target 'foodie' do
   pod 'Alamofire', '~> 4.7'
   pod 'SwiftLint', '~> 0.25'
   pod 'UIFontComplete', '~> 3.0'
+  pod 'SwiftyJSON', '~> 4.0'
+  pod 'SDWebImage', '~> 4.0'
 end

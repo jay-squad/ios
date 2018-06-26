@@ -13,6 +13,10 @@
 		2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */; };
 		2623BA0020BF660200AD5605 /* foodieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623B9FF20BF660200AD5605 /* foodieTests.swift */; };
 		2623BA0B20BF660200AD5605 /* foodieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BA0A20BF660200AD5605 /* foodieUITests.swift */; };
+		262B743D20E042020019B8BF /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B743C20E042020019B8BF /* MenuViewModel.swift */; };
+		262B743E20E042020019B8BF /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B743C20E042020019B8BF /* MenuViewModel.swift */; };
+		262B743F20E042020019B8BF /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B743C20E042020019B8BF /* MenuViewModel.swift */; };
+		262B744120E064EC0019B8BF /* testmodel.txt in Resources */ = {isa = PBXBuildFile; fileRef = 262B744020E064EC0019B8BF /* testmodel.txt */; };
 		2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
 		2651C7FA20D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
 		2651C7FB20D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
@@ -96,6 +100,8 @@
 		2623BA0620BF660200AD5605 /* foodieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = foodieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2623BA0A20BF660200AD5605 /* foodieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodieUITests.swift; sourceTree = "<group>"; };
 		2623BA0C20BF660200AD5605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		262B743C20E042020019B8BF /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		262B744020E064EC0019B8BF /* testmodel.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testmodel.txt; sourceTree = "<group>"; };
 		2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailDisplayOptionsTableViewCell.swift; sourceTree = "<group>"; };
 		2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUISegmentedControl.swift; sourceTree = "<group>"; };
 		2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenu3ColumnGridTableViewCell.swift; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 		2623B9DE20BF660100AD5605 = {
 			isa = PBXGroup;
 			children = (
+				262B744020E064EC0019B8BF /* testmodel.txt */,
 				2623B9E920BF660200AD5605 /* foodie */,
 				2623B9FE20BF660200AD5605 /* foodieTests */,
 				2623BA0920BF660200AD5605 /* foodieUITests */,
@@ -237,6 +244,7 @@
 				26C7171020C0FA190026C4EF /* Menu.swift */,
 				26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */,
 				26C7170320C0F7A00026C4EF /* Dish.swift */,
+				262B743C20E042020019B8BF /* MenuViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -368,6 +376,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				262B744120E064EC0019B8BF /* testmodel.txt in Resources */,
 				2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */,
 				2623B9F220BF660200AD5605 /* Assets.xcassets in Resources */,
 				26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
@@ -415,11 +424,15 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-foodie/Pods-foodie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UIFontComplete/UIFontComplete.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFontComplete.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,6 +479,7 @@
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
 				2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				262B743D20E042020019B8BF /* MenuViewModel.swift in Sources */,
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */,
 			);
@@ -489,6 +503,7 @@
 				26C7170520C0F7A00026C4EF /* Dish.swift in Sources */,
 				2651C80120D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26C7170E20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				262B743E20E042020019B8BF /* MenuViewModel.swift in Sources */,
 				26C716FC20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				26C716F120C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 			);
@@ -512,6 +527,7 @@
 				26C7170620C0F7A00026C4EF /* Dish.swift in Sources */,
 				2651C80220D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26C7170F20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				262B743F20E042020019B8BF /* MenuViewModel.swift in Sources */,
 				26C716FD20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				26C716F220C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 			);

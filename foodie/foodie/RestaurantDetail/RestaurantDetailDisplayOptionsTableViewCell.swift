@@ -35,6 +35,17 @@ class RestaurantDetailDisplayOptionsTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
         buildComponents()
     }
+    
+    func configureCell(type: RestaurantDetailDisplayOption) {
+        switch type {
+        case .grid:
+            gridViewButton.isSelected = true
+        case .list:
+            listViewButton.isSelected = true
+        case .expanded:
+            expandedViewButton.isSelected = true
+        }
+    }
 
     private func buildComponents() {
         gridViewButton = UIButton()
@@ -78,7 +89,6 @@ class RestaurantDetailDisplayOptionsTableViewCell: UITableViewCell {
 
         gridViewButton.widthAnchor.constraint(equalTo: listViewButton.widthAnchor).isActive = true
         gridViewButton.widthAnchor.constraint(equalTo: expandedViewButton.widthAnchor).isActive = true
-
     }
 
     @objc private func onGridViewButtonTapped(_ sender: UIButton) {

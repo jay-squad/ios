@@ -51,10 +51,12 @@ class RestaurantDetailTableViewCell: UITableViewCell {
         self.restaurantCuisineLabel.text = restaurant.cuisine.joined(separator: ", ")
         self.restaurantPriceLabel.text = "$\(restaurant.priceRange[0]) - $\(restaurant.priceRange[1])"
         self.restaurantDescriptionLabel.text = restaurant.description
-
-        for medal in restaurant.medals {
-            let medalView = RestaurantDetailMedalView(medal: medal)
-            restaurantMedalsStackView.addArrangedSubview(medalView)
+        
+        if restaurantMedalsStackView.arrangedSubviews.count == 0 {
+            for medal in restaurant.medals {
+                let medalView = RestaurantDetailMedalView(medal: medal)
+                restaurantMedalsStackView.addArrangedSubview(medalView)
+            }
         }
     }
 
