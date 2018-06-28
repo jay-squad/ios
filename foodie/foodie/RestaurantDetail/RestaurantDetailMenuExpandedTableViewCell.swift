@@ -45,10 +45,7 @@ class RestaurantDetailMenuExpandedTableViewCell: UITableViewCell {
         let externalContainerView = UIView()
         externalContainerView.backgroundColor = .white
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false
-        externalContainerView.layer.shadowColor = UIColor.cc200LightGrey.withAlphaComponent(0.5).cgColor
-        externalContainerView.layer.shadowRadius = 8.0
-        externalContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        externalContainerView.layer.shadowOpacity = 1.0
+        externalContainerView.applyDefaultShadow()
         
         let externalStackView = UIStackView()
         externalStackView.translatesAutoresizingMaskIntoConstraints = false

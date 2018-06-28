@@ -21,6 +21,8 @@ let kRestaurantDetailMenuListTableViewCellId = "RestaurantDetailMenuListTableVie
 class RestaurantDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    let kRowAnimationType: UITableViewRowAnimation = .middle
     var gridTapGestureRecognizer: UITapGestureRecognizer?
     
     private var restaurant: Restaurant?
@@ -115,7 +117,7 @@ class RestaurantDetailViewController: UIViewController {
                                 rowOffset -= 2
                             } else if indexPath.section != currentExpandedGridCellIndex.section {
                                 tableView.reloadSections(IndexSet(integer: currentExpandedGridCellIndex.section),
-                                                         with: .bottom)
+                                                         with: kRowAnimationType)
                             }
                         }
                         
@@ -127,7 +129,7 @@ class RestaurantDetailViewController: UIViewController {
                                                                                  at: indexPath.row + 1 + rowOffset)
                             currentExpandedGridCellIndex = IndexPath(row: indexPath.row + rowOffset,
                                                                      section: indexPath.section)
-                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .bottom)
+                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: kRowAnimationType)
                         } else if cell.dish1 != nil, cell.dish1ImageView.frame.contains(pointInCell) {
                             menuView?.orders[.grid]![indexPath.section-2][indexPath.row + rowOffset] = .column1
                             menuView?.orders[.grid]![indexPath.section-2].insert(.column1,
@@ -136,7 +138,7 @@ class RestaurantDetailViewController: UIViewController {
                                                                                  at: indexPath.row + 1 + rowOffset)
                             currentExpandedGridCellIndex = IndexPath(row: indexPath.row + rowOffset,
                                                                      section: indexPath.section)
-                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .bottom)
+                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: kRowAnimationType)
                         } else if cell.dish2 != nil, cell.dish2ImageView.frame.contains(pointInCell) {
                             menuView?.orders[.grid]![indexPath.section-2][indexPath.row + rowOffset] = .column1
                             menuView?.orders[.grid]![indexPath.section-2].insert(.expanded,
@@ -145,7 +147,7 @@ class RestaurantDetailViewController: UIViewController {
                                                                                  at: indexPath.row + 1 + rowOffset)
                             currentExpandedGridCellIndex = IndexPath(row: indexPath.row + rowOffset,
                                                                      section: indexPath.section)
-                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .bottom)
+                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: kRowAnimationType)
                         }
                         self.tableView.endUpdates()
                     } else if let cell = tableView.cellForRow(at: indexPath)
@@ -160,7 +162,7 @@ class RestaurantDetailViewController: UIViewController {
                         }
                         menuView?.orders[.grid]![indexPath.section-2][indexPath.row] = .expanded
                         tableView.beginUpdates()
-                        tableView.reloadRows(at: reloadRows, with: .bottom)
+                        tableView.reloadRows(at: reloadRows, with: kRowAnimationType)
                         tableView.endUpdates()
                     }
                 }
@@ -264,6 +266,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                 }
             }
         }
+        assert(false)
         return UITableViewCell()
     }
 
@@ -344,7 +347,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                         menuView?.orders[.list]![indexPath.section-2][indexPath.row] = .condensed
                     }
                     tableView.beginUpdates()
-                    tableView.reloadRows(at: [indexPath], with: .bottom)
+                    tableView.reloadRows(at: [indexPath], with: kRowAnimationType)
                     tableView.endUpdates()
                 }
             case .expanded:
@@ -356,9 +359,8 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let type = menuView?.activeMenuType, let height = estimatedHeightDict[type]![indexPath] {
             return height
-        } else {
-            return UITableViewAutomaticDimension
         }
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

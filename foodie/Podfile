@@ -7,4 +7,7 @@ target 'foodie' do
   pod 'UIFontComplete', '~> 3.0'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'SDWebImage', '~> 4.0'
+  pod 'DKImagePickerController', '~> 3.8'
+  pod 'TextFieldEffects', '~> 3.0'
+  pod 'Validator', '~> 3.0'
 end

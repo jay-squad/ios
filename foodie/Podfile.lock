@@ -1,34 +1,50 @@
 PODS:
   - Alamofire (4.7.2)
-  - SDWebImage (4.4.0):
-    - SDWebImage/Core (= 4.4.0)
-  - SDWebImage/Core (4.4.0)
-  - SwiftLint (0.25.1)
+  - DKImagePickerController (3.8.1):
+    - DKImagePickerController/Camera (= 3.8.1)
+    - DKImagePickerController/ImageManager (= 3.8.1)
+  - DKImagePickerController/Camera (3.8.1)
+  - DKImagePickerController/ImageManager (3.8.1)
+  - SDWebImage (4.4.1):
+    - SDWebImage/Core (= 4.4.1)
+  - SDWebImage/Core (4.4.1)
+  - SwiftLint (0.26.0)
   - SwiftyJSON (4.1.0)
+  - TextFieldEffects (1.4.0)
   - UIFontComplete (3.0.0)
+  - Validator (3.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - DKImagePickerController (~> 3.8)
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
   - SwiftyJSON (~> 4.0)
+  - TextFieldEffects
   - UIFontComplete (~> 3.0)
+  - Validator
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - DKImagePickerController
     - SDWebImage
     - SwiftLint
     - SwiftyJSON
+    - TextFieldEffects
     - UIFontComplete
+    - Validator
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  SDWebImage: b534502786e43dde36dfcaee89356fe6df30e203
-  SwiftLint: ce933681be10c3266e82576dad676fa815a602e9
+  DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
+  SwiftLint: f6b83e8d95ee1e91e11932d843af4fdcbf3fc764
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  TextFieldEffects: 4ee41b5216e674d55fb6ac25107bf1af7629176f
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
+  Validator: bf211c1d71b3f910d230c09c70e62429d0fef63a
 
-PODFILE CHECKSUM: a235710272f4e0be5e2ac725bf3669b6b8ea2f26
+PODFILE CHECKSUM: 836e098a8ce85f1da133974c1ad9f2194af0f24d
 
 COCOAPODS: 1.5.3
