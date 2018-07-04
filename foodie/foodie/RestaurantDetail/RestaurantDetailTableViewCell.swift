@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class RestaurantDetailTableViewCell: UITableViewCell {
 
@@ -23,19 +24,21 @@ class RestaurantDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var restaurantMedalsStackView: UIStackView!
 
     private var restaurant: Restaurant?
+    
+    var mapView = MKMapView()
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.externalContainerView.layer.shadowColor = UIColor(red: 200/255.0,
+        externalContainerView.layer.shadowColor = UIColor(red: 200/255.0,
                                                                green: 200/255.0,
                                                                blue: 200/255.0,
                                                                alpha: 1.0).cgColor
-        self.externalContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
-        self.externalContainerView.layer.shadowRadius = 8
-        self.externalContainerView.layer.shadowOpacity = 0.25
+        externalContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
+        externalContainerView.layer.shadowRadius = 8
+        externalContainerView.layer.shadowOpacity = 0.25
 
-        self.selectionStyle = .none
+        selectionStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -47,10 +50,10 @@ class RestaurantDetailTableViewCell: UITableViewCell {
     func configureCell(restaurant: Restaurant) {
         self.restaurant = restaurant
 
-        self.restaurantNameLabel.text = restaurant.name
-        self.restaurantCuisineLabel.text = restaurant.cuisine.joined(separator: ", ")
-        self.restaurantPriceLabel.text = "$\(restaurant.priceRange[0]) - $\(restaurant.priceRange[1])"
-        self.restaurantDescriptionLabel.text = restaurant.description
+        restaurantNameLabel.text = restaurant.name
+        restaurantCuisineLabel.text = restaurant.cuisine.joined(separator: ", ")
+        restaurantPriceLabel.text = "$\(restaurant.priceRange[0]) - $\(restaurant.priceRange[1])"
+        restaurantDescriptionLabel.text = restaurant.description
         
         if restaurantMedalsStackView.arrangedSubviews.count == 0 {
             for medal in restaurant.medals {
@@ -58,6 +61,33 @@ class RestaurantDetailTableViewCell: UITableViewCell {
                 restaurantMedalsStackView.addArrangedSubview(medalView)
             }
         }
+        
+        let annotation = MKPointAnnotation()
+        let centerCoordinate = restaurant.location
+        annotation.coordinate = centerCoordinate
+        mapView.addAnnotation(annotation)
+        
+        mapView.setRegion(MKCoordinateRegion(center: restaurant.location,
+                                             span: MKCoordinateSpan(latitudeDelta: 0.0275, longitudeDelta: 0.0275)),
+                          animated: false)
+
+        mapView.setCenter(restaurant.location, animated: false)
+        
+        buildComponents()
+    }
+    
+    private func buildComponents() {
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.mapType = .standard
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
+        
+        mapContainerView.addSubview(mapView)
+        
+        mapView.topAnchor.constraint(equalTo: mapContainerView.topAnchor).isActive = true
+        mapView.leadingAnchor.constraint(equalTo: mapContainerView.leadingAnchor).isActive = true
+        mapView.bottomAnchor.constraint(equalTo: mapContainerView.bottomAnchor).isActive = true
+        mapView.trailingAnchor.constraint(equalTo: mapContainerView.trailingAnchor).isActive = true
     }
 
 }

@@ -48,6 +48,8 @@ class RestaurantDetailDisplayOptionsTableViewCell: UITableViewCell {
     }
 
     private func buildComponents() {
+        selectionStyle = .none
+        
         gridViewButton = UIButton()
         listViewButton = UIButton()
         expandedViewButton = UIButton()

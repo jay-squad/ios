@@ -20,9 +20,9 @@ DEPENDENCIES:
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
   - SwiftyJSON (~> 4.0)
-  - TextFieldEffects
+  - TextFieldEffects (~> 1.4)
   - UIFontComplete (~> 3.0)
-  - Validator
+  - Validator (~> 3.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: bf211c1d71b3f910d230c09c70e62429d0fef63a
 
-PODFILE CHECKSUM: 836e098a8ce85f1da133974c1ad9f2194af0f24d
+PODFILE CHECKSUM: ee6822c9d60da3e9ff9a8cf95a9b829331cfa171
 
 COCOAPODS: 1.5.3

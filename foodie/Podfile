@@ -8,6 +8,6 @@ target 'foodie' do
   pod 'SwiftyJSON', '~> 4.0'
   pod 'SDWebImage', '~> 4.0'
   pod 'DKImagePickerController', '~> 3.8'
-  pod 'TextFieldEffects', '~> 3.0'
+  pod 'TextFieldEffects', '~> 1.4'
   pod 'Validator', '~> 3.0'
 end

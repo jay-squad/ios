@@ -25,7 +25,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wpg-6v-L1n">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="486.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N4t-S7-Ey3">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N4t-S7-Ey3">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
                                         <color key="backgroundColor" red="0.83137254900000002" green="0.68627450980000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -117,7 +117,7 @@
                                             <constraint firstAttribute="bottom" secondItem="lIX-pQ-F8n" secondAttribute="bottom" constant="20" id="u6z-yU-Irm"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pZ5-lP-34F">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pZ5-lP-34F">
                                         <rect key="frame" x="0.0" y="486.5" width="320" height="0.0"/>
                                         <color key="backgroundColor" red="0.83137254900000002" green="0.68627450980000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>

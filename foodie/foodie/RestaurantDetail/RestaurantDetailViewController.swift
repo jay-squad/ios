@@ -25,7 +25,7 @@ class RestaurantDetailViewController: UIViewController {
     let kRowAnimationType: UITableViewRowAnimation = .middle
     var gridTapGestureRecognizer: UITapGestureRecognizer?
     
-    private var restaurant: Restaurant?
+    var restaurant: Restaurant?
     private var menu: Menu?
     private var menuView: MenuViewModel?
     private var estimatedHeightDict: [RestaurantDetailDisplayOption: [IndexPath: CGFloat]] = [.grid: [:],
@@ -59,15 +59,6 @@ class RestaurantDetailViewController: UIViewController {
     }
 
     private func setupDataSource() {
-        self.restaurant = Restaurant(name: "Seoul Soul",
-                                     cuisine: ["Korean, Asian"],
-                                     priceRange: [10, 20],
-                                     location: CLLocationCoordinate2D(latitude: 43.4752071, longitude: -80.5395287),
-                                     description: "Authentic homestyle Korean cuisine, made with care by chef Kim.",
-                                     medals: [RestaurantMedal(type: .highRating,
-                                                              description: "86% of customers enjoyed their dish")],
-                                     website: "www.seoulsoulkoreanrestaurant.ca",
-                                     phoneNum: 6506953997)
         
         let path = Bundle.main.path(forResource: "testmodel", ofType: "txt")
         var text: String = ""
@@ -93,6 +84,11 @@ class RestaurantDetailViewController: UIViewController {
         setupNibs()
         setupTableView()
         setupDataSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @objc private func handleGridTap(_ gestureRecognizer: UITapGestureRecognizer) {
