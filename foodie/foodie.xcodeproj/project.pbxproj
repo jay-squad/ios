@@ -55,6 +55,7 @@
 		26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E420EE0459006AB058 /* UUIStackView.swift */; };
 		26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E620EE3C69006AB058 /* UUIString.swift */; };
 		26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E820EE4594006AB058 /* OnboardingViewController.swift */; };
+		26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3686821E55E4F0093B223 /* MapViewController.swift */; };
 		BCA78E337EFBC28871942FBB /* Pods_foodie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC14FEBF6794AE1DBFA8978 /* Pods_foodie.framework */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +133,7 @@
 		26CC94E420EE0459006AB058 /* UUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIStackView.swift; sourceTree = "<group>"; };
 		26CC94E620EE3C69006AB058 /* UUIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIString.swift; sourceTree = "<group>"; };
 		26CC94E820EE4594006AB058 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		26D3686821E55E4F0093B223 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BC0E7E9CCAF3F16B51B11042 /* Pods-foodie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-foodie/Pods-foodie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +191,7 @@
 			children = (
 				2623B9EA20BF660200AD5605 /* AppDelegate.swift */,
 				2623B9EE20BF660200AD5605 /* Main.storyboard */,
+				26D3686A21E55E5D0093B223 /* Map */,
 				26CC94EA20EE459F006AB058 /* Onboarding */,
 				26CC94DF20ED95BB006AB058 /* Network */,
 				26AAFB9120ED4CA900DEE4E7 /* Search */,
@@ -325,6 +328,14 @@
 				26CC94E820EE4594006AB058 /* OnboardingViewController.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		26D3686A21E55E5D0093B223 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				26D3686821E55E4F0093B223 /* MapViewController.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		75B573863A930851082E2F26 /* Pods */ = {
@@ -601,6 +612,7 @@
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
 				26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
+				26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */,
 				26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */,
 				26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */,
 				26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */,
