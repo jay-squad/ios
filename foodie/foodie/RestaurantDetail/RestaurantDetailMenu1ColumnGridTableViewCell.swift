@@ -13,7 +13,7 @@ class RestaurantDetailMenu1ColumnGridTableViewCell: UITableViewCell {
     let dishImageView = UIImageView()
     var dish: Dish?
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
     }

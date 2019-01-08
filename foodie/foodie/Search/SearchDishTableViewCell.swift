@@ -17,7 +17,7 @@ class SearchDishTableViewCell: UITableViewCell {
     var viewComponent1 = SearchDishTableViewCellComponent()
     var viewComponent2 = SearchDishTableViewCellComponent()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
     }
@@ -73,7 +73,7 @@ class SearchDishTableViewCell: UITableViewCell {
         externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         externalContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         externalContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6.0).isActive = true
     }
 
 }
@@ -140,7 +140,7 @@ class SearchDishTableViewCellComponent: UIView {
         dishPriceLabel.textColor = UIColor.cc253UltraLightGrey
         dishPriceLabel.textAlignment = .right
         
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.cc74MediumGrey.cgColor]
         gradientLayer.locations = [0.0, 1.0]
         gradientView.layer.insertSublayer(gradientLayer, at: 0)
         

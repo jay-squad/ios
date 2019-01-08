@@ -12,8 +12,9 @@ import TextFieldEffects
 class UploadAdditionalInfoTableViewCell: UploadFormComponentTableViewCell {
     
     var additionalNotesView = UIView()
+    let additionalNotesTextField = HoshiTextField()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
@@ -37,7 +38,6 @@ class UploadAdditionalInfoTableViewCell: UploadFormComponentTableViewCell {
         stackView.addArrangedSubview(additionalNotesView)
         customViewContainer.addSubview(stackView)
         
-        let additionalNotesTextField = HoshiTextField()
         additionalNotesTextField.translatesAutoresizingMaskIntoConstraints = false
         additionalNotesTextField.defaultStyle()
         additionalNotesTextField.placeholder = "e.g. extra rice, salad instead of fries"

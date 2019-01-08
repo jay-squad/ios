@@ -14,7 +14,6 @@ class SearchResult {
         case dish
     }
     
-    var type: ResultType = .restaurant
     var restaurant: Restaurant?
     
     // restaurant
@@ -22,4 +21,23 @@ class SearchResult {
     
     // dish
     var dish: Dish?
+    
+    init(dish: Dish?) {
+        guard dish != nil else { return }
+        
+        self.dish = dish
+        
+        // grab restaurant data
+        NetworkManager.shared.getRestaurant(restaurantId: self.dish!.restaurantId) { (json, _, _) in
+            if let restaurantJSON = json {
+                self.restaurant = Restaurant(json: restaurantJSON)
+            }
+        }
+    }
+    
+    init(restaurant: Restaurant?, restaurantImages: [String?]) {
+        guard restaurant != nil else { return }
+        self.restaurantImages = restaurantImages
+        self.restaurant = restaurant
+    }
 }

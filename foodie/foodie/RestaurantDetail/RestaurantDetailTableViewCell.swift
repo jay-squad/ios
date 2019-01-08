@@ -49,10 +49,12 @@ class RestaurantDetailTableViewCell: UITableViewCell {
 
     func configureCell(restaurant: Restaurant) {
         self.restaurant = restaurant
-
+        
         restaurantNameLabel.text = restaurant.name
         restaurantCuisineLabel.text = restaurant.cuisine.joined(separator: ", ")
-        restaurantPriceLabel.text = "$\(restaurant.priceRange[0]) - $\(restaurant.priceRange[1])"
+        if restaurant.priceRange.count == 2 {
+            restaurantPriceLabel.text = "$\(restaurant.priceRange[0]) - $\(restaurant.priceRange[1])"
+        }
         restaurantDescriptionLabel.text = restaurant.description
         
         if restaurantMedalsStackView.arrangedSubviews.count == 0 {
@@ -72,6 +74,14 @@ class RestaurantDetailTableViewCell: UITableViewCell {
                           animated: false)
 
         mapView.setCenter(restaurant.location, animated: false)
+        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onMapViewTapped)))
+        
+        restaurantWebsiteButton.addTarget(self,
+                                          action: #selector(onRestaurantWebsiteButtonTapped(_:)),
+                                          for: .touchUpInside)
+        restaurantCallButton.addTarget(self,
+                                       action: #selector(onRestaurantCallButtonTapped(_:)),
+                                       for: .touchUpInside)
         
         buildComponents()
     }
@@ -89,5 +99,27 @@ class RestaurantDetailTableViewCell: UITableViewCell {
         mapView.bottomAnchor.constraint(equalTo: mapContainerView.bottomAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: mapContainerView.trailingAnchor).isActive = true
     }
-
+    
+    @objc private func onMapViewTapped() {
+        guard let restaurant = restaurant else { return }
+        let coordinate = restaurant.location
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
+        mapItem.name = restaurant.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
+    
+    @objc private func onRestaurantWebsiteButtonTapped(_ sender: UIButton!) {
+        if let website = restaurant?.website, let url = URL(string: website) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc private func onRestaurantCallButtonTapped(_ sender: UIButton!) {
+        if let phoneNumber = restaurant?.phoneNum, let phoneCallURL = URL(string: "tel://\(phoneNumber.digits)") {
+            if UIApplication.shared.canOpenURL(phoneCallURL) {
+                UIApplication.shared.open(phoneCallURL)
+            }
+        }
+    }
+    
 }

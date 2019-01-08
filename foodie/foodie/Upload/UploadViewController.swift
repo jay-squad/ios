@@ -21,19 +21,28 @@ enum UploadFormError: Error {
     case price
 }
 
+protocol UploadViewControllerDelegate: class {
+    func onSuccessfulUpload()
+}
+
 class UploadViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
+    var restaurantId: Int = -1
     var uploadImage: UIImage? {
         didSet {
-            tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            if let tableView = tableView {
+                tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            }
         }
     }
     
     var restaurantResult: ValidationResult?
     var dishResult: ValidationResult?
     var priceResult: ValidationResult?
+    
+    weak var delegate: UploadViewControllerDelegate?
     
     private var estimatedHeightDict: [IndexPath: CGFloat] = [:]
     
@@ -60,8 +69,8 @@ class UploadViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.cc253UltraLightGrey
         navigationController?.navigationBar.tintColor = UIColor.cc45DarkGrey
         navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedStringKey.font: UIFont(font: .helveticaNeueBold, size: 18.0)!,
-             NSAttributedStringKey.foregroundColor: UIColor.cc45DarkGrey]
+            [NSAttributedString.Key.font: UIFont(font: .helveticaNeueBold, size: 18.0)!,
+             NSAttributedString.Key.foregroundColor: UIColor.cc45DarkGrey]
         navigationItem.title = "Upload a Dish"
         
         let rightNavBtn = UIBarButtonItem(title: "Submit",
@@ -69,6 +78,7 @@ class UploadViewController: UIViewController {
                                          target: self,
                                          action: #selector(onSubmitButtonTapped(_:)))
         navigationItem.rightBarButtonItem = rightNavBtn
+        
     }
     
     @objc private func onSubmitButtonTapped(_ sender: UIBarButtonItem?) {
@@ -78,7 +88,25 @@ class UploadViewController: UIViewController {
             priceResult = (cell.priceTextField.text ?? "").validate(rule: Validator.priceRule)
             
             if restaurantResult!.isValid && dishResult!.isValid && priceResult!.isValid {
-                print("valid")
+                
+                var description: String?
+                if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0))
+                    as? UploadAdditionalInfoTableViewCell,
+                    let desc = cell.additionalNotesTextField.text {
+                    description = desc
+                }
+                
+                NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
+                                                     itemName: cell.dishTextField.text,
+                                                     itemImage: uploadImage,
+                                                     description: description,
+                                                     sectionName: cell.restaurantTextField.text,
+                                                     price: cell.priceFloat) { (_, error, _) in
+                    if error == nil {
+                        self.delegate?.onSuccessfulUpload()
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
             } else {
                 if !restaurantResult!.isValid {
                     cell.restaurantTextField.errorStyle()
@@ -93,6 +121,10 @@ class UploadViewController: UIViewController {
         }
     }
     
+    @objc private func onDismissButtonTapped(_ sender: UIBarButtonItem?) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNibs()
@@ -100,15 +132,15 @@ class UploadViewController: UIViewController {
         setupNavigation()
         hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
-                                               name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+                                               name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height
                 if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? UploadImageTableViewCell {
@@ -196,7 +228,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
         if let height = estimatedHeightDict[indexPath] {
             return height
         }
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -13,29 +13,32 @@ class SearchRestaurantTableViewCell: UITableViewCell {
     
     var nameLabel = UILabel()
     var dishImageViews: [UIImageView] = []
-    let verticalStackView = UIStackView()
-    let rowStackView1 = UIStackView()
-    let rowStackView2 = UIStackView()
-    let externalContainerView = UIView()
+    var verticalStackView = UIStackView()
+    var rowStackView1 = UIStackView()
+    var rowStackView2 = UIStackView()
+    var externalContainerView = UIView()
     var nameLabelToVerticalStackViewTopConstaint: NSLayoutConstraint?
     
     var searchResult: SearchResult?
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        buildComponents()
+//        buildComponents()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        buildComponents()
+//        buildComponents()
     }
     
     func configureCell(searchResult: SearchResult?) {
         if let searchResult = searchResult {
-            if let restaurant = searchResult.restaurant {
-                nameLabel.text = restaurant.name
-            }
+            self.searchResult = searchResult
+            guard let restaurant = searchResult.restaurant else { return }
+            
+            buildComponents()
+            
+            nameLabel.text = restaurant.name
             if searchResult.restaurantImages.count == 0 {
                 verticalStackView.removeFromSuperview()
                 nameLabelToVerticalStackViewTopConstaint?.isActive = false
@@ -44,6 +47,7 @@ class SearchRestaurantTableViewCell: UITableViewCell {
                 verticalStackView.removeArrangedSubview(rowStackView2)
             }
             for i in 0..<searchResult.restaurantImages.count {
+                dishImageViews[i].image = nil
                 if let urlString = searchResult.restaurantImages[i] {
                     dishImageViews[i].sd_setImage(with: URL(string: urlString))
                 }
@@ -51,8 +55,19 @@ class SearchRestaurantTableViewCell: UITableViewCell {
         }
     }
     
+    // TODO: Separate out parts that MUST be rerendered on every configureCell call
     private func buildComponents() {
         selectionStyle = .none
+        
+        externalContainerView.removeFromSuperview()
+        
+        // TODO: reuse these views instead of reinstantiating
+        dishImageViews = []
+        nameLabel = UILabel()
+        verticalStackView = UIStackView()
+        rowStackView1 = UIStackView()
+        rowStackView2 = UIStackView()
+        externalContainerView = UIView()
         
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false
         externalContainerView.backgroundColor = UIColor.cc253UltraLightGrey
@@ -83,13 +98,17 @@ class SearchRestaurantTableViewCell: UITableViewCell {
         rowStackView2.spacing = 4.0
         
         verticalStackView.addArrangedSubview(rowStackView1)
-        verticalStackView.addArrangedSubview(rowStackView2)
+        
         rowStackView1.addArrangedSubview(dishImageViews[0])
         rowStackView1.addArrangedSubview(dishImageViews[1])
         rowStackView1.addArrangedSubview(dishImageViews[2])
-        rowStackView2.addArrangedSubview(dishImageViews[3])
-        rowStackView2.addArrangedSubview(dishImageViews[4])
-        rowStackView2.addArrangedSubview(dishImageViews[5])
+        
+        if let searchResult = searchResult, searchResult.restaurantImages.count > 3 {
+            verticalStackView.addArrangedSubview(rowStackView2)
+            rowStackView2.addArrangedSubview(dishImageViews[3])
+            rowStackView2.addArrangedSubview(dishImageViews[4])
+            rowStackView2.addArrangedSubview(dishImageViews[5])
+        }
         
         externalContainerView.addSubview(nameLabel)
         externalContainerView.addSubview(verticalStackView)
