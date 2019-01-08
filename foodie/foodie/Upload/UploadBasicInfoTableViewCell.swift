@@ -9,10 +9,12 @@
 import UIKit
 import TextFieldEffects
 import Validator
+import DropDown
 
 class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
     
-    let restaurantTextField = HoshiTextField()
+    let dishSectionTextField = HoshiTextField()
+    let dishSectionDropDown = DropDown()
     let dishTextField = HoshiTextField()
     let priceTextField = HoshiTextField()
     
@@ -29,11 +31,18 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         addValidationRules()
     }
     
+    func configureCell(menu: Menu?) {
+        if let menu = menu {
+            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
+            dishSectionDropDown.dataSource.append("+ Add a Menu Section")
+        }
+    }
+    
 //    func configureCell(restaurantResult: ValidationResult?,
 //                       dishResult: ValidationResult?,
 //                       priceResult: ValidationResult?) {
 //        if let result = restaurantResult, !result.isValid {
-//            restaurantTextField.errorStyle()
+//            dishSectionTextField.errorStyle()
 //        }
 //        if let result = dishResult, !result.isValid {
 //            dishTextField.errorStyle()
@@ -53,24 +62,35 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         stackView.axis = .vertical
         stackView.spacing = 24.0
         
-        let restaurantSelectView = UIView()
+        let dishSectionSelectView = UIView()
         let dishSelectView = UIView()
         let priceView = UIView()
-        restaurantSelectView.translatesAutoresizingMaskIntoConstraints = false
+        dishSectionSelectView.translatesAutoresizingMaskIntoConstraints = false
         dishSelectView.translatesAutoresizingMaskIntoConstraints = false
         priceView.translatesAutoresizingMaskIntoConstraints = false
         
-        stackView.addArrangedSubview(restaurantSelectView)
+        stackView.addArrangedSubview(dishSectionSelectView)
         stackView.addArrangedSubview(dishSelectView)
         stackView.addArrangedSubview(priceView)
         customViewContainer.addSubview(stackView)
         
-        restaurantTextField.translatesAutoresizingMaskIntoConstraints = false
-        restaurantTextField.defaultStyle()
-        restaurantTextField.placeholder = "Dish Section in Menu"
-        restaurantTextField.tag = UploadFormComponent.restaurant.rawValue
-        restaurantTextField.autocorrectionType = .no
-        restaurantSelectView.addSubview(restaurantTextField)
+        dishSectionTextField.translatesAutoresizingMaskIntoConstraints = false
+        dishSectionTextField.defaultStyle()
+        dishSectionTextField.placeholder = "Dish Section in Menu"
+        dishSectionTextField.tag = UploadFormComponent.restaurant.rawValue
+        dishSectionTextField.autocorrectionType = .no
+        dishSectionTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onDishSectionTextFieldTapped(_:))))
+        dishSectionSelectView.addSubview(dishSectionTextField)
+        
+        dishSectionDropDown.anchorView = dishSectionTextField
+        dishSectionDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            if index == self.dishSectionDropDown.dataSource.count - 1 {
+                self.dishSectionDropDown.hide()
+                self.dishSectionTextField.becomeFirstResponder()
+            } else {
+                self.dishSectionTextField.text = item
+            }
+        }
         
         dishTextField.translatesAutoresizingMaskIntoConstraints = false
         dishTextField.defaultStyle()
@@ -88,10 +108,10 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         priceTextField.autocorrectionType = .no
         priceView.addSubview(priceTextField)
         
-        restaurantSelectView.topAnchor.constraint(equalTo: restaurantTextField.topAnchor).isActive = true
-        restaurantSelectView.leadingAnchor.constraint(equalTo: restaurantTextField.leadingAnchor).isActive = true
-        restaurantSelectView.trailingAnchor.constraint(equalTo: restaurantTextField.trailingAnchor).isActive = true
-        restaurantSelectView.bottomAnchor.constraint(equalTo: restaurantTextField.bottomAnchor).isActive = true
+        dishSectionSelectView.topAnchor.constraint(equalTo: dishSectionTextField.topAnchor).isActive = true
+        dishSectionSelectView.leadingAnchor.constraint(equalTo: dishSectionTextField.leadingAnchor).isActive = true
+        dishSectionSelectView.trailingAnchor.constraint(equalTo: dishSectionTextField.trailingAnchor).isActive = true
+        dishSectionSelectView.bottomAnchor.constraint(equalTo: dishSectionTextField.bottomAnchor).isActive = true
         
         dishSelectView.topAnchor.constraint(equalTo: dishTextField.topAnchor).isActive = true
         dishSelectView.leadingAnchor.constraint(equalTo: dishTextField.leadingAnchor).isActive = true
@@ -103,7 +123,7 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         priceView.bottomAnchor.constraint(equalTo: priceTextField.bottomAnchor).isActive = true
         priceTextField.widthAnchor.constraint(equalToConstant: 150.0).isActive = true
         
-        restaurantTextField.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
+        dishSectionTextField.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         dishTextField.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         priceTextField.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         
@@ -121,19 +141,19 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         var priceRules = ValidationRuleSet<String>()
         priceRules.add(rule: Validator.priceRule)
         
-        restaurantTextField.validationRules = requiredRules
+        dishSectionTextField.validationRules = requiredRules
         dishTextField.validationRules = requiredRules
         priceTextField.validationRules = priceRules
         
-        restaurantTextField.validationHandler = { result in
+        dishSectionTextField.validationHandler = { result in
             switch result {
             case .valid:
-                self.restaurantTextField.defaultStyle()
+                self.dishSectionTextField.defaultStyle()
             case .invalid(_):
-                self.restaurantTextField.errorStyle()
+                self.dishSectionTextField.errorStyle()
             }
         }
-        restaurantTextField.validateOnInputChange(enabled: true)
+        dishSectionTextField.validateOnInputChange(enabled: true)
         
         dishTextField.validationHandler = { result in
             switch result {
@@ -155,7 +175,10 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         }
         priceTextField.validateOnInputChange(enabled: true)
     }
-
+    
+    @objc private func onDishSectionTextFieldTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        dishSectionDropDown.show()
+    }
 }
 
 extension UploadBasicInfoTableViewCell: UITextFieldDelegate {

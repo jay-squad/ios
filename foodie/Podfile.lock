@@ -18,6 +18,7 @@ PODS:
     - DKImagePickerController/ImageManager (= 3.8.1)
   - DKImagePickerController/Camera (3.8.1)
   - DKImagePickerController/ImageManager (3.8.1)
+  - DropDown (2.3.12)
   - FBSDKCoreKit (4.39.0):
     - Bolts (~> 1.9)
   - FBSDKLoginKit (4.39.0):
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - AWSMobileClient (~> 2.6.13)
   - AWSS3 (~> 2.6.13)
   - DKImagePickerController (~> 3.8)
+  - DropDown (~> 2.3)
   - FBSDKLoginKit
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
@@ -55,6 +57,7 @@ SPEC REPOS:
     - AWSS3
     - Bolts
     - DKImagePickerController
+    - DropDown
     - FBSDKCoreKit
     - FBSDKLoginKit
     - SDWebImage
@@ -73,6 +76,7 @@ SPEC CHECKSUMS:
   AWSS3: 282a590bb47e9cd88de24979fb28954399c41c52
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  DropDown: 0bcc278799ec11a3d34ce1aac9367fbbaf5423d9
   FBSDKCoreKit: 1e3981faefab8c88edfaa9eecd94aab02d99a9bc
   FBSDKLoginKit: 30ba5039a2c53d65a75103889bc2deebdacd5a1f
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
@@ -83,6 +87,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: 2ef4e61e6dc766de9c47d359009c03f5f811149d
+PODFILE CHECKSUM: 7f84bce63c5084813eb0e7064673efd2376c55fc
 
 COCOAPODS: 1.5.3

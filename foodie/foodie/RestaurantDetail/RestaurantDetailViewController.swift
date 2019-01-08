@@ -109,6 +109,7 @@ class RestaurantDetailViewController: UIViewController {
                     asset.fetchOriginalImage(true, completeBlock: { image, _ in
                         if let img = image {
                             uploadVC.restaurantId = restaurant.id
+                            uploadVC.restaurantMenu = self.menu
                             uploadVC.uploadImage = img
                             uploadVC.delegate = self
                             self.navigationController?.pushViewController(uploadVC, animated: true)

@@ -14,4 +14,5 @@ target 'foodie' do
   pod 'AWSS3', '~> 2.6.13'
   pod 'FBSDKLoginKit'
   pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
+  pod 'DropDown', '~>2.3'
 end

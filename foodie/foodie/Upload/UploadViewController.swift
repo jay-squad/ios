@@ -28,8 +28,9 @@ protocol UploadViewControllerDelegate: class {
 class UploadViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-
+    
     var restaurantId: Int = -1
+    var restaurantMenu: Menu?
     var uploadImage: UIImage? {
         didSet {
             if let tableView = tableView {
@@ -83,7 +84,7 @@ class UploadViewController: UIViewController {
     
     @objc private func onSubmitButtonTapped(_ sender: UIBarButtonItem?) {
         if let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? UploadBasicInfoTableViewCell {
-            restaurantResult = (cell.restaurantTextField.text ?? "").validate(rule: Validator.requiredRule)
+            restaurantResult = (cell.dishSectionTextField.text ?? "").validate(rule: Validator.requiredRule)
             dishResult = (cell.dishTextField.text ?? "").validate(rule: Validator.requiredRule)
             priceResult = (cell.priceTextField.text ?? "").validate(rule: Validator.priceRule)
             
@@ -100,7 +101,7 @@ class UploadViewController: UIViewController {
                                                      itemName: cell.dishTextField.text,
                                                      itemImage: uploadImage,
                                                      description: description,
-                                                     sectionName: cell.restaurantTextField.text,
+                                                     sectionName: cell.dishSectionTextField.text,
                                                      price: cell.priceFloat) { (_, error, _) in
                     if error == nil {
                         self.delegate?.onSuccessfulUpload()
@@ -109,7 +110,7 @@ class UploadViewController: UIViewController {
                 }
             } else {
                 if !restaurantResult!.isValid {
-                    cell.restaurantTextField.errorStyle()
+                    cell.dishSectionTextField.errorStyle()
                 }
                 if !dishResult!.isValid {
                     cell.dishTextField.errorStyle()
@@ -176,6 +177,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadBasicInfoTableViewCellId,
                                                         for: indexPath) as? UploadBasicInfoTableViewCell {
+                cell.configureCell(menu: restaurantMenu)
                 return cell
             }
         case 2:

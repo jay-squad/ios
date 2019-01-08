@@ -11,6 +11,7 @@ import AWSCore
 import AWSMobileClient
 import AWSS3
 import FBSDKCoreKit
+import DropDown
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        DropDown.startListeningToKeyboard()
         
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1,
                                                                identityPoolId: "us-east-1:a52fc90f-e8ea-4afe-bb3d-2188a17995b9")
@@ -31,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                      didFinishLaunchingWithOptions: launchOptions)
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
 //        return true
     }
 
