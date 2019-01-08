@@ -305,7 +305,6 @@ class NetworkManager {
     
                     if task.result != nil {
                         // Do something with downloadTask.
-    
                     }
                     
                     return nil
