@@ -8,6 +8,7 @@
 
 import UIKit
 import DKImagePickerController
+import Photos.PHImageManager
 import Validator
 
 let kUploadFormComponentTableViewCellId = "UploadFormComponentTableViewCellId"
@@ -213,7 +214,9 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
             pickerController.setDefaultControllerProperties()
             pickerController.didSelectAssets = { (assets: [DKAsset]) in
                 for asset in assets {
-                    asset.fetchOriginalImage(true, completeBlock: { image, _ in
+                    let options = PHImageRequestOptions()
+                    options.isSynchronous = true
+                    asset.fetchOriginalImage(options: options, completeBlock: { (image, _) in
                         if let img = image {
                             self.uploadImage = img
                         }

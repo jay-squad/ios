@@ -13,23 +13,67 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - DKImagePickerController (3.8.1):
-    - DKImagePickerController/Camera (= 3.8.1)
-    - DKImagePickerController/ImageManager (= 3.8.1)
-  - DKImagePickerController/Camera (3.8.1)
-  - DKImagePickerController/ImageManager (3.8.1)
+  - DKCamera (1.6.4)
+  - DKImagePickerController (4.1.2):
+    - DKImagePickerController/Camera (= 4.1.2)
+    - DKImagePickerController/Core (= 4.1.2)
+    - DKImagePickerController/ImageDataManager (= 4.1.2)
+    - DKImagePickerController/InlineCamera (= 4.1.2)
+    - DKImagePickerController/PhotoEditor (= 4.1.2)
+    - DKImagePickerController/PhotoGallery (= 4.1.2)
+    - DKImagePickerController/Resource (= 4.1.2)
+  - DKImagePickerController/Camera (4.1.2):
+    - DKCamera
+    - DKImagePickerController/Core
+  - DKImagePickerController/Core (4.1.2):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.1.2)
+  - DKImagePickerController/InlineCamera (4.1.2):
+    - DKCamera
+    - DKImagePickerController/Core
+  - DKImagePickerController/PhotoEditor (4.1.2):
+    - DKImagePickerController/Core
+    - TOCropViewController (~> 2.4)
+  - DKImagePickerController/PhotoGallery (4.1.2):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.1.2)
+  - DKPhotoGallery (0.0.11):
+    - DKPhotoGallery/Core (= 0.0.11)
+    - DKPhotoGallery/Model (= 0.0.11)
+    - DKPhotoGallery/Preview (= 0.0.11)
+    - DKPhotoGallery/Resource (= 0.0.11)
+    - SDWebImage/GIF
+  - DKPhotoGallery/Core (0.0.11):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage/GIF
+  - DKPhotoGallery/Model (0.0.11):
+    - SDWebImage/GIF
+  - DKPhotoGallery/Preview (0.0.11):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage/GIF
+  - DKPhotoGallery/Resource (0.0.11):
+    - SDWebImage/GIF
   - DropDown (2.3.12)
   - FBSDKCoreKit (4.39.0):
     - Bolts (~> 1.9)
   - FBSDKLoginKit (4.39.0):
     - FBSDKCoreKit
+  - FLAnimatedImage (1.0.12)
   - SDWebImage (4.4.3):
     - SDWebImage/Core (= 4.4.3)
   - SDWebImage/Core (4.4.3)
+  - SDWebImage/GIF (4.4.3):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - SwiftLint (0.29.3)
   - SwiftyJSON (4.2.0)
   - SwiftyUserDefaults (4.0.0-alpha.1)
   - TextFieldEffects (1.5.1)
+  - TOCropViewController (2.4.0)
   - UIFontComplete (3.0.0)
   - Validator (3.1.1)
 
@@ -37,7 +81,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AWSMobileClient (~> 2.6.13)
   - AWSS3 (~> 2.6.13)
-  - DKImagePickerController (~> 3.8)
+  - DKImagePickerController (>= 3.8)
   - DropDown (~> 2.3)
   - FBSDKLoginKit
   - SDWebImage (~> 4.0)
@@ -56,15 +100,19 @@ SPEC REPOS:
     - AWSMobileClient
     - AWSS3
     - Bolts
+    - DKCamera
     - DKImagePickerController
+    - DKPhotoGallery
     - DropDown
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FLAnimatedImage
     - SDWebImage
     - SwiftLint
     - SwiftyJSON
     - SwiftyUserDefaults
     - TextFieldEffects
+    - TOCropViewController
     - UIFontComplete
     - Validator
 
@@ -75,18 +123,22 @@ SPEC CHECKSUMS:
   AWSMobileClient: f89a36e0d95fc354a9d3b50d347371788c542449
   AWSS3: 282a590bb47e9cd88de24979fb28954399c41c52
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  DKCamera: 61fa47629a39354e5111bca1fe96695de020dcb9
+  DKImagePickerController: 358ebcd5ce87db8863ec4b8dea651c67baca36e0
+  DKPhotoGallery: e5fc53899345c26af4374503dd249caabac7d26a
   DropDown: 0bcc278799ec11a3d34ce1aac9367fbbaf5423d9
   FBSDKCoreKit: 1e3981faefab8c88edfaa9eecd94aab02d99a9bc
   FBSDKLoginKit: 30ba5039a2c53d65a75103889bc2deebdacd5a1f
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SwiftLint: bfa7ca7b4d170cfaf0d236ca3ffd969e88a2f002
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   TextFieldEffects: 7d372f58aeaf9acd9626bbf962680aef926b085d
+  TOCropViewController: 368d8df3ea43b62c3dc5a61f11b9048274d240bd
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: 7f84bce63c5084813eb0e7064673efd2376c55fc
+PODFILE CHECKSUM: ef79d5764043a7d6d75681485eca83df7807a152
 
 COCOAPODS: 1.5.3

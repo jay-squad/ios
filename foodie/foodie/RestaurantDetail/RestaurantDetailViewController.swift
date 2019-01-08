@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import SwiftyJSON
 import DKImagePickerController
+import Photos.PHImageManager
 
 let kRestaurantDetailTableViewCellId = "RestaurantDetailTableViewCellId"
 let kRestaurantDetailDisplayOptionsTableViewCellId = "RestaurantDetailDisplayOptionsTableViewCellId"
@@ -106,7 +107,9 @@ class RestaurantDetailViewController: UIViewController {
             pickerController.setDefaultControllerProperties()
             pickerController.didSelectAssets = { (assets: [DKAsset]) in
                 for asset in assets {
-                    asset.fetchOriginalImage(true, completeBlock: { image, _ in
+                    let options = PHImageRequestOptions()
+                    options.isSynchronous = true
+                    asset.fetchOriginalImage(options: options, completeBlock: { image, _ in
                         if let img = image {
                             uploadVC.restaurantId = restaurant.id
                             uploadVC.restaurantMenu = self.menu

@@ -8,6 +8,7 @@
 
 import UIKit
 import DKImagePickerController
+import Photos.PHImageManager
 
 class RootTabBarViewController: UITabBarController {
 
@@ -35,7 +36,9 @@ extension RootTabBarViewController: UITabBarControllerDelegate {
                 pickerController.setDefaultControllerProperties()
                 pickerController.didSelectAssets = { (assets: [DKAsset]) in
                     for asset in assets {
-                        asset.fetchOriginalImage(true, completeBlock: { image, _ in
+                        let options = PHImageRequestOptions()
+                        options.isSynchronous = true
+                        asset.fetchOriginalImage(options: options, completeBlock: { image, _ in
                             if let img = image {
                                 uploadVC.uploadImage = img
                             }
