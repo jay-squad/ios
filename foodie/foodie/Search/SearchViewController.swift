@@ -19,31 +19,48 @@ class SearchViewController: UIViewController {
     let searchStackView = UIStackView()
     let searchTextField = UITextField()
     let searchActionButton = UIButton()
+    let searchTypeToggleButton = UIButton()
+    let searchByDishText = "Search by dish"
+    let searchByRestaurantText = "Search by restaurant"
     
     var searchResults: [SearchResult] = []
-    let searchResultType: SearchResult.ResultType = .dish
+    var searchResultType: SearchResult.ResultType = .restaurant
+    var nextSearchResultType: SearchResult.ResultType = .restaurant
     var dishesTapGestureRecognizer: UITapGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        onboardingIfNeeded()
+        
         setupNibs()
         setupTableView()
         setupNavigation()
         buildComponents()
-        hideKeyboardWhenTappedAround()
+//        hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
-                                               name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-        
-        query(with: "asdf")
-        
+                                               name: UIResponder.keyboardDidHideNotification, object: nil)
+        searchActionButton.addTarget(self,
+                                     action: #selector(onSearchActionButtonTapped(_:)),
+                                     for: .touchUpInside)
+        searchTypeToggleButton.addTarget(self,
+                                         action: #selector(onSearchTypeToggleButtonTapped(_:)),
+                                         for: .touchUpInside)
+        query(with: " ")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    private func onboardingIfNeeded() {
+        let onboardingVC = OnboardingViewController()
+        self.present(onboardingVC, animated: true, completion: nil)
     }
     
     private func setupNavigation() {
@@ -58,17 +75,52 @@ class SearchViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        tableView.isUserInteractionEnabled = false
+        searchActionButton.setImage(UIImage(named: "btn_close"), for: .normal)
+        self.searchTypeToggleButton.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.2) {
+            self.searchTypeToggleButton.alpha = 1.0
+            self.searchTypeToggleButton.frame.origin.y = 70.0
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.searchTypeToggleButton.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.2) {
+            self.searchTypeToggleButton.alpha = 0.0
+            self.searchTypeToggleButton.frame.origin.y = 0.0
+        }
     }
     
     @objc func keyboardDidHide(notification: NSNotification) {
-        tableView.isUserInteractionEnabled = true
+        if searchTextField.text == nil || searchTextField.text == "" {
+            searchActionButton.setImage(UIImage(named: "btn_search"), for: .normal)
+        }
     }
     
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .onDrag
+    }
+    
+    @objc func onSearchActionButtonTapped(_ sender: UIButton!) {
+        if searchActionButton.currentImage == UIImage(named: "btn_close") {
+            searchTextField.text = nil
+            searchActionButton.setImage(UIImage(named: "btn_search"), for: .normal)
+        } else {
+            searchTextField.becomeFirstResponder()
+        }
+    }
+    
+    @objc func onSearchTypeToggleButtonTapped(_ sender: UIButton!) {
+        if sender.currentTitle == searchByRestaurantText {
+            sender.setTitle(searchByDishText, for: .normal)
+            nextSearchResultType = .dish
+        } else if sender.currentTitle == searchByDishText {
+            sender.setTitle(searchByRestaurantText, for: .normal)
+            nextSearchResultType = .restaurant
+        }
     }
     
     func buildComponents() {
@@ -79,16 +131,21 @@ class SearchViewController: UIViewController {
         searchActionButton.translatesAutoresizingMaskIntoConstraints = false
         
         searchStackView.axis = .horizontal
+        searchStackView.backgroundColor = .white
+        
+        searchActionButton.setImage(UIImage(named: "btn_search"), for: .normal)
         
         searchTextField.font = UIFont(font: .helveticaNeueMedium, size: 24.0)
         searchTextField.textColor = UIColor.cc74MediumGrey
         searchTextField.borderStyle = .none
         searchTextField.placeholder = "Search"
+        searchTextField.delegate = self
         
         searchStackView.addArrangedSubview(searchTextField)
         searchStackView.addArrangedSubview(searchActionButton)
 
         view.addSubview(tableView)
+        view.addSubview(searchTypeToggleButton)
         view.addSubview(searchStackView)
         
         searchActionButton.widthAnchor.constraint(equalToConstant: 24.0).isActive = true
@@ -105,70 +162,62 @@ class SearchViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
+        searchTypeToggleButton.frame = CGRect(x: UIScreen.main.bounds.width/2 - 90, y: 0, width: 180, height: 30.0)
+        searchTypeToggleButton.backgroundColor = .white
+        searchTypeToggleButton.layer.cornerRadius = 15.0
+        searchTypeToggleButton.applyDefaultShadow()
+        searchTypeToggleButton.setTitle(searchByRestaurantText, for: .normal)
+        searchTypeToggleButton.setTitleColor(UIColor.ccOchre, for: .normal)
+        searchTypeToggleButton.titleLabel?.font = UIFont(font: .helveticaNeue, size: 12.0)
+        searchTypeToggleButton.isUserInteractionEnabled = false
+        searchTypeToggleButton.isExclusiveTouch = true
+        searchTypeToggleButton.alpha = 0.0
+        
     }
     
     func query(with query: String?) {
-        
-        let restaurant = Restaurant(name: "Seoul Soul",
-                                     cuisine: ["Korean, Asian"],
-                                     priceRange: [10, 20],
-                                     location: CLLocationCoordinate2D(latitude: 43.4752071, longitude: -80.5395287),
-                                     description: "Authentic homestyle Korean cuisine, made with care by chef Kim.",
-                                     medals: [RestaurantMedal(type: .highRating,
-                                                              description: "86% of customers enjoyed their dish")],
-                                     website: "www.seoulsoulkoreanrestaurant.ca",
-                                     phoneNum: 6506953997)
-        
-        let path = Bundle.main.path(forResource: "testmodel", ofType: "txt")
-        var text: String = ""
-        do {
-            text = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
-        } catch {
-            print("file bad")
-        }
-        if let data = text.data(using: .utf8, allowLossyConversion: false) {
-            do {
-                let json = try JSON(data: data)
-                let menu = Menu(json: json)
-                
-                if query != nil {
-                    let newSearchResult = SearchResult()
-                    newSearchResult.type = .dish
-                    
-                    // restaurant type
-                    newSearchResult.restaurant = restaurant
-                    newSearchResult.restaurantImages = [menu.getDish(section: 0, row: 0)?.image,
-                    menu.getDish(section: 0, row: 1)?.image,
-                    menu.getDish(section: 0, row: 2)?.image,
-                    menu.getDish(section: 0, row: 3)?.image,
-                    menu.getDish(section: 1, row: 0)?.image,
-                    menu.getDish(section: 1, row: 1)?.image]
-                    
-                    // dish type
-                    newSearchResult.dish = menu.getDish(section: 0, row: 0)
-                    
-                    searchResults.append(newSearchResult)
-                    searchResults.append(newSearchResult)
-                    
-                    tableView.reloadData()
-                }
-                
-            } catch {
-                print("json bad")
+        self.searchResults.removeAll()
+        switch nextSearchResultType {
+        case .restaurant:
+            if dishesTapGestureRecognizer != nil {
+                self.tableView.removeGestureRecognizer(dishesTapGestureRecognizer!)
             }
-        }
-        
-        if searchResultType == .dish {
+            NetworkManager.shared.searchRestaurant(query: query) { (json, error, code) in
+                if let restaurantJSONs = json?.array {
+                    for restaurantJSON in restaurantJSONs {
+                        var images: [String?] = []
+                        if let minimenu = restaurantJSON["menu"].array {
+                            for item in minimenu {
+                                images.append(item["image"]["link"].string)
+                            }
+                        }
+                        self.searchResults.append(SearchResult(restaurant: Restaurant(json: restaurantJSON["restaurant"]), restaurantImages: images))
+                    }
+                    self.searchResultType = self.nextSearchResultType
+                    self.tableView.reloadData()
+                } else if let error = error {
+                    print("----------- ERROR ---------------")
+                    print(error.localizedDescription)
+                }
+            }
+        case .dish:
             dishesTapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                 action: #selector(self.handleDishesTap(_:)))
             dishesTapGestureRecognizer?.delegate = self
             self.tableView.addGestureRecognizer(dishesTapGestureRecognizer!)
-        } else {
-            if dishesTapGestureRecognizer != nil {
-                self.tableView.removeGestureRecognizer(dishesTapGestureRecognizer!)
+            NetworkManager.shared.searchDish(query: query) { (json, error, _) in
+                if let dishJSONs = json?.array {
+                    for dishJSON in dishJSONs {
+                        self.searchResults.append(SearchResult(dish: Dish(json: dishJSON)))
+                    }
+                    self.searchResultType = self.nextSearchResultType
+                    self.tableView.reloadData()
+                } else if let error = error {
+                    print("----------- ERROR ---------------")
+                    print(error.localizedDescription)
+                }
             }
         }
-
     }
     
     @objc private func handleDishesTap(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -238,6 +287,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         segueToRestaurantDetailedVC(restaurant: searchResults[indexPath.row].restaurant)
     }
+    
 }
 
 extension SearchViewController: UIGestureRecognizerDelegate {
@@ -251,4 +301,14 @@ extension SearchViewController: UIGestureRecognizerDelegate {
         }
         return false
     }
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let queryString = textField.text else { return true }
+        query(with: queryString)
+        return true
+    }
+
 }

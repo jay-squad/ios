@@ -13,8 +13,14 @@ class Menu {
     var sections: [MenuSection] = []
     
     init(json: JSON) {
-        for section in json["section"].array ?? [] {
-            sections.append(MenuSection(json: section))
+        var i = 0
+        
+        for section in json.array ?? [] {
+            let newSection = MenuSection(json: section, rank: i)
+            if newSection.dishes.count > 0 {
+                sections.append(newSection)
+                i += 1
+            }
         }
         sections.sort {$0.rank < $1.rank}
     }
@@ -23,6 +29,7 @@ class Menu {
         guard section < sections.count && row < sections[section].dishes.count else { return nil }
         return sections[section].dishes[row]
     }
+    
 }
 
 class MenuSection {
@@ -31,12 +38,14 @@ class MenuSection {
     var rank: Int = -1
     var dishes: [Dish] = []
 
-    init(json: JSON) {
-        name = json["name"].string ?? ""
-        rank = json["rank"].int ?? -1
-        if let items = json["items"].array {
-            for item in items {
-                dishes.append(Dish(json: item))
+    init(json: JSON, rank: Int) {
+        self.rank = rank
+        if let arr = json.array {
+            name = arr[0].string
+            if let items = arr[1].array {
+                for item in items {
+                    dishes.append(Dish(json: item))
+                }
             }
         }
     }

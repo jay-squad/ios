@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import AWSCore
+import AWSMobileClient
+import AWSS3
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,9 +18,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        
+        
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:a52fc90f-e8ea-4afe-bb3d-2188a17995b9")
+        let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        AWSS3TransferUtility.register(with: configuration!, forKey: "USEast1S3TransferUtility")
+        
+        //Instantiate AWSMobileClient to establish AWS user credentials
+        return AWSMobileClient.sharedInstance().interceptApplication(application,
+                                                                     didFinishLaunchingWithOptions: launchOptions)
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+//        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -46,6 +62,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         /* Called when the application is about to terminate. Save data if appropriate. See also
          applicationDidEnterBackground: .*/
+    }
+    
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [: ]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(
+                        app,
+                        open: url,
+                        sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String ?? "",
+                        annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        return handled
     }
 
 }

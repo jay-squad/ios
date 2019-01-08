@@ -29,7 +29,7 @@
         <!--Upload View Controller-->
         <scene sceneID="U3k-lv-Fvs">
             <objects>
-                <viewController id="yeZ-t1-Tlo" customClass="UploadViewController" customModule="foodie" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UploadViewControllerId" id="yeZ-t1-Tlo" customClass="UploadViewController" customModule="foodie" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1V9-Ef-WI1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

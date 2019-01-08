@@ -1,10 +1,27 @@
 PODS:
   - Alamofire (4.7.2)
+  - AWSAuthCore (2.6.22):
+    - AWSCore (= 2.6.22)
+  - AWSCore (2.6.22)
+  - AWSMobileClient (2.6.22):
+    - AWSAuthCore (= 2.6.22)
+  - AWSS3 (2.6.22):
+    - AWSCore (= 2.6.22)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
   - DKImagePickerController (3.8.1):
     - DKImagePickerController/Camera (= 3.8.1)
     - DKImagePickerController/ImageManager (= 3.8.1)
   - DKImagePickerController/Camera (3.8.1)
   - DKImagePickerController/ImageManager (3.8.1)
+  - FBSDKCoreKit (4.34.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.34.0):
+    - FBSDKCoreKit
   - SDWebImage (4.4.1):
     - SDWebImage/Core (= 4.4.1)
   - SDWebImage/Core (4.4.1)
@@ -16,7 +33,10 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - AWSMobileClient (~> 2.6.13)
+  - AWSS3 (~> 2.6.13)
   - DKImagePickerController (~> 3.8)
+  - FBSDKLoginKit
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
   - SwiftyJSON (~> 4.0)
@@ -27,7 +47,14 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AWSAuthCore
+    - AWSCore
+    - AWSMobileClient
+    - AWSS3
+    - Bolts
     - DKImagePickerController
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - SDWebImage
     - SwiftLint
     - SwiftyJSON
@@ -37,7 +64,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  AWSAuthCore: cbe932da2bd77b94e0efa73c81428b3646796427
+  AWSCore: faae134779f0f6e46a8d426c0ccc02e34466b785
+  AWSMobileClient: 091482a8bf8d9a92bc290fb2137892e2055e9b61
+  AWSS3: 2b70463225a455ba26494f06346bddb74dedf73d
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  FBSDKCoreKit: 0ff57f093b85c8c9d5aba697d3edf68a8960ce78
+  FBSDKLoginKit: 8c78f57a145afb756e4755e69195ebe08a42466e
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   SwiftLint: f6b83e8d95ee1e91e11932d843af4fdcbf3fc764
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
@@ -45,6 +79,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: bf211c1d71b3f910d230c09c70e62429d0fef63a
 
-PODFILE CHECKSUM: ee6822c9d60da3e9ff9a8cf95a9b829331cfa171
+PODFILE CHECKSUM: 63326812171b6b5bb959606169801078a037db86
 
 COCOAPODS: 1.5.3

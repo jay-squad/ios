@@ -8,8 +8,8 @@
 
 import UIKit
 import CoreLocation
-
 import SwiftyJSON
+import DKImagePickerController
 
 let kRestaurantDetailTableViewCellId = "RestaurantDetailTableViewCellId"
 let kRestaurantDetailDisplayOptionsTableViewCellId = "RestaurantDetailDisplayOptionsTableViewCellId"
@@ -22,7 +22,7 @@ class RestaurantDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    let kRowAnimationType: UITableViewRowAnimation = .middle
+    let kRowAnimationType: UITableView.RowAnimation = .middle
     var gridTapGestureRecognizer: UITapGestureRecognizer?
     
     var restaurant: Restaurant?
@@ -59,22 +59,17 @@ class RestaurantDetailViewController: UIViewController {
     }
 
     private func setupDataSource() {
+        guard let restaurant = restaurant else { return }
         
-        let path = Bundle.main.path(forResource: "testmodel", ofType: "txt")
-        var text: String = ""
-        do {
-            text = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
-        } catch {
-            print("file bad")
-        }
-        if let data = text.data(using: .utf8, allowLossyConversion: false) {
-            do {
-                let json = try JSON(data: data)
-                menu = Menu(json: json)
-                menuView = MenuViewModel(type: .grid)
-                menuView?.setDataSource(menu: menu!)
-            } catch {
-                print("json bad")
+        NetworkManager.shared.getRestaurantMenu(restaurantId: restaurant.id) { (json, error, code) in
+            if let menuJSONs = json {
+                self.menu = Menu(json: menuJSONs)
+                self.menuView = MenuViewModel(type: .grid)
+                self.menuView?.setDataSource(menu: self.menu!)
+                self.tableView.reloadData()
+            } else if let error = error {
+                print("----------- ERROR ---------------")
+                print(error.localizedDescription)
             }
         }
     }
@@ -84,11 +79,46 @@ class RestaurantDetailViewController: UIViewController {
         setupNibs()
         setupTableView()
         setupDataSource()
+        setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    private func setupNavigation() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Upload a Dish",
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(onUploadButtonTapped))
+    }
+    
+    @objc private func onUploadButtonTapped() {
+        guard let restaurant = restaurant else { return }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let uploadVC = storyboard.instantiateViewController(
+            withIdentifier: CommonIdentifiers.UploadViewControllerId)
+            as? UploadViewController {
+        
+            let pickerController = DKImagePickerController()
+            pickerController.setDefaultControllerProperties()
+            pickerController.didSelectAssets = { (assets: [DKAsset]) in
+                for asset in assets {
+                    asset.fetchOriginalImage(true, completeBlock: { image, _ in
+                        if let img = image {
+                            uploadVC.restaurantId = restaurant.id
+                            uploadVC.uploadImage = img
+                            uploadVC.delegate = self
+                            self.navigationController?.pushViewController(uploadVC, animated: true)
+                        }
+                    })
+                }
+            }
+            self.present(pickerController, animated: true) {}
+        }
+        
     }
     
     @objc private func handleGridTap(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -252,7 +282,6 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                                                                           row: currentExpandedGridCellIndex.row * 3
                                                                                 + offset))
                                 }
-                                cell.configureCell(dish: menu.getDish(section: indexPath.section-2, row: indexPath.row))
                             default:
                                 cell.configureCell(dish: menu.getDish(section: indexPath.section-2, row: indexPath.row))
                             }
@@ -356,7 +385,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
         if let type = menuView?.activeMenuType, let height = estimatedHeightDict[type]![indexPath] {
             return height
         }
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -390,5 +419,11 @@ extension RestaurantDetailViewController: UIGestureRecognizerDelegate {
             }
         }
         return false
+    }
+}
+
+extension RestaurantDetailViewController: UploadViewControllerDelegate {
+    func onSuccessfulUpload() {
+        setupDataSource()
     }
 }

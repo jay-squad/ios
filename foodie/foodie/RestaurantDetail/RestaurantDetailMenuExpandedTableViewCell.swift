@@ -18,7 +18,7 @@ class RestaurantDetailMenuExpandedTableViewCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let tagsLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
     }
@@ -31,9 +31,10 @@ class RestaurantDetailMenuExpandedTableViewCell: UITableViewCell {
     func configureCell(dish: Dish?) {
         guard let dish = dish else { return }
         nameLabel.text = dish.name
-        priceLabel.text = "$ \(dish.price)"
+        priceLabel.text = String(format: "$ %.2f", dish.price)
         descriptionLabel.text = dish.description
         if let imageUrl = dish.image {
+            dishImageView.image = nil
             dishImageView.sd_setImage(with: URL(string: imageUrl))
         }
     }
@@ -76,6 +77,7 @@ class RestaurantDetailMenuExpandedTableViewCell: UITableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.font = UIFont(font: .avenirBook, size: 14)
         descriptionLabel.textColor = UIColor.ccGreyishBrown
+        descriptionLabel.numberOfLines = 5
         
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         

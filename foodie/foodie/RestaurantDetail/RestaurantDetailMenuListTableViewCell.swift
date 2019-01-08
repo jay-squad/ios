@@ -14,7 +14,7 @@ class RestaurantDetailMenuListTableViewCell: UITableViewCell {
     var nameLabel = UILabel()
     var priceLabel = UILabel()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
     }
@@ -28,7 +28,7 @@ class RestaurantDetailMenuListTableViewCell: UITableViewCell {
         guard let dish = dish else { return }
         self.dish = dish
         nameLabel.text = dish.name
-        priceLabel.text = "$ \(dish.price)"
+        priceLabel.text = String(format: "$ %.2f", dish.price)
     }
     
     private func buildComponents() {

@@ -18,7 +18,7 @@ class RestaurantDetailMenu3ColumnGridTableViewCell: UITableViewCell {
     let dish1ImageView = UIImageView()
     let dish2ImageView = UIImageView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
     }
@@ -32,22 +32,19 @@ class RestaurantDetailMenu3ColumnGridTableViewCell: UITableViewCell {
         self.dish0 = dish0
         self.dish1 = dish1
         self.dish2 = dish2
+        dish0ImageView.image = nil
         if let imageUrl = dish0?.image {
             dish0ImageView.sd_setImage(with: URL(string: imageUrl))
-        } else {
-            dish0ImageView.image = nil
         }
         
+        dish1ImageView.image = nil
         if let imageUrl = dish1?.image {
             dish1ImageView.sd_setImage(with: URL(string: imageUrl))
-        } else {
-            dish1ImageView.image = nil
         }
         
+        dish2ImageView.image = nil
         if let imageUrl = dish2?.image {
             dish2ImageView.sd_setImage(with: URL(string: imageUrl))
-        } else {
-            dish2ImageView.image = nil
         }
     }
     

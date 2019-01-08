@@ -10,4 +10,7 @@ target 'foodie' do
   pod 'DKImagePickerController', '~> 3.8'
   pod 'TextFieldEffects', '~> 1.4'
   pod 'Validator', '~> 3.0'
+  pod 'AWSMobileClient', '~> 2.6.13'
+  pod 'AWSS3', '~> 2.6.13'
+  pod 'FBSDKLoginKit'
 end

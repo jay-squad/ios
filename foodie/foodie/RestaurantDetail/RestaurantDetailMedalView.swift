@@ -39,7 +39,7 @@ class RestaurantDetailMedalView: UIView {
     private func buildComponents() {
         // name label
         nameLabel.attributedText = NSAttributedString(string: medal?.name ?? "",
-                                                      attributes: [ NSAttributedStringKey.kern: 1.5])
+                                                      attributes: [ NSAttributedString.Key.kern: 1.5])
         nameLabel.numberOfLines = 2
         nameLabel.textColor = UIColor.ccOchre
         nameLabel.font = UIFont(font: .helveticaNeueMedium, size: 12.0)

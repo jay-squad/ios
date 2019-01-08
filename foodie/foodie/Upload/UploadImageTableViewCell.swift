@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 class UploadImageTableViewCell: UITableViewCell {
 
     var uploadImageView = UIImageView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
     }
@@ -28,6 +29,7 @@ class UploadImageTableViewCell: UITableViewCell {
     
     private func buildComponents() {
         selectionStyle = .none
+        clipsToBounds = true
         
         let externalContainerView = UIView()
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false

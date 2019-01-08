@@ -10,4 +10,5 @@ import Foundation
 
 class CommonIdentifiers {
     static let RestaurantDetailViewControllerId = "RestaurantDetailViewControllerId"
+    static let UploadViewControllerId = "UploadViewControllerId"
 }

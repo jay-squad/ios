@@ -17,8 +17,9 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
     let priceTextField = HoshiTextField()
     
     var amountTypedString: String = ""
+    var priceFloat: Float = 0
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addValidationRules()
     }
@@ -66,7 +67,7 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         
         restaurantTextField.translatesAutoresizingMaskIntoConstraints = false
         restaurantTextField.defaultStyle()
-        restaurantTextField.placeholder = "Restaurant"
+        restaurantTextField.placeholder = "Dish Section in Menu"
         restaurantTextField.tag = UploadFormComponent.restaurant.rawValue
         restaurantTextField.autocorrectionType = .no
         restaurantSelectView.addSubview(restaurantTextField)
@@ -169,12 +170,14 @@ extension UploadBasicInfoTableViewCell: UITextFieldDelegate {
             amountTypedString += string
             let decNumber = NSDecimalNumber(string: amountTypedString).multiplying(by: 0.01)
             let newString = "$ " + formatter.string(from: decNumber)!
+            priceFloat = decNumber.floatValue
             textField.text = newString
         } else {
             amountTypedString = String(amountTypedString.dropLast())
             if amountTypedString.count > 0 {
                 let decNumber = NSDecimalNumber(string: amountTypedString).multiplying(by: 0.01)
                 let newString = "$ " +  formatter.string(from: decNumber)!
+                priceFloat = decNumber.floatValue
                 textField.text = newString
             } else {
                 textField.text = "$ 0.00"

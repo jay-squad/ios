@@ -49,6 +49,12 @@
 		26C7171120C0FA190026C4EF /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7171020C0FA190026C4EF /* Menu.swift */; };
 		26CC94DA20ED544A006AB058 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94D920ED544A006AB058 /* SearchResult.swift */; };
 		26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */; };
+		26CC94DE20ED95B6006AB058 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94DD20ED95B6006AB058 /* NetworkManager.swift */; };
+		26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E020EDB0B5006AB058 /* RequestBodyFactory.swift */; };
+		26CC94E320EDD1AA006AB058 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 26CC94E220EDD1AA006AB058 /* awsconfiguration.json */; };
+		26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E420EE0459006AB058 /* UUIStackView.swift */; };
+		26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E620EE3C69006AB058 /* UUIString.swift */; };
+		26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E820EE4594006AB058 /* OnboardingViewController.swift */; };
 		BCA78E337EFBC28871942FBB /* Pods_foodie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC14FEBF6794AE1DBFA8978 /* Pods_foodie.framework */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +126,12 @@
 		26C7171020C0FA190026C4EF /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		26CC94D920ED544A006AB058 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonIdentifiers.swift; sourceTree = "<group>"; };
+		26CC94DD20ED95B6006AB058 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		26CC94E020EDB0B5006AB058 /* RequestBodyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBodyFactory.swift; sourceTree = "<group>"; };
+		26CC94E220EDD1AA006AB058 /* awsconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		26CC94E420EE0459006AB058 /* UUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIStackView.swift; sourceTree = "<group>"; };
+		26CC94E620EE3C69006AB058 /* UUIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIString.swift; sourceTree = "<group>"; };
+		26CC94E820EE4594006AB058 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		BC0E7E9CCAF3F16B51B11042 /* Pods-foodie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-foodie/Pods-foodie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +189,8 @@
 			children = (
 				2623B9EA20BF660200AD5605 /* AppDelegate.swift */,
 				2623B9EE20BF660200AD5605 /* Main.storyboard */,
+				26CC94EA20EE459F006AB058 /* Onboarding */,
+				26CC94DF20ED95BB006AB058 /* Network */,
 				26AAFB9120ED4CA900DEE4E7 /* Search */,
 				262B744920E428EF0019B8BF /* Upload */,
 				262B744420E428070019B8BF /* TabBar */,
@@ -187,6 +201,7 @@
 				2623B9F120BF660200AD5605 /* Assets.xcassets */,
 				2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */,
 				2623B9F620BF660200AD5605 /* Info.plist */,
+				26CC94E220EDD1AA006AB058 /* awsconfiguration.json */,
 			);
 			path = foodie;
 			sourceTree = "<group>";
@@ -241,6 +256,8 @@
 				2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */,
 				262B745E20E453CC0019B8BF /* UUIView.swift */,
 				26AAFB8B20E58BF000DEE4E7 /* UValidator.swift */,
+				26CC94E420EE0459006AB058 /* UUIStackView.swift */,
+				26CC94E620EE3C69006AB058 /* UUIString.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -291,6 +308,23 @@
 				26CC94D920ED544A006AB058 /* SearchResult.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		26CC94DF20ED95BB006AB058 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				26CC94DD20ED95B6006AB058 /* NetworkManager.swift */,
+				26CC94E020EDB0B5006AB058 /* RequestBodyFactory.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		26CC94EA20EE459F006AB058 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				26CC94E820EE4594006AB058 /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		75B573863A930851082E2F26 /* Pods */ = {
@@ -381,15 +415,18 @@
 				TargetAttributes = {
 					2623B9E620BF660100AD5605 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					2623B9FA20BF660200AD5605 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2623B9E620BF660100AD5605;
 					};
 					2623BA0520BF660200AD5605 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2623B9E620BF660100AD5605;
 					};
@@ -422,6 +459,7 @@
 			files = (
 				262B744120E064EC0019B8BF /* testmodel.txt in Resources */,
 				2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */,
+				26CC94E320EDD1AA006AB058 /* awsconfiguration.json in Resources */,
 				2623B9F220BF660200AD5605 /* Assets.xcassets in Resources */,
 				26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
 				2623B9F020BF660200AD5605 /* Main.storyboard in Resources */,
@@ -465,8 +503,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-foodie/Pods-foodie-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
@@ -475,8 +520,15 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
@@ -513,6 +565,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26CC94DE20ED95B6006AB058 /* NetworkManager.swift in Sources */,
 				26AAFB9320ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift in Sources */,
 				26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */,
 				262B745320E43C6E0019B8BF /* UploadAdditionalInfoTableViewCell.swift in Sources */,
@@ -535,13 +588,17 @@
 				2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
 				262B744620E428EB0019B8BF /* UploadViewController.swift in Sources */,
 				2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */,
+				26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
 				2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26AAFB8C20E58BF000DEE4E7 /* UValidator.swift in Sources */,
+				26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */,
 				26AAFB8E20E5973C00DEE4E7 /* UploadNavigationController.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
+				26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */,
+				26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */,
 				26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */,
 				262B743D20E042020019B8BF /* MenuViewModel.swift in Sources */,
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
@@ -720,7 +777,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -736,7 +793,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -752,7 +809,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/foodie.app/foodie";
 			};
@@ -769,7 +826,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/foodie.app/foodie";
 			};
@@ -785,7 +842,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodieUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = foodie;
 			};
@@ -801,7 +858,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodieUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = foodie;
 			};
