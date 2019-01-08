@@ -18,6 +18,7 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
     let dishTextField = HoshiTextField()
     let priceTextField = HoshiTextField()
     
+    var isPreviousSelectedDishSectionCustom: Bool = false
     var amountTypedString: String = ""
     var priceFloat: Float = 0
     
@@ -82,13 +83,19 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         dishSectionTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onDishSectionTextFieldTapped(_:))))
         dishSectionSelectView.addSubview(dishSectionTextField)
         
+        DropDown.appearance().backgroundColor = UIColor.white
         dishSectionDropDown.anchorView = dishSectionTextField
         dishSectionDropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             if index == self.dishSectionDropDown.dataSource.count - 1 {
                 self.dishSectionDropDown.hide()
+                if !self.isPreviousSelectedDishSectionCustom {
+                    self.dishSectionTextField.text = ""
+                }
                 self.dishSectionTextField.becomeFirstResponder()
+                self.isPreviousSelectedDishSectionCustom = true
             } else {
                 self.dishSectionTextField.text = item
+                self.isPreviousSelectedDishSectionCustom = false
             }
         }
         
