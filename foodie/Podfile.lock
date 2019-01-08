@@ -27,6 +27,7 @@ PODS:
   - SDWebImage/Core (4.4.3)
   - SwiftLint (0.29.3)
   - SwiftyJSON (4.2.0)
+  - SwiftyUserDefaults (4.0.0-alpha.1)
   - TextFieldEffects (1.5.1)
   - UIFontComplete (3.0.0)
   - Validator (3.1.1)
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
   - SwiftyJSON (~> 4.0)
+  - SwiftyUserDefaults (= 4.0.0-alpha.1)
   - TextFieldEffects (~> 1.4)
   - UIFontComplete (~> 3.0)
   - Validator (~> 3.0)
@@ -58,6 +60,7 @@ SPEC REPOS:
     - SDWebImage
     - SwiftLint
     - SwiftyJSON
+    - SwiftyUserDefaults
     - TextFieldEffects
     - UIFontComplete
     - Validator
@@ -75,10 +78,11 @@ SPEC CHECKSUMS:
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SwiftLint: bfa7ca7b4d170cfaf0d236ca3ffd969e88a2f002
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
   TextFieldEffects: 7d372f58aeaf9acd9626bbf962680aef926b085d
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: 63326812171b6b5bb959606169801078a037db86
+PODFILE CHECKSUM: 2ef4e61e6dc766de9c47d359009c03f5f811149d
 
 COCOAPODS: 1.5.3

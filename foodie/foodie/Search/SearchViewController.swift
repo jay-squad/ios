@@ -9,6 +9,11 @@
 import UIKit
 import MapKit
 import SwiftyJSON
+import SwiftyUserDefaults
+
+extension DefaultsKeys {
+    static let launchCount = DefaultsKey<Int>("user_launch_count")
+}
 
 let kSearchRestaurantTableViewCellId = "SearchRestaurantTableViewCellId"
 let kSearchDishTableViewCellId = "SearchDishTableViewCellId"
@@ -59,8 +64,11 @@ class SearchViewController: UIViewController {
     }
     
     private func onboardingIfNeeded() {
-        let onboardingVC = OnboardingViewController()
-        self.present(onboardingVC, animated: true, completion: nil)
+        if Defaults[.launchCount] == 0 {
+            Defaults[.launchCount] += 1
+            let onboardingVC = OnboardingViewController()
+            self.present(onboardingVC, animated: true, completion: nil)
+        }
     }
     
     private func setupNavigation() {
