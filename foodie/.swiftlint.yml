@@ -12,7 +12,4 @@ disabled_rules:
   - empty_enum_arguments
   - todo
   - function_parameter_count
-<<<<<<< HEAD
   - line_length
-=======
->>>>>>> f26ce630a15b12d8e8b9ee68ea99d23a8b2046b7
