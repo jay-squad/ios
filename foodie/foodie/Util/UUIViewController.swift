@@ -20,4 +20,11 @@ extension UIViewController {
         view.endEditing(true)
     }
     
+    func setDefaultNavigationBarStyle() {
+        navigationController?.navigationBar.barTintColor = UIColor.cc253UltraLightGrey
+        navigationController?.navigationBar.tintColor = UIColor.cc45DarkGrey
+        navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.font: UIFont(font: .helveticaNeueBold, size: 18.0)!,
+             NSAttributedString.Key.foregroundColor: UIColor.cc45DarkGrey]
+    }
 }

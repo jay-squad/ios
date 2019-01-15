@@ -13,3 +13,4 @@ disabled_rules:
   - todo
   - function_parameter_count
   - line_length
+  - type_body_length

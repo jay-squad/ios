@@ -29,6 +29,7 @@ class NetworkManager {
         case searchRestaurant(query: String)
         case searchDish(query: String)
         case insertMenuItem(restaurantId: Int, params: [String: AnyObject])
+        case getOwnProfile()
         
         static let baseURLString = "https://foodie-server-prod.herokuapp.com/"
         
@@ -46,6 +47,8 @@ class NetworkManager {
                 return .get
             case .insertMenuItem:
                 return .post
+            case .getOwnProfile:
+                return .get
             }
         }
         
@@ -63,6 +66,8 @@ class NetworkManager {
                 return "search/item/\(query)"
             case .insertMenuItem(let restaurantId, _):
                 return "restaurant/\(restaurantId)/item"
+            case .getOwnProfile():
+                return "profile"
             }
         }
         
@@ -213,6 +218,19 @@ class NetworkManager {
                      completion: @escaping (JSON?, Error?, Int) -> Void ) {
         guard query != nil else { return }
         Alamofire.request(Router.searchDish(query: query!))
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
+        }
+    }
+    
+    func getOwnProfile( completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        Alamofire.request(Router.getOwnProfile())
             .responseJSON { response in
                 let code = self.getStatusCode( response: response )
                 switch response.result {

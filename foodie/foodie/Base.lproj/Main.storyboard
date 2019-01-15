@@ -104,21 +104,21 @@
             </objects>
             <point key="canvasLocation" x="1993" y="112"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="6Gu-VV-hb5">
             <objects>
-                <viewController id="w1g-bX-4fU" sceneMemberID="viewController">
+                <viewController id="w1g-bX-4fU" customClass="ProfileViewController" customModule="foodie" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vTx-Ef-p10">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="aOV-hL-jm1"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="btn_profile" id="GHa-JO-qWX"/>
+                    <navigationItem key="navigationItem" id="ia2-t4-c9w"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wrf-ix-ByZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1054" y="887"/>
+            <point key="canvasLocation" x="1992.8" y="886.50674662668678"/>
         </scene>
         <!--Root Tab Bar View Controller-->
         <scene sceneID="DME-sb-8xv">
@@ -133,7 +133,7 @@
                     <connections>
                         <segue destination="o0a-Cm-OVu" kind="relationship" relationship="viewControllers" id="ZTy-Kd-hPl"/>
                         <segue destination="10n-Lw-rzN" kind="relationship" relationship="viewControllers" id="a5f-FG-iYv"/>
-                        <segue destination="w1g-bX-4fU" kind="relationship" relationship="viewControllers" id="HvP-Ce-SO1"/>
+                        <segue destination="nqe-DX-1JB" kind="relationship" relationship="viewControllers" id="HvP-Ce-SO1"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B40-Ty-qMe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -177,6 +177,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gKY-xV-xGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1053.5999999999999" y="111.99400299850076"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="yeS-Sr-LHZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nqe-DX-1JB" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="btn_profile" id="GHa-JO-qWX"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PnP-NS-buS">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="w1g-bX-4fU" kind="relationship" relationship="rootViewController" id="dRE-pE-0JX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W8c-EW-R2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1053.5999999999999" y="886.50674662668678"/>
         </scene>
     </scenes>
     <resources>

@@ -57,6 +57,11 @@
 		26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E620EE3C69006AB058 /* UUIString.swift */; };
 		26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E820EE4594006AB058 /* OnboardingViewController.swift */; };
 		26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3686821E55E4F0093B223 /* MapViewController.swift */; };
+		26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3686E21E59FEF0093B223 /* ProfileViewController.swift */; };
+		26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */; };
+		26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */; };
+		26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */; };
+		26FE879521E79D8D001AF76E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879421E79D8D001AF76E /* Profile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +138,11 @@
 		26CC94E620EE3C69006AB058 /* UUIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIString.swift; sourceTree = "<group>"; };
 		26CC94E820EE4594006AB058 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		26D3686821E55E4F0093B223 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		26D3686E21E59FEF0093B223 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRedeemPointsTableViewCell.swift; sourceTree = "<group>"; };
+		26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDishSubmissionTableViewCell.swift; sourceTree = "<group>"; };
+		26FE879421E79D8D001AF76E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		AD90E899697F34CA9BB15AD8 /* Pods_foodie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_foodie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91EAC670D228CF2C7898419 /* Pods-foodie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-foodie/Pods-foodie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +209,7 @@
 			children = (
 				2623B9EA20BF660200AD5605 /* AppDelegate.swift */,
 				2623B9EE20BF660200AD5605 /* Main.storyboard */,
+				26D3686D21E59FA30093B223 /* Profile */,
 				26D3686A21E55E5D0093B223 /* Map */,
 				26CC94EA20EE459F006AB058 /* Onboarding */,
 				26CC94DF20ED95BB006AB058 /* Network */,
@@ -317,6 +328,7 @@
 				26C7170320C0F7A00026C4EF /* Dish.swift */,
 				262B743C20E042020019B8BF /* MenuViewModel.swift */,
 				26CC94D920ED544A006AB058 /* SearchResult.swift */,
+				26FE879421E79D8D001AF76E /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +356,17 @@
 				26D3686821E55E4F0093B223 /* MapViewController.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		26D3686D21E59FA30093B223 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				26D3686E21E59FEF0093B223 /* ProfileViewController.swift */,
+				26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */,
+				26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */,
+				26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		5BCDFE881302AEB12CCA97ED /* Pods */ = {
@@ -625,6 +648,7 @@
 				26AAFB8C20E58BF000DEE4E7 /* UValidator.swift in Sources */,
 				26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */,
 				26AAFB8E20E5973C00DEE4E7 /* UploadNavigationController.swift in Sources */,
+				26FE879521E79D8D001AF76E /* Profile.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
 				26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
@@ -633,8 +657,12 @@
 				26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */,
 				26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */,
 				262B743D20E042020019B8BF /* MenuViewModel.swift in Sources */,
+				26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */,
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				262B744F20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift in Sources */,
+				26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */,
+				26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */,
+				26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */,
 				262B744320E428030019B8BF /* RootTabBarViewController.swift in Sources */,
 				2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */,
 			);

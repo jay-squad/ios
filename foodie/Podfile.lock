@@ -81,7 +81,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AWSMobileClient (~> 2.6.13)
   - AWSS3 (~> 2.6.13)
-  - DKImagePickerController (>= 3.8)
+  - DKImagePickerController (~> 4.1)
   - DropDown (~> 2.3)
   - FBSDKLoginKit
   - SDWebImage (~> 4.0)
@@ -139,6 +139,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: ef79d5764043a7d6d75681485eca83df7807a152
+PODFILE CHECKSUM: 8a09500391afe24dcecaa739221b1bc70fb3b6f1
 
 COCOAPODS: 1.5.3

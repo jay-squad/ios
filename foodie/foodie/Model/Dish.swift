@@ -27,3 +27,30 @@ class Dish {
         dishId = json["item"]["id"].int ?? -1
     }
 }
+
+enum DishApprovalStatus: Int {
+    case none
+    case approved
+    case notapproved
+    case pending
+}
+
+class ProfileDish: Dish {
+    var date: Date?
+    var approvalStatus: DishApprovalStatus
+    var notApprovedReason: String?
+    
+    override init(json: JSON) {
+        let strDate = json["date"].string ?? ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ" // TODO: some date format
+        date = dateFormatter.date(from: strDate)
+        
+        approvalStatus = DishApprovalStatus(rawValue: json["status"].int ?? 0) ?? .none
+        if approvalStatus == .notapproved {
+            notApprovedReason = json["notapprovedreason"].string ?? ""
+        }
+        
+        super.init(json: json)
+    }
+}
