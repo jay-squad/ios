@@ -19,4 +19,5 @@ extension UIColor {
     static let ccGreyishBrown = UIColor(red: 76/255.0, green: 73/255.0, blue: 56/255.0, alpha: 1.0)
     static let ccMoneyGreen = UIColor(red: 76/255.0, green: 160/255.0, blue: 0, alpha: 1.0)
     static let ccErrorRed = UIColor(red: 255/255.0, green: 37/255.0, blue: 37/255.0, alpha: 1.0)
+    static let ccPendingBlue = UIColor(red: 84/255.0, green: 179/255.0, blue: 221/255.0, alpha: 1.0)
 }

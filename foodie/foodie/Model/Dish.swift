@@ -17,7 +17,7 @@ class Dish {
     var price: Float = 0
     var description: String = ""
     var restaurantId: Int
-    
+
     init(json: JSON) {
         name = json["item"]["normalized_name"].string ?? ""
         image = json["image"]["link"].string
@@ -39,18 +39,18 @@ class ProfileDish: Dish {
     var date: Date?
     var approvalStatus: DishApprovalStatus
     var notApprovedReason: String?
-    
+
     override init(json: JSON) {
-        let strDate = json["date"].string ?? ""
+        let strDate = json["profile"]["date"].string ?? ""
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ" // TODO: some date format
+        dateFormatter.dateFormat = "YYYY'-'MM'-'DD'T'HH':'mm':'ss" // TODO: some date format
         date = dateFormatter.date(from: strDate)
-        
-        approvalStatus = DishApprovalStatus(rawValue: json["status"].int ?? 0) ?? .none
+
+        approvalStatus = DishApprovalStatus(rawValue: json["profile"]["status"].int ?? 0) ?? .none
         if approvalStatus == .notapproved {
-            notApprovedReason = json["notapprovedreason"].string ?? ""
+            notApprovedReason = json["profile"]["notapprovedreason"].string ?? ""
         }
-        
+
         super.init(json: json)
     }
 }

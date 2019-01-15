@@ -62,6 +62,7 @@
 		26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */; };
 		26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */; };
 		26FE879521E79D8D001AF76E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879421E79D8D001AF76E /* Profile.swift */; };
+		26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRedeemPointsTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDishSubmissionTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879421E79D8D001AF76E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		AD90E899697F34CA9BB15AD8 /* Pods_foodie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_foodie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91EAC670D228CF2C7898419 /* Pods-foodie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-foodie/Pods-foodie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -362,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				26D3686E21E59FEF0093B223 /* ProfileViewController.swift */,
+				26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */,
 				26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */,
 				26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */,
 				26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */,
@@ -641,6 +644,7 @@
 				26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 				2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
 				262B744620E428EB0019B8BF /* UploadViewController.swift in Sources */,
+				26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */,
 				2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
