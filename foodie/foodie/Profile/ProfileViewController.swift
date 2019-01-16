@@ -108,10 +108,20 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Date"
+        switch section {
+        case 0:
+            return nil
+        default:
+            return "Date"
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 64
+        switch section {
+        case 0:
+            return 0
+        default:
+            return 64
+        }
     }
 }

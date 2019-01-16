@@ -31,8 +31,8 @@ class Dish {
 enum DishApprovalStatus: Int {
     case none
     case approved
-    case notapproved
     case pending
+    case notapproved
 }
 
 class ProfileDish: Dish {
