@@ -36,15 +36,12 @@ enum DishApprovalStatus: Int {
 }
 
 class ProfileDish: Dish {
-    var date: Date?
+    var date: Date
     var approvalStatus: DishApprovalStatus
     var notApprovedReason: String?
 
     override init(json: JSON) {
-        let strDate = json["profile"]["date"].string ?? ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY'-'MM'-'DD'T'HH':'mm':'ss" // TODO: some date format
-        date = dateFormatter.date(from: strDate)
+        date = Date(timeIntervalSince1970: json["profile"]["date"].double ?? 0)
 
         approvalStatus = DishApprovalStatus(rawValue: json["profile"]["status"].int ?? 0) ?? .none
         if approvalStatus == .notapproved {

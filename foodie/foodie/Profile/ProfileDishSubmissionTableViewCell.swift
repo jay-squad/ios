@@ -9,7 +9,15 @@
 import UIKit
 
 class ProfileDishSubmissionTableViewCell: UITableViewCell {
-
+    
+    let kTitleFontSize: CGFloat = 18
+    let kDefaultFontSize: CGFloat = 14
+    let kDefaultPadding: CGFloat = 16
+    let kMaximumLineHeight: CGFloat = 16
+    let kCellHeight: CGFloat = 170
+    let kImageWidth: CGFloat = 120
+    let dishDescriptionParagraphStyle = NSMutableParagraphStyle()
+    
     lazy var dishImageView = UIImageView()
     lazy var dishNameLabel = UILabel()
     lazy var dishRestaurantLabel = UILabel()
@@ -34,17 +42,25 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         if let profileDish = profileDish {
             self.profileDish = profileDish
             dishNameLabel.text = profileDish.name
-
+            
+            self.dishRestaurantLabel.text = " "
             // grab restaurant data
             NetworkManager.shared.getRestaurant(restaurantId: profileDish.restaurantId) { (json, _, _) in
                 if let restaurantJSON = json {
                     self.restaurant = Restaurant(json: restaurantJSON)
-                    self.dishRestaurantLabel.text = self.restaurant?.name
+                    DispatchQueue.main.async {
+                        self.dishRestaurantLabel.text = self.restaurant?.name
+                    }
                 }
             }
 
             dishPriceLabel.text = String(format: "$ %.2f", profileDish.price)
-            dishDescriptionLabel.text = profileDish.description
+            
+            let descriptionLabelAttributedString = NSMutableAttributedString(string: profileDish.description,
+                                                                             attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
+                                                                                          .kern: -0.5])
+            dishDescriptionLabel.attributedText = descriptionLabelAttributedString
+            
             setDishApprovalStatusLabel(status: profileDish.approvalStatus)
 
             if let imageUrl = profileDish.image {
@@ -61,11 +77,18 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor.cc253UltraLightGrey
         contentView.clipsToBounds = false
 
-        dishNameLabel.font = UIFont(font: .helveticaNeueBold, size: 18)
-        dishRestaurantLabel.font = UIFont(font: .helveticaNeue, size: 14)
-        dishPriceLabel.font = UIFont(font: .helveticaNeue, size: 14)
-        dishDescriptionLabel.font = UIFont(font: .avenirBook, size: 14)
-        dishApprovalStatusLabel.font = UIFont(font: .helveticaNeue, size: 14)
+        dishNameLabel.font = UIFont(font: .helveticaNeueBold, size: kTitleFontSize)
+        dishNameLabel.textColor = .cc45DarkGrey
+        dishRestaurantLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
+        dishRestaurantLabel.textColor = .cc45DarkGrey
+        dishPriceLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
+        dishPriceLabel.textColor = .cc45DarkGrey
+        dishDescriptionLabel.font = UIFont(font: .avenirBook, size: kDefaultFontSize)
+        dishDescriptionLabel.textColor = .cc74MediumGrey
+        dishDescriptionLabel.numberOfLines = 3
+        dishDescriptionParagraphStyle.lineSpacing = 0
+        dishDescriptionParagraphStyle.maximumLineHeight = kMaximumLineHeight
+        dishApprovalStatusLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
 
         let externalContainerView = UIView()
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,15 +108,18 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         horizontalStackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor).isActive = true
         horizontalStackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor).isActive = true
         horizontalStackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor).isActive = true
-        horizontalStackView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        horizontalStackView.heightAnchor.constraint(equalToConstant: kCellHeight).isActive = true
 
         horizontalStackView.addArrangedSubview(dishImageView)
         dishImageView.contentMode = .scaleAspectFill
-        dishImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        dishImageView.widthAnchor.constraint(equalToConstant: kImageWidth).isActive = true
 
         let verticalStackView = UIStackView()
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.axis = .vertical
+        verticalStackView.layoutMargins = UIEdgeInsets(top: kDefaultPadding, left: kDefaultPadding, bottom: kDefaultPadding, right: kDefaultPadding)
+        verticalStackView.isLayoutMarginsRelativeArrangement = true
+        verticalStackView.spacing = 4.0
 
         let spacer = UIView()
         spacer.translatesAutoresizingMaskIntoConstraints = false

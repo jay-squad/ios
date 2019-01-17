@@ -24,10 +24,10 @@ class ProfileDishSubmissionsViewModel {
             dishes = mockProfileDishes()
         }
         
-        dishes.sort { return $0.date! < $1.date! }
+        dishes.sort { return $0.date > $1.date }
         
         for dish in dishes {
-            if sectionedDishes.last!.isEmpty || Calendar.current.isDate(dish.date!, inSameDayAs: sectionedDishes.last![0].date!) {
+            if sectionedDishes.last!.isEmpty || Calendar.current.isDate(dish.date, inSameDayAs: sectionedDishes.last![0].date) {
                 sectionedDishes[sectionedDishes.count-1].append(dish)
             } else {
                 sectionedDishes.append([dish])
@@ -52,7 +52,7 @@ class ProfileDishSubmissionsViewModel {
                 "restaurant_id": 71
             ],
             "profile": [
-                "date": "2019-01-01T00:00:00",
+                "date": 1547086870,
                 "status": 2
             ]
         ]
@@ -71,7 +71,7 @@ class ProfileDishSubmissionsViewModel {
                 "restaurant_id": 71
             ],
             "profile": [
-                "date": "2019-01-02T00:00:00",
+                "date": 1547173270,
                 "status": 1
             ]
         ]
@@ -90,7 +90,7 @@ class ProfileDishSubmissionsViewModel {
                 "restaurant_id": 71
             ],
             "profile": [
-                "date": "2019-01-03T00:00:00",
+                "date": 1547173270,
                 "status": 1
             ]
         ]
@@ -109,7 +109,7 @@ class ProfileDishSubmissionsViewModel {
                 "restaurant_id": 71
             ],
             "profile": [
-                "date": "2019-01-04T00:00:00",
+                "date": 1547259670,
                 "status": 1
             ]
         ]

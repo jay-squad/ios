@@ -108,11 +108,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let viewModel = viewModel else { return nil }
+        
         switch section {
         case 0:
             return nil
         default:
-            return "Date"
+            return DateFormatter.friendlyStringForDate(date: viewModel.sectionedDishes[section-1][0].date)
         }
     }
     
