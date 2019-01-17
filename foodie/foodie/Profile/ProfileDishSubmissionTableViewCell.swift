@@ -84,7 +84,7 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         dishPriceLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
         dishPriceLabel.textColor = .cc45DarkGrey
         dishDescriptionLabel.font = UIFont(font: .avenirBook, size: kDefaultFontSize)
-        dishDescriptionLabel.textColor = .cc74MediumGrey
+        dishDescriptionLabel.textColor = .ccGreyishBrown
         dishDescriptionLabel.numberOfLines = 3
         dishDescriptionParagraphStyle.lineSpacing = 0
         dishDescriptionParagraphStyle.maximumLineHeight = kMaximumLineHeight

@@ -25,6 +25,7 @@ class RestaurantDetailViewController: UIViewController {
     
     let kRowAnimationType: UITableView.RowAnimation = .middle
     var gridTapGestureRecognizer: UITapGestureRecognizer?
+    var gridLongPressGestureRecognizer: UILongPressGestureRecognizer?
     
     var restaurant: Restaurant?
     private var menu: Menu?
@@ -33,6 +34,12 @@ class RestaurantDetailViewController: UIViewController {
                                                                                               .list: [:],
                                                                                               .expanded: [:]]
     private var currentExpandedGridCellIndex: IndexPath?
+    
+    // peeking
+    let kPeekAnimationDuration: TimeInterval = 0.15
+    let kPeekLongPressMinimumDuration: TimeInterval = 0.1
+    var peekView: RestaurantDetailMenuExpandedView!
+    var blurView: UIVisualEffectView!
     
     private func setupNibs() {
         tableView.register(UINib(nibName: "RestaurantDetailTableViewCell", bundle: nil),
@@ -54,15 +61,21 @@ class RestaurantDetailViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
-        gridTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleGridTap(_:)))
-        gridTapGestureRecognizer?.delegate = self
-        self.tableView.addGestureRecognizer(gridTapGestureRecognizer!)
+//        gridTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleGridTap(_:)))
+//        gridTapGestureRecognizer?.delegate = self
+//        self.tableView.addGestureRecognizer(gridTapGestureRecognizer!)
+        
+        gridLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleGridLongPress(_:)))
+        gridLongPressGestureRecognizer?.delegate = self
+        gridLongPressGestureRecognizer?.minimumPressDuration = kPeekLongPressMinimumDuration
+        self.tableView.addGestureRecognizer(gridLongPressGestureRecognizer!)
+        
     }
 
     private func setupDataSource() {
         guard let restaurant = restaurant else { return }
         
-        NetworkManager.shared.getRestaurantMenu(restaurantId: restaurant.id) { (json, error, code) in
+        NetworkManager.shared.getRestaurantMenu(restaurantId: restaurant.id) { (json, error, _) in
             if let menuJSONs = json {
                 self.menu = Menu(json: menuJSONs)
                 self.menuView = MenuViewModel(type: .grid)
@@ -124,80 +137,69 @@ class RestaurantDetailViewController: UIViewController {
         }
         
     }
-    
-    @objc private func handleGridTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        if gestureRecognizer.state == .ended {
+
+    @objc private func handleGridLongPress(_ gestureRecognizer: UITapGestureRecognizer) {
+        if gestureRecognizer.state == .began {
             if let tableView = gestureRecognizer.view as? UITableView {
                 let p = gestureRecognizer.location(in: gestureRecognizer.view)
                 if let indexPath = tableView.indexPathForRow(at: p) {
                     if let cell = tableView.cellForRow(at: indexPath) as? RestaurantDetailMenu3ColumnGridTableViewCell {
                         let pointInCell = gestureRecognizer.location(in: cell)
-                        var rowOffset: Int = 0
-                        self.tableView.beginUpdates()
-                        if let currentExpandedGridCellIndex = currentExpandedGridCellIndex {
-                            menuView?.orders[.grid]![currentExpandedGridCellIndex.section-2][
-                                currentExpandedGridCellIndex.row] = .column3
-                            menuView?.orders[.grid]![currentExpandedGridCellIndex.section-2]
-                                                    .remove(at: currentExpandedGridCellIndex.row + 1)
-                            menuView?.orders[.grid]![currentExpandedGridCellIndex.section-2]
-                                                    .remove(at: currentExpandedGridCellIndex.row + 1)
-                            self.currentExpandedGridCellIndex = nil
-                            if indexPath.section == currentExpandedGridCellIndex.section
-                                && indexPath.row > currentExpandedGridCellIndex.row {
-                                rowOffset -= 2
-                            } else if indexPath.section != currentExpandedGridCellIndex.section {
-                                tableView.reloadSections(IndexSet(integer: currentExpandedGridCellIndex.section),
-                                                         with: kRowAnimationType)
-                            }
-                        }
                         
-                        if cell.dish0 != nil, cell.dish0ImageView.frame.contains(pointInCell) {
-                            menuView?.orders[.grid]![indexPath.section-2][indexPath.row + rowOffset] = .expanded
-                            menuView?.orders[.grid]![indexPath.section-2].insert(.column1,
-                                                                                 at: indexPath.row + 1 + rowOffset)
-                            menuView?.orders[.grid]![indexPath.section-2].insert(.column1,
-                                                                                 at: indexPath.row + 1 + rowOffset)
-                            currentExpandedGridCellIndex = IndexPath(row: indexPath.row + rowOffset,
-                                                                     section: indexPath.section)
-                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: kRowAnimationType)
-                        } else if cell.dish1 != nil, cell.dish1ImageView.frame.contains(pointInCell) {
-                            menuView?.orders[.grid]![indexPath.section-2][indexPath.row + rowOffset] = .column1
-                            menuView?.orders[.grid]![indexPath.section-2].insert(.column1,
-                                                                                 at: indexPath.row + 1 + rowOffset)
-                            menuView?.orders[.grid]![indexPath.section-2].insert(.expanded,
-                                                                                 at: indexPath.row + 1 + rowOffset)
-                            currentExpandedGridCellIndex = IndexPath(row: indexPath.row + rowOffset,
-                                                                     section: indexPath.section)
-                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: kRowAnimationType)
-                        } else if cell.dish2 != nil, cell.dish2ImageView.frame.contains(pointInCell) {
-                            menuView?.orders[.grid]![indexPath.section-2][indexPath.row + rowOffset] = .column1
-                            menuView?.orders[.grid]![indexPath.section-2].insert(.expanded,
-                                                                                 at: indexPath.row + 1 + rowOffset)
-                            menuView?.orders[.grid]![indexPath.section-2].insert(.column1,
-                                                                                 at: indexPath.row + 1 + rowOffset)
-                            currentExpandedGridCellIndex = IndexPath(row: indexPath.row + rowOffset,
-                                                                     section: indexPath.section)
-                            tableView.reloadSections(IndexSet(integer: indexPath.section), with: kRowAnimationType)
+                        if let dish0 = cell.dish0, cell.dish0ImageView.frame.contains(pointInCell) {
+                            peekExpandedForm(dish: dish0)
+                        } else if let dish1 = cell.dish1, cell.dish1ImageView.frame.contains(pointInCell) {
+                            peekExpandedForm(dish: dish1)
+                        } else if let dish2 = cell.dish2, cell.dish2ImageView.frame.contains(pointInCell) {
+                            peekExpandedForm(dish: dish2)
                         }
-                        self.tableView.endUpdates()
-                    } else if let cell = tableView.cellForRow(at: indexPath)
-                        as? RestaurantDetailMenu1ColumnGridTableViewCell, cell.dish != nil {
-                        let lowerBound = max(0, indexPath.row - 2)
-                        let upperBound = min(menuView!.orders[.grid]![indexPath.section-2].count - 1, indexPath.row + 2)
-                        var reloadRows: [IndexPath] = [indexPath]
-                        for i in lowerBound...upperBound
-                            where menuView?.orders[.grid]![indexPath.section-2][i] == .expanded {
-                                menuView?.orders[.grid]![indexPath.section-2][i] = .column1
-                                reloadRows.append(IndexPath(row: i, section: indexPath.section))
-                        }
-                        menuView?.orders[.grid]![indexPath.section-2][indexPath.row] = .expanded
-                        tableView.beginUpdates()
-                        tableView.reloadRows(at: reloadRows, with: kRowAnimationType)
-                        tableView.endUpdates()
                     }
                 }
             }
+        } else if gestureRecognizer.state == .ended {
+            unpeekExpandedForm()
         }
+    }
+    
+    func peekExpandedForm(dish: Dish) {
+        guard peekView == nil else { return }
+        
+        peekView = RestaurantDetailMenuExpandedView()
+        peekView.translatesAutoresizingMaskIntoConstraints = false
+        peekView.configureView(dish: dish)
+        peekView.layer.cornerRadius = 8.0
+        peekView.clipsToBounds = true
+        
+        if blurView == nil {
+            let blurEffect = UIBlurEffect(style: .dark)
+            blurView = UIVisualEffectView(effect: blurEffect)
+            blurView.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        let window = UIApplication.shared.keyWindow!
+        
+        UIView.transition(with: window,
+                          duration: kPeekAnimationDuration,
+                          options: [.transitionCrossDissolve],
+                          animations: {
+            window.addSubview(self.blurView)
+            window.addSubview(self.peekView)
+        }, completion: nil)
+        
+        window.applyAutoLayoutInsetsForAllMargins(to: self.blurView, with: .zero)
+        window.leadingAnchor.constraint(equalTo: peekView.leadingAnchor, constant: -30).isActive = true
+        window.trailingAnchor.constraint(equalTo: peekView.trailingAnchor, constant: 30).isActive = true
+        window.centerYAnchor.constraint(equalTo: peekView.centerYAnchor).isActive = true
+        
+        // if we want fixed height
+        // peekView.heightAnchor.constraint(equalToConstant: 475).isActive = true
+    }
+    
+    func unpeekExpandedForm() {
+        guard peekView != nil else { return }
+        peekView.removeFromSuperview()
+        blurView.removeFromSuperview()
+        peekView = nil
     }
 }
 

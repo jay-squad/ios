@@ -33,6 +33,7 @@
 		2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
 		265264A120C272E300D97EE8 /* UUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265264A020C272E300D97EE8 /* UUIColor.swift */; };
 		267440FE21F01B980003E3FC /* UDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267440FD21F01B980003E3FC /* UDateFormatter.swift */; };
+		2674410021F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */; };
 		26AAFB8520E4AB6300DEE4E7 /* UUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */; };
 		26AAFB8720E4C37F00DEE4E7 /* UDKImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8620E4C37F00DEE4E7 /* UDKImagePickerController.swift */; };
 		26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8920E581E000DEE4E7 /* UHoshiTextField.swift */; };
@@ -116,6 +117,7 @@
 		2652649B20C2727D00D97EE8 /* CommonColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColours.swift; sourceTree = "<group>"; };
 		265264A020C272E300D97EE8 /* UUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIColor.swift; sourceTree = "<group>"; };
 		267440FD21F01B980003E3FC /* UDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDateFormatter.swift; sourceTree = "<group>"; };
+		267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenuExpandedView.swift; sourceTree = "<group>"; };
 		26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIViewController.swift; sourceTree = "<group>"; };
 		26AAFB8620E4C37F00DEE4E7 /* UDKImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDKImagePickerController.swift; sourceTree = "<group>"; };
 		26AAFB8920E581E000DEE4E7 /* UHoshiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UHoshiTextField.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */,
 				2651C80720D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift */,
 				2651C80B20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift */,
+				267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */,
 				2651C80F20D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift */,
 				2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */,
 				26C716FA20C0E9770026C4EF /* RestaurantDetailViewController.swift */,
@@ -541,8 +544,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-foodie/Pods-foodie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
@@ -567,8 +568,6 @@
 				"${BUILT_PRODUCTS_DIR}/Validator/Validator.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
@@ -601,15 +600,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-foodie-checkManifestLockResult.txt",
 			);
@@ -661,6 +656,7 @@
 				26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */,
+				2674410021F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift in Sources */,
 				26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */,
 				26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */,
 				26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */,

@@ -16,4 +16,11 @@ extension UIView {
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowOpacity = 1.0
     }
+    
+    func applyAutoLayoutInsetsForAllMargins(to view: UIView, with margins: UIEdgeInsets) {
+        topAnchor.constraint(equalTo: view.topAnchor, constant: -margins.top).isActive = true
+        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -margins.left).isActive = true
+        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: margins.right).isActive = true
+        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: margins.bottom).isActive = true
+    }
 }
