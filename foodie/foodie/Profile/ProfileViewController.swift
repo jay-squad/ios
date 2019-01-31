@@ -30,6 +30,11 @@ class ProfileViewController: UIViewController {
         buildComponents()
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
+            if FBSDKAccessToken.current() != nil {
+                NetworkManager.shared.setFBSDKAuthCookie()
+            } else {
+                NetworkManager.shared.deleteFBSDKAuthCookie()
+            }
             self.loadProfileIfNeeded()
             self.setupNavigation()
             self.tableView.reloadData()

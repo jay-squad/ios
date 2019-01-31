@@ -16,6 +16,10 @@ import FBSDKCoreKit
 class NetworkManager {
     
     let kS3bucketName = "foodie-prod-menu-item-images"
+    let authCookieName = "fb_access_token"
+    let authCookieDomain = "foodie-server-prod.herokuapp.com"
+    let authCookieSecure = "TRUE"
+    let authCookiePath = "/"
     
     static let shared: NetworkManager = {
         let instance = NetworkManager()
@@ -115,10 +119,6 @@ class NetworkManager {
     // MARK: Public Functions
     
     func setFBSDKAuthCookie() {
-        let authCookieName = "fb_access_token"
-        let authCookieDomain = "foodie-server-prod.herokuapp.com"
-        let authCookieSecure = "TRUE"
-        let authCookiePath = "/"
         if let authCookie = HTTPCookie(properties: [.name: authCookieName,
                                                     .value: FBSDKAccessToken.current()?.tokenString as Any,
                                                     .path: authCookiePath,
@@ -126,6 +126,16 @@ class NetworkManager {
                                                     .secure: authCookieSecure,
                                                     .expires: FBSDKAccessToken.current().expirationDate]) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(authCookie)
+        }
+    }
+    
+    func deleteFBSDKAuthCookie() {
+        if let httpStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage,
+            let url = URL(string: NetworkManager.Router.baseURLString),
+            let cookies = httpStorage.cookies {
+            for cookie in cookies {
+                httpStorage.deleteCookie(cookie)
+            }
         }
     }
     
