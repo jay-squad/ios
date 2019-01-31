@@ -17,6 +17,7 @@ extension DefaultsKeys {
 
 let kSearchRestaurantTableViewCellId = "SearchRestaurantTableViewCellId"
 let kSearchDishTableViewCellId = "SearchDishTableViewCellId"
+let kPaginationPendingTableViewCellId = "kPaginationPendingTableViewCellId"
 
 class SearchViewController: UIViewController {
 
@@ -80,6 +81,8 @@ class SearchViewController: UIViewController {
                            forCellReuseIdentifier: kSearchDishTableViewCellId)
         tableView.register(SearchRestaurantTableViewCell.self,
                            forCellReuseIdentifier: kSearchRestaurantTableViewCellId)
+        tableView.register(PaginationPendingTableViewCell.self,
+                           forCellReuseIdentifier: kPaginationPendingTableViewCellId)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -261,6 +264,16 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == tableView.numberOfSections-1
+            && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 {
+            // TODO: and check that it's not the last page of pagination
+            if let cell = tableView.dequeueReusableCell(withIdentifier: kPaginationPendingTableViewCellId,
+                                                        for: indexPath) as? PaginationPendingTableViewCell {
+                return cell
+            }
+        }
+        
         switch searchResultType {
         case .restaurant:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kSearchRestaurantTableViewCellId,
@@ -287,16 +300,29 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch searchResultType {
         case .restaurant:
-            return searchResults.count
+            return searchResults.count + 1
         case .dish:
-            return searchResults.count/2
+            return searchResults.count/2 + 1
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        segueToRestaurantDetailedVC(restaurant: searchResults[indexPath.row].restaurant)
+        if !isLastRow(indexPath: indexPath) {
+            segueToRestaurantDetailedVC(restaurant: searchResults[indexPath.row].restaurant)
+        }
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if isLastRow(indexPath: indexPath) {
+            // TODO: get next page and repopulate
+            
+        }
+    }
+    
+    private func isLastRow(indexPath: IndexPath) -> Bool {
+        return indexPath.section == tableView.numberOfSections - 1
+            && indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
+    }
 }
 
 extension SearchViewController: UIGestureRecognizerDelegate {
