@@ -7,27 +7,41 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class ProfileViewController: UIViewController {
 
     let tableView = UITableView()
     let kProfileSummaryTableViewCellId = "ProfileSummaryTableViewCellId"
     let kProfileDishSubmissionTableViewCellId = "ProfileDishSubmissionTableViewCellId"
+    let kProfileNeedsAuthTableViewCellId = "ProfileNeedsAuthTableViewCellId"
 
     var viewModel: ProfileDishSubmissionsViewModel?
-
+    var rightNavBtn: UIBarButtonItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadProfile()
+        loadProfileIfNeeded()
         setupTableView()
         setupNavigation()
         setupNibs()
         buildComponents()
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
+            self.loadProfileIfNeeded()
+            self.setupNavigation()
+            self.tableView.reloadData()
+        }
     }
 
-    private func loadProfile() {
-        viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)
+    private func loadProfileIfNeeded() {
+        if FBSDKAccessToken.currentAccessTokenIsActive() {
+            viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)
+        } else {
+            viewModel = nil
+        }
     }
 
     private func setupTableView() {
@@ -41,12 +55,25 @@ class ProfileViewController: UIViewController {
         self.setDefaultNavigationBarStyle()
 
         navigationItem.title = "Profile"
-
-//        let rightNavBtn = UIBarButtonItem(title: "stuff",
-//                                          style: .plain,
-//                                          target: self,
-//                                          action: #selector(onSubmitButtonTapped(_:)))
-//        navigationItem.rightBarButtonItem = rightNavBtn
+        
+        if FBSDKAccessToken.currentAccessTokenIsActive() {
+            rightNavBtn = UIBarButtonItem(image: UIImage(named: "btn_more"), style: .plain, target: self, action: #selector(onMoreButtonTapped(_:)))
+            navigationItem.rightBarButtonItem = rightNavBtn
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    @objc private func onMoreButtonTapped(_ sender: UIBarButtonItem?) {
+        let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let change = UIAlertAction(title: "Logout", style: .destructive) { _ in
+            FBSDKLoginManager().logOut()
+        }
+        actionController.addAction(cancel)
+        actionController.addAction(change)
+        
+        self.present(actionController, animated: true, completion: nil)
     }
 
     private func setupNibs() {
@@ -54,6 +81,8 @@ class ProfileViewController: UIViewController {
                            forCellReuseIdentifier: kProfileSummaryTableViewCellId)
         tableView.register(ProfileDishSubmissionTableViewCell.self,
                            forCellReuseIdentifier: kProfileDishSubmissionTableViewCellId)
+        tableView.register(ProfileNeedsAuthTableViewCell.self,
+                           forCellReuseIdentifier: kProfileNeedsAuthTableViewCellId)
     }
 
     private func buildComponents() {
@@ -72,10 +101,18 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
         switch indexPath.section {
         case 0:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSummaryTableViewCellId,
-                                                        for: indexPath) as? ProfileSummaryTableViewCell {
-                //            cell.configureCell
-                return cell
+            if FBSDKAccessToken.currentAccessTokenIsActive() {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSummaryTableViewCellId,
+                                                            for: indexPath) as? ProfileSummaryTableViewCell {
+                    //            cell.configureCell
+                    return cell
+                }
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileNeedsAuthTableViewCellId,
+                                                            for: indexPath) as? ProfileNeedsAuthTableViewCell {
+                    //            cell.configureCell
+                    return cell
+                }
             }
         default:
             guard let viewModel = viewModel else { return UITableViewCell() }

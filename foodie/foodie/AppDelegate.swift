@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DropDown.startListeningToKeyboard()
         
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1,
                                                                identityPoolId: "us-east-1:a52fc90f-e8ea-4afe-bb3d-2188a17995b9")
         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
@@ -33,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return AWSMobileClient.sharedInstance().interceptApplication(application,
                                                                      didFinishLaunchingWithOptions: launchOptions)
         
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 //        return true
     }
 

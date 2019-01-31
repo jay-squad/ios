@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import AWSCore
 import AWSS3
+import FBSDKCoreKit
 
 class NetworkManager {
     
@@ -83,6 +84,14 @@ class NetworkManager {
         }
         
         func asURLRequest() throws -> URLRequest {
+            if let authToken = FBSDKAccessToken.current(), authToken.isExpired {
+                FBSDKAccessToken.refreshCurrentAccessToken { (_, _, error) in
+                    if error != nil {
+                        NetworkManager.shared.setFBSDKAuthCookie()
+                    }
+                }
+            }
+            
             let url = try Router.baseURLString.asURL()
             
             var urlRequest = URLRequest(url: url.appendingPathComponent(path))
@@ -104,6 +113,22 @@ class NetworkManager {
     }
     
     // MARK: Public Functions
+    
+    func setFBSDKAuthCookie() {
+        let authCookieName = "fb_access_token"
+        let authCookieDomain = "foodie-server-prod.herokuapp.com"
+        let authCookieSecure = "TRUE"
+        let authCookiePath = "/"
+        if let authCookie = HTTPCookie(properties: [.name: authCookieName,
+                                                    .value: FBSDKAccessToken.current()?.tokenString as Any,
+                                                    .path: authCookiePath,
+                                                    .domain: authCookieDomain,
+                                                    .secure: authCookieSecure,
+                                                    .expires: FBSDKAccessToken.current().expirationDate]) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(authCookie)
+        }
+    }
+    
     func insertMenuItem(restaurantId: Int,
                         itemName: String?,
                         itemImage: UIImage?,
@@ -144,7 +169,6 @@ class NetworkManager {
                 }
             }
         }
-        
     }
     
     func updateMenuItem( restaurantId: Int,

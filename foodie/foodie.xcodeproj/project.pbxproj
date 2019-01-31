@@ -42,6 +42,7 @@
 		26AAFB9020ED4CA400DEE4E7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8F20ED4CA400DEE4E7 /* SearchViewController.swift */; };
 		26AAFB9320ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB9220ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift */; };
 		26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB9420ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift */; };
+		26BECED02202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */; };
 		26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
 		26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */; };
 		26C716F720C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */; };
@@ -126,6 +127,7 @@
 		26AAFB8F20ED4CA400DEE4E7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		26AAFB9220ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		26AAFB9420ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDishTableViewCell.swift; sourceTree = "<group>"; };
+		26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNeedsAuthTableViewCell.swift; sourceTree = "<group>"; };
 		26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
 		26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailTableViewCell.xib; sourceTree = "<group>"; };
 		26C716F620C0E8E00026C4EF /* RestaurantDetailMedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMedalView.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */,
 				26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */,
 				26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */,
+				26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				262B744620E428EB0019B8BF /* UploadViewController.swift in Sources */,
 				26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */,
 				2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */,
+				26BECED02202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift in Sources */,
 				26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
 				2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
@@ -839,6 +843,50 @@
 				DEVELOPMENT_TEAM = V5RRGS2M7S;
 				INFOPLIST_FILE = foodie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AWSAuthCore\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSMobileClient\"",
+					"-framework",
+					"\"AWSS3\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"DKCamera\"",
+					"-framework",
+					"\"DKImagePickerController\"",
+					"-framework",
+					"\"DKPhotoGallery\"",
+					"-framework",
+					"\"DropDown\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"FLAnimatedImage\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SwiftyUserDefaults\"",
+					"-framework",
+					"\"TOCropViewController\"",
+					"-framework",
+					"\"TextFieldEffects\"",
+					"-framework",
+					"\"UIFontComplete\"",
+					"-framework",
+					"\"Validator\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -855,6 +903,50 @@
 				DEVELOPMENT_TEAM = V5RRGS2M7S;
 				INFOPLIST_FILE = foodie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AWSAuthCore\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSMobileClient\"",
+					"-framework",
+					"\"AWSS3\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"DKCamera\"",
+					"-framework",
+					"\"DKImagePickerController\"",
+					"-framework",
+					"\"DKPhotoGallery\"",
+					"-framework",
+					"\"DropDown\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"FLAnimatedImage\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SwiftyUserDefaults\"",
+					"-framework",
+					"\"TOCropViewController\"",
+					"-framework",
+					"\"TextFieldEffects\"",
+					"-framework",
+					"\"UIFontComplete\"",
+					"-framework",
+					"\"Validator\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = jay.foodie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

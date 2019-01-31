@@ -58,9 +58,9 @@ PODS:
   - DKPhotoGallery/Resource (0.0.11):
     - SDWebImage/GIF
   - DropDown (2.3.12)
-  - FBSDKCoreKit (4.39.0):
+  - FBSDKCoreKit (4.40.0):
     - Bolts (~> 1.9)
-  - FBSDKLoginKit (4.39.0):
+  - FBSDKLoginKit (4.40.0):
     - FBSDKCoreKit
   - FLAnimatedImage (1.0.12)
   - SDWebImage (4.4.3):
@@ -127,8 +127,8 @@ SPEC CHECKSUMS:
   DKImagePickerController: 358ebcd5ce87db8863ec4b8dea651c67baca36e0
   DKPhotoGallery: e5fc53899345c26af4374503dd249caabac7d26a
   DropDown: 0bcc278799ec11a3d34ce1aac9367fbbaf5423d9
-  FBSDKCoreKit: 1e3981faefab8c88edfaa9eecd94aab02d99a9bc
-  FBSDKLoginKit: 30ba5039a2c53d65a75103889bc2deebdacd5a1f
+  FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
+  FBSDKLoginKit: 7a1e411d46acc8834588eca437daf34de42e1d52
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SwiftLint: bfa7ca7b4d170cfaf0d236ca3ffd969e88a2f002
