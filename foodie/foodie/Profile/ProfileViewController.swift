@@ -31,9 +31,9 @@ class ProfileViewController: UIViewController {
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
             if FBSDKAccessToken.current() != nil {
-                NetworkManager.shared.setFBSDKAuthCookie()
+                NetworkManager.shared.setAuthedState()
             } else {
-                NetworkManager.shared.deleteFBSDKAuthCookie()
+                NetworkManager.shared.setUnAuthedState()
             }
             self.loadProfileIfNeeded()
             self.setupNavigation()

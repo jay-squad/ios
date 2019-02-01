@@ -11,11 +11,17 @@ import Alamofire
 import SwiftyJSON
 import AWSCore
 import AWSS3
+import AWSMobileClient
+import AWSAuthCore
 import FBSDKCoreKit
 
 class NetworkManager {
     
-    let kS3bucketName = "foodie-prod-menu-item-images"
+    // This can only be public/, protected/ or /private
+    let ks3Prefix = "protected/"
+    let kS3baseUrl = "https://s3.us-east-2.amazonaws.com/"
+    let kS3bucketName = "foodie-prod-dish-images"
+    
     let authCookieName = "fb_access_token"
     let authCookieDomain = "foodie-server-prod.herokuapp.com"
     let authCookieSecure = "TRUE"
@@ -91,7 +97,7 @@ class NetworkManager {
             if let authToken = FBSDKAccessToken.current(), authToken.isExpired {
                 FBSDKAccessToken.refreshCurrentAccessToken { (_, _, error) in
                     if error != nil {
-                        NetworkManager.shared.setFBSDKAuthCookie()
+                        NetworkManager.shared.setAuthedState()
                     }
                 }
             }
@@ -118,7 +124,7 @@ class NetworkManager {
     
     // MARK: Public Functions
     
-    func setFBSDKAuthCookie() {
+    func setAuthedState() {
         if let authCookie = HTTPCookie(properties: [.name: authCookieName,
                                                     .value: FBSDKAccessToken.current()?.tokenString as Any,
                                                     .path: authCookiePath,
@@ -127,9 +133,17 @@ class NetworkManager {
                                                     .expires: FBSDKAccessToken.current().expirationDate]) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(authCookie)
         }
+        
+        if let token = FBSDKAccessToken.current()?.tokenString {
+            AWSMobileClient.sharedInstance().federatedSignIn(providerName: IdentityProvider.facebook.rawValue, token: token) { (userState, error)  in
+                if let error = error {
+                    print("Federated Sign In failed: \(error.localizedDescription)")
+                }
+            }
+        }
     }
     
-    func deleteFBSDKAuthCookie() {
+    func setUnAuthedState() {
         if let httpStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage,
             let url = URL(string: NetworkManager.Router.baseURLString),
             let cookies = httpStorage.cookies {
@@ -137,6 +151,7 @@ class NetworkManager {
                 httpStorage.deleteCookie(cookie)
             }
         }
+        AWSMobileClient.sharedInstance().signOut()
     }
     
     func insertMenuItem(restaurantId: Int,
@@ -280,27 +295,16 @@ class NetworkManager {
                      completion: @escaping (URL?, Error?) -> Void) {
         
         guard image != nil else { return }
-        
+        guard let identityId = AWSMobileClient.sharedInstance().identityId else { return }
 //        let image = image?.imageResized(newSize: CGSize(width: 100, height: 100))
         
         let data: Data = image!.jpegData(compressionQuality: 0 )!
-        let key = "\(restaurantId)/\(UUID().uuidString).jpg"
+        let key = "\(ks3Prefix)\(identityId)/\(restaurantId)/\(UUID().uuidString).jpg"
         
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.progressBlock = {(task, progress) in
             DispatchQueue.main.async(execute: {
                 // Do something e.g. Update a progress bar.
-            })
-        }
-        
-        var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
-        completionHandler = { (task, error) -> Void in
-            DispatchQueue.main.async(execute: {
-                print("Progress: \(task.progress)")
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                    
-                }
             })
         }
         
@@ -310,58 +314,50 @@ class NetworkManager {
                                    bucket: kS3bucketName,
                                    key: key,
                                    contentType: "image/jpeg",
-                                   expression: expression,
-                                   completionHandler: completionHandler).continueWith { (task) -> AnyObject? in
-                                    if let error = task.error {
+                                   expression: expression) { (_, error) in
+                                    if let error = error {
                                         print("Error: \(error.localizedDescription)")
+                                        completion(nil, error)
+                                    } else {
+                                        let newImageUrl =  URL(string: "\(self.kS3baseUrl)\(self.kS3bucketName)/\(key)")
+                                        print("Successfully uploaded image to: \(newImageUrl?.absoluteString)")
+                                        completion(newImageUrl, nil)
                                     }
-                                    
-                                    let newImageUrl =  URL(string: "https://s3.us-east-2.amazonaws.com/foodie-prod-menu-item-images/\(key)")
-                                    print("Successfully uploaded image to: \(newImageUrl?.absoluteString)")
-                                    
-                                    completion(newImageUrl, task.error)
-                                    return nil
         }
     }
     
-        func downloadData() {
-            let expression = AWSS3TransferUtilityDownloadExpression()
-            expression.progressBlock = {(task, progress) in DispatchQueue.main.async(execute: {
-                // Do something e.g. Update a progress bar.
-            })
-            }
-    
-            var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
-            completionHandler = { (task, URL, data, error) -> Void in
-                DispatchQueue.main.async(execute: {
-                    // Do something e.g. Alert a user for transfer completion.
-                    // On failed downloads, `error` contains the error object.
-                    print("Progress: \(task.progress)")
-                    if let error = error {
-                        print("Error: \(error.localizedDescription)")
-                        
-                    }
-                })
-            }
-    
-            let transferUtility = AWSS3TransferUtility.default()
-            transferUtility.downloadData(
-                fromBucket: kS3bucketName,
-                key: "a.png",
-                expression: expression,
-                completionHandler: completionHandler
-                ).continueWith {
-                    (task) -> AnyObject? in if let error = task.error {
-                        print("Error: \(error.localizedDescription)")
-                    }
-    
-                    if task.result != nil {
-                        // Do something with downloadTask.
-                    }
+    func downloadData() {
+        var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
+        completionHandler = { (task, URL, data, error) -> Void in
+            DispatchQueue.main.async(execute: {
+                // Do something e.g. Alert a user for transfer completion.
+                // On failed downloads, `error` contains the error object.
+                print("Progress: \(task.progress)")
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
                     
-                    return nil
-            }
+                }
+            })
         }
+        
+        let transferUtility = AWSS3TransferUtility.default()
+        transferUtility.downloadData(
+            fromBucket: kS3bucketName,
+            key: "a.png",
+            expression: nil,
+            completionHandler: completionHandler
+            ).continueWith {
+                (task) -> AnyObject? in if let error = task.error {
+                    print("Error: \(error.localizedDescription)")
+                }
+                
+                if task.result != nil {
+                    // Do something with downloadTask.
+                }
+                
+                return nil
+        }
+    }
     
 }
 

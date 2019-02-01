@@ -1,0 +1,9 @@
+{
+    "bucketName": "foodie-prod-dish-images",
+    "authPolicyName": "s3_amplify_30c308a0",
+    "unauthPolicyName": "s3_amplify_30c308a0",
+    "authRoleName": "iosfoodie-20190131175433-authRole",
+    "unauthRoleName": "iosfoodie-20190131175433-unauthRole",
+    "authPermissions": "rw",
+    "unauthPermissions": "r"
+}

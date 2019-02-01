@@ -1,12 +1,27 @@
 PODS:
   - Alamofire (4.8.0)
-  - AWSAuthCore (2.6.35):
-    - AWSCore (= 2.6.35)
-  - AWSCore (2.6.35)
-  - AWSMobileClient (2.6.35):
-    - AWSAuthCore (= 2.6.35)
-  - AWSS3 (2.6.35):
-    - AWSCore (= 2.6.35)
+  - AWSAuthCore (2.8.4):
+    - AWSCore (= 2.8.4)
+  - AWSAuthUI (2.8.4):
+    - AWSAuthCore (= 2.8.4)
+    - AWSCore (= 2.8.4)
+  - AWSCognitoIdentityProvider (2.8.4):
+    - AWSCognitoIdentityProviderASF (= 1.0.1)
+    - AWSCore (= 2.8.4)
+  - AWSCognitoIdentityProviderASF (1.0.1)
+  - AWSCore (2.8.4)
+  - AWSFacebookSignIn (2.8.4):
+    - AWSAuthCore (= 2.8.4)
+    - FBSDKCoreKit (~> 4.0)
+    - FBSDKLoginKit (~> 4.0)
+  - AWSMobileClient (2.8.4):
+    - AWSAuthCore (= 2.8.4)
+    - AWSCognitoIdentityProvider (= 2.8.4)
+  - AWSS3 (2.8.4):
+    - AWSCore (= 2.8.4)
+  - AWSUserPoolsSignIn (2.8.4):
+    - AWSAuthCore (= 2.8.4)
+    - AWSCognitoIdentityProvider (= 2.8.4)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -79,11 +94,14 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
-  - AWSMobileClient (~> 2.6.13)
-  - AWSS3 (~> 2.6.13)
+  - AWSAuthUI (~> 2.8.0)
+  - AWSFacebookSignIn (~> 2.8.0)
+  - AWSMobileClient (~> 2.8.0)
+  - AWSS3 (~> 2.8.0)
+  - AWSUserPoolsSignIn (~> 2.8.0)
   - DKImagePickerController (~> 4.1)
   - DropDown (~> 2.3)
-  - FBSDKLoginKit
+  - FBSDKLoginKit (~> 4.40.0)
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
   - SwiftyJSON (~> 4.0)
@@ -96,9 +114,14 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AWSAuthCore
+    - AWSAuthUI
+    - AWSCognitoIdentityProvider
+    - AWSCognitoIdentityProviderASF
     - AWSCore
+    - AWSFacebookSignIn
     - AWSMobileClient
     - AWSS3
+    - AWSUserPoolsSignIn
     - Bolts
     - DKCamera
     - DKImagePickerController
@@ -118,10 +141,15 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  AWSAuthCore: 386e045a341acebf2409425467e907ae1a45ed63
-  AWSCore: 2dab62ef2e5ca5d8c72c6cbdb3a6ea1532c27c2b
-  AWSMobileClient: f89a36e0d95fc354a9d3b50d347371788c542449
-  AWSS3: 282a590bb47e9cd88de24979fb28954399c41c52
+  AWSAuthCore: ac2536f54f73a2914c236e266cbec02a49f57d69
+  AWSAuthUI: dd68ce1af153c0f5aa7521c0bd89a633d0a24cc5
+  AWSCognitoIdentityProvider: ba1858e7524b29254172ae333e1f96ddc93507dc
+  AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
+  AWSCore: 734b0d67c2c77f6edae9e5520431a37310ea4193
+  AWSFacebookSignIn: b84d2995b928f58080a4606abcfc4cb0566d7bde
+  AWSMobileClient: 59072ca49e82706c6d958f7a08e4a285d7197af1
+  AWSS3: ead679e0887fa3ca8dddd054643a197b55360f1f
+  AWSUserPoolsSignIn: 1eb61512db85bf0d043f79eda77de0ee09035bcf
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   DKCamera: 61fa47629a39354e5111bca1fe96695de020dcb9
   DKImagePickerController: 358ebcd5ce87db8863ec4b8dea651c67baca36e0
@@ -139,6 +167,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: 8a09500391afe24dcecaa739221b1bc70fb3b6f1
+PODFILE CHECKSUM: e805b79cacd1b74a979df9cfcaa38daae56075dc
 
 COCOAPODS: 1.5.3

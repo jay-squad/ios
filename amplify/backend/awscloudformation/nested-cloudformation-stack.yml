@@ -1,0 +1,223 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Root stack for the Amplify AWS CloudFormation provider",
+	"Parameters": {
+		"DeploymentBucketName": {
+			"Description": "Name of the common deployment bucket provided by the parent stack",
+			"Type": "String",
+			"Default": "DeploymentBucket"
+		},
+		"AuthRoleName": {
+			"Type": "String",
+			"Default": "AuthRoleName"
+		},
+		"UnauthRoleName": {
+			"Type": "String",
+			"Default": "UnauthRoleName"
+		}
+	},
+	"Resources": {
+		"DeploymentBucket": {
+			"Type": "AWS::S3::Bucket",
+			"DeletionPolicy": "Retain",
+			"Properties": {
+				"BucketName": {
+					"Ref": "DeploymentBucketName"
+				}
+			}
+		},
+		"AuthRole": {
+			"Type": "AWS::IAM::Role",
+			"Properties": {
+				"RoleName": {
+					"Ref": "AuthRoleName"
+				},
+				"AssumeRolePolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Sid": "",
+							"Effect": "Allow",
+							"Principal": {
+								"Federated": "cognito-identity.amazonaws.com"
+							},
+							"Action": "sts:AssumeRoleWithWebIdentity",
+							"Condition": {
+								"ForAnyValue:StringLike": {
+									"cognito-identity.amazonaws.com:amr": "authenticated"
+								}
+							}
+						}
+					]
+				}
+			}
+		},
+		"UnauthRole": {
+			"Type": "AWS::IAM::Role",
+			"Properties": {
+				"RoleName": {
+					"Ref": "UnauthRoleName"
+				},
+				"AssumeRolePolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Sid": "",
+							"Effect": "Allow",
+							"Principal": {
+								"Federated": "cognito-identity.amazonaws.com"
+							},
+							"Action": "sts:AssumeRoleWithWebIdentity",
+							"Condition": {
+								"ForAnyValue:StringLike": {
+									"cognito-identity.amazonaws.com:amr": "unauthenticated"
+								}
+							}
+						}
+					]
+				}
+			}
+		},
+		"authFoodieAuth": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/iosfoodie-20190131175433-deployment/amplify-cfn-templates/auth/FoodieAuth-cloudformation-template.yml",
+				"Parameters": {
+					"identityPoolName": "FoodieAuth",
+					"allowUnauthenticatedIdentities": true,
+					"thirdPartyAuth": true,
+					"lambdaLogPolicy": "FoodieAuth_lambda_log_policy",
+					"openIdLambdaRoleName": "FoodieAuth_openid_lambda_role",
+					"openIdRolePolicy": "FoodieAuth_openid_pass_role_policy",
+					"openIdLambdaIAMPolicy": "FoodieAuth_openid_lambda_iam_policy",
+					"openIdLogPolicy": "FoodieAuth_openid_lambda_log_policy",
+					"userPoolName": "FoodieFacebookAuth",
+					"autoVerifiedAttributes": "email",
+					"mfaConfiguration": "OFF",
+					"mfaTypes": "SMS Text Message",
+					"roleName": "FoodieAuth_sns-role",
+					"roleExternalId": "FoodieAuth_role_external_id",
+					"policyName": "FoodieAuth-sns-policy",
+					"smsAuthenticationMessage": "Your authentication code is {####}",
+					"smsVerificationMessage": "Your verification code is {####}",
+					"emailVerificationSubject": "Your Foodie Verification Code",
+					"emailVerificationMessage": "Your verification code is {####}",
+					"defaultPasswordPolicy": false,
+					"passwordPolicyMinLength": 8,
+					"passwordPolicyCharacters": "Requires Lowercase,Requires Uppercase,Requires Numbers,Requires Symbols",
+					"requiredAttributes": "email",
+					"userpoolClientName": "FoodieAuth_app_client",
+					"userpoolClientGenerateSecret": true,
+					"userpoolClientRefreshTokenValidity": 30,
+					"userpoolClientReadAttributes": "email",
+					"mfaLambdaRole": "FoodieAuth_totp_lambda_role",
+					"mfaLambdaLogPolicy": "FoodieAuth_totp_lambda_log_policy",
+					"mfaPassRolePolicy": "FoodieAuth_totp_pass_role_policy",
+					"mfaLambdaIAMPolicy": "FoodieAuth_totp_lambda_iam_policy",
+					"userpoolClientLambdaRole": "FoodieAuth_userpoolclient_lambda_role",
+					"userpoolClientLogPolicy": "FoodieAuth_userpoolclient_lambda_log_policy",
+					"userpoolClientLambdaPolicy": "FoodieAuth_userpoolclient_lambda_iam_policy",
+					"userpoolClientSetAttributes": true,
+					"useDefault": "manual",
+					"authSelections": "identityPoolAndUserPool",
+					"resourceName": "FoodieAuth",
+					"authProviders": "graph.facebook.com",
+					"facebookAppId": "2097330147147894",
+					"userpoolClientWriteAttributes": "email",
+					"selectedParties": "{\"graph.facebook.com\":\"2097330147147894\"}",
+					"unAuthRoleName": "iosfoodie-20190131175433-unauthRole",
+					"authRoleName": "iosfoodie-20190131175433-authRole",
+					"unAuthRoleArn": "arn:aws:iam::870237454365:role/iosfoodie-20190131175433-unauthRole",
+					"authRoleArn": "arn:aws:iam::870237454365:role/iosfoodie-20190131175433-authRole"
+				}
+			}
+		},
+		"storageFoodieS3": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/iosfoodie-20190131175433-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"Parameters": {
+					"bucketName": "foodie-prod-dish-images",
+					"authPolicyName": "s3_amplify_30c308a0",
+					"unauthPolicyName": "s3_amplify_30c308a0",
+					"authRoleName": "iosfoodie-20190131175433-authRole",
+					"unauthRoleName": "iosfoodie-20190131175433-unauthRole",
+					"authPermissions": "rw",
+					"unauthPermissions": "r"
+				}
+			}
+		}
+	},
+	"Outputs": {
+		"Region": {
+			"Description": "CloudFormation provider root stack Region",
+			"Value": {
+				"Ref": "AWS::Region"
+			},
+			"Export": {
+				"Name": {
+					"Fn::Sub": "${AWS::StackName}-Region"
+				}
+			}
+		},
+		"StackName": {
+			"Description": "CloudFormation provider root stack ID",
+			"Value": {
+				"Ref": "AWS::StackName"
+			},
+			"Export": {
+				"Name": {
+					"Fn::Sub": "${AWS::StackName}-StackName"
+				}
+			}
+		},
+		"StackId": {
+			"Description": "CloudFormation provider root stack name",
+			"Value": {
+				"Ref": "AWS::StackId"
+			},
+			"Export": {
+				"Name": {
+					"Fn::Sub": "${AWS::StackName}-StackId"
+				}
+			}
+		},
+		"DeploymentBucketName": {
+			"Description": "CloudFormation provider root stack deployment bucket name",
+			"Value": {
+				"Ref": "DeploymentBucketName"
+			},
+			"Export": {
+				"Name": {
+					"Fn::Sub": "${AWS::StackName}-DeploymentBucketName"
+				}
+			}
+		},
+		"AuthRoleArn": {
+			"Value": {
+				"Fn::GetAtt": [
+					"AuthRole",
+					"Arn"
+				]
+			}
+		},
+		"UnauthRoleArn": {
+			"Value": {
+				"Fn::GetAtt": [
+					"UnauthRole",
+					"Arn"
+				]
+			}
+		},
+		"AuthRoleName": {
+			"Value": {
+				"Ref": "AuthRole"
+			}
+		},
+		"UnauthRoleName": {
+			"Value": {
+				"Ref": "UnauthRole"
+			}
+		}
+	}
+}

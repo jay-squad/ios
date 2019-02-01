@@ -26,6 +26,7 @@
 		262B745F20E453CC0019B8BF /* UUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745E20E453CC0019B8BF /* UUIView.swift */; };
 		2636462C220393CD009BB22B /* PaginationPendingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462B220393CD009BB22B /* PaginationPendingTableViewCell.swift */; };
 		2636462E2203A173009BB22B /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462D2203A173009BB22B /* ReportViewController.swift */; };
+		263646352204050F009BB22B /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 263646342204050F009BB22B /* awsconfiguration.json */; };
 		2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
 		2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */; };
 		2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */; };
@@ -57,7 +58,6 @@
 		26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */; };
 		26CC94DE20ED95B6006AB058 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94DD20ED95B6006AB058 /* NetworkManager.swift */; };
 		26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E020EDB0B5006AB058 /* RequestBodyFactory.swift */; };
-		26CC94E320EDD1AA006AB058 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 26CC94E220EDD1AA006AB058 /* awsconfiguration.json */; };
 		26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E420EE0459006AB058 /* UUIStackView.swift */; };
 		26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E620EE3C69006AB058 /* UUIString.swift */; };
 		26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E820EE4594006AB058 /* OnboardingViewController.swift */; };
@@ -113,6 +113,7 @@
 		262B745E20E453CC0019B8BF /* UUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIView.swift; sourceTree = "<group>"; };
 		2636462B220393CD009BB22B /* PaginationPendingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPendingTableViewCell.swift; sourceTree = "<group>"; };
 		2636462D2203A173009BB22B /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		263646342204050F009BB22B /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = awsconfiguration.json; path = ../../awsconfiguration.json; sourceTree = "<group>"; };
 		2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailDisplayOptionsTableViewCell.swift; sourceTree = "<group>"; };
 		2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUISegmentedControl.swift; sourceTree = "<group>"; };
 		2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenu3ColumnGridTableViewCell.swift; sourceTree = "<group>"; };
@@ -144,7 +145,6 @@
 		26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonIdentifiers.swift; sourceTree = "<group>"; };
 		26CC94DD20ED95B6006AB058 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		26CC94E020EDB0B5006AB058 /* RequestBodyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBodyFactory.swift; sourceTree = "<group>"; };
-		26CC94E220EDD1AA006AB058 /* awsconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		26CC94E420EE0459006AB058 /* UUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIStackView.swift; sourceTree = "<group>"; };
 		26CC94E620EE3C69006AB058 /* UUIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIString.swift; sourceTree = "<group>"; };
 		26CC94E820EE4594006AB058 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				2623B9F120BF660200AD5605 /* Assets.xcassets */,
 				2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */,
 				2623B9F620BF660200AD5605 /* Info.plist */,
-				26CC94E220EDD1AA006AB058 /* awsconfiguration.json */,
+				263646342204050F009BB22B /* awsconfiguration.json */,
 			);
 			path = foodie;
 			sourceTree = "<group>";
@@ -518,8 +518,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				262B744120E064EC0019B8BF /* testmodel.txt in Resources */,
+				263646352204050F009BB22B /* awsconfiguration.json in Resources */,
 				2623B9F520BF660200AD5605 /* LaunchScreen.storyboard in Resources */,
-				26CC94E320EDD1AA006AB058 /* awsconfiguration.json in Resources */,
 				2623B9F220BF660200AD5605 /* Assets.xcassets in Resources */,
 				26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */,
 				2623B9F020BF660200AD5605 /* Main.storyboard in Resources */,
@@ -564,9 +564,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-foodie/Pods-foodie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthUI/AWSAuthUI.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSFacebookSignIn/AWSFacebookSignIn.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSUserPoolsSignIn/AWSUserPoolsSignIn.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/DKCamera/DKCamera.framework",
@@ -587,9 +592,14 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSFacebookSignIn.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSUserPoolsSignIn.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKCamera.framework",

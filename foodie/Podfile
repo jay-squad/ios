@@ -10,9 +10,13 @@ target 'foodie' do
   pod 'DKImagePickerController', '~> 4.1'
   pod 'TextFieldEffects', '~> 1.4'
   pod 'Validator', '~> 3.0'
-  pod 'AWSMobileClient', '~> 2.6.13'
-  pod 'AWSS3', '~> 2.6.13'
   pod 'FBSDKLoginKit', '~> 4.40.0'
   pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
   pod 'DropDown', '~>2.3'
+  
+  pod 'AWSFacebookSignIn', '~> 2.8.0'     # Add this new dependency
+  pod 'AWSAuthUI', '~> 2.8.0'             # Add this dependency if you have not already added
+  pod 'AWSMobileClient', '~> 2.8.0'
+  pod 'AWSUserPoolsSignIn', '~> 2.8.0'
+  pod 'AWSS3', '~> 2.8.0'
 end

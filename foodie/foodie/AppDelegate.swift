@@ -26,16 +26,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1,
-                                                               identityPoolId: "us-east-1:a52fc90f-e8ea-4afe-bb3d-2188a17995b9")
-        let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
-        AWSS3TransferUtility.register(with: configuration!, forKey: "USEast1S3TransferUtility")
-        
         //Instantiate AWSMobileClient to establish AWS user credentials
-        return AWSMobileClient.sharedInstance().interceptApplication(application,
-                                                                     didFinishLaunchingWithOptions: launchOptions)
+        AWSMobileClient.sharedInstance().initialize { (userState, error) in
+            if let userState = userState {
+                print("UserState: \(userState.rawValue)")
+            } else if let error = error {
+                print("error: \(error.localizedDescription)")
+            }
+        }
         
-//        return true
+        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

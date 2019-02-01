@@ -37,7 +37,7 @@ class OnboardingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         if FBSDKAccessToken.currentAccessTokenIsActive() {
-            NetworkManager.shared.setFBSDKAuthCookie()
+            NetworkManager.shared.setAuthedState()
             self.dismiss(animated: true, completion: nil)
         }
     }

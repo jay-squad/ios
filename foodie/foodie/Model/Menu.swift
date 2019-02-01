@@ -17,10 +17,10 @@ class Menu {
         
         for section in json.array ?? [] {
             let newSection = MenuSection(json: section, rank: i)
-            if newSection.dishes.count > 0 {
+//            if newSection.dishes.count > 0 {
                 sections.append(newSection)
                 i += 1
-            }
+//            }
         }
         sections.sort {$0.rank < $1.rank}
     }

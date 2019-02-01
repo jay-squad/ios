@@ -1,0 +1,52 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "iosfoodie-20190131175433-authRole",
+			"UnauthRoleArn": "arn:aws:iam::870237454365:role/iosfoodie-20190131175433-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::870237454365:role/iosfoodie-20190131175433-authRole",
+			"Region": "us-east-2",
+			"DeploymentBucketName": "iosfoodie-20190131175433-deployment",
+			"UnauthRoleName": "iosfoodie-20190131175433-unauthRole",
+			"StackName": "iosfoodie-20190131175433",
+			"StackId": "arn:aws:cloudformation:us-east-2:870237454365:stack/iosfoodie-20190131175433/2d5cc2c0-25ab-11e9-828f-0a84bc2bb20a"
+		}
+	},
+	"auth": {
+		"FoodieAuth": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/iosfoodie-20190131175433-deployment/amplify-cfn-templates/auth/FoodieAuth-cloudformation-template.yml",
+				"logicalId": "authFoodieAuth"
+			},
+			"lastPushTimeStamp": "2019-02-01T01:59:45.970Z",
+			"output": {
+				"AppClientSecret": "1m8id2seme1dr9t0a49d9r63r30uvu8d91v9gdrsjo56t31532rj",
+				"UserPoolId": "us-east-2_REF1IF2aC",
+				"AppClientIDWeb": "a3vcmf352osnmmof0jldstove",
+				"AppClientID": "hstof1l3mr1mubf817ge7fvap",
+				"FacebookWebClient": "2097330147147894",
+				"IdentityPoolId": "us-east-2:63649939-7564-42e9-8fe5-19d615ba557e",
+				"IdentityPoolName": "FoodieAuth",
+				"UserPoolName": "FoodieFacebookAuth"
+			},
+			"lastPushDirHash": "Aw/FP98Bz6yEfYtjsHGQvhIw81s="
+		}
+	},
+	"storage": {
+		"FoodieS3": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/iosfoodie-20190131175433-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"logicalId": "storageFoodieS3"
+			},
+			"lastPushTimeStamp": "2019-02-01T01:59:45.973Z",
+			"output": {
+				"BucketName": "foodie-prod-dish-images",
+				"Region": "us-east-2"
+			},
+			"lastPushDirHash": "E3z8mwg6PeGYiCKLiX6JJE6Nnqg="
+		}
+	}
+}

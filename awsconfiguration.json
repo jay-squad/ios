@@ -1,0 +1,33 @@
+{
+    "UserAgent": "aws-amplify/cli",
+    "Version": "0.1.0",
+    "IdentityManager": {
+        "Default": {}
+    },
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "us-east-2:63649939-7564-42e9-8fe5-19d615ba557e",
+                "Region": "us-east-2"
+            }
+        }
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "us-east-2_REF1IF2aC",
+            "AppClientId": "hstof1l3mr1mubf817ge7fvap",
+            "AppClientSecret": "1m8id2seme1dr9t0a49d9r63r30uvu8d91v9gdrsjo56t31532rj",
+            "Region": "us-east-2"
+        }
+    },
+    "FacebookSignIn": {
+        "AppId": "2097330147147894",
+        "Permissions": "public_profile"
+    },
+    "S3TransferUtility": {
+        "Default": {
+            "Bucket": "foodie-prod-dish-images",
+            "Region": "us-east-2"
+        }
+    }
+}
