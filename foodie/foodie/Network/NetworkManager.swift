@@ -326,6 +326,29 @@ class NetworkManager {
         }
     }
     
+    func getPresigned(url: String?, completion: @escaping(String?, Error?) -> Void) {
+        if let url = url, let indexOfKey = url.endIndex(of: "\(kS3bucketName)/") {
+            let substring = url[indexOfKey...]
+            let key = String(substring)
+            
+            let getPreSignedURLRequest = AWSS3GetPreSignedURLRequest()
+            getPreSignedURLRequest.bucket = kS3bucketName
+            getPreSignedURLRequest.key = key
+            getPreSignedURLRequest.httpMethod = .GET
+            getPreSignedURLRequest.expires = Date(timeIntervalSinceNow: 86400)  // Change the value of the expires time interval as required
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(getPreSignedURLRequest).continueWith { (task: AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    completion(nil, error)
+                    return nil
+                }
+                let presignedURL = task.result
+                completion(presignedURL?.absoluteString, nil)
+                return nil
+            }
+        }
+    }
+    
     func downloadData() {
         var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
         completionHandler = { (task, URL, data, error) -> Void in
@@ -341,6 +364,7 @@ class NetworkManager {
         }
         
         let transferUtility = AWSS3TransferUtility.default()
+        
         transferUtility.downloadData(
             fromBucket: kS3bucketName,
             key: "a.png",

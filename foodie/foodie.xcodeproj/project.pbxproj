@@ -27,6 +27,7 @@
 		2636462C220393CD009BB22B /* PaginationPendingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462B220393CD009BB22B /* PaginationPendingTableViewCell.swift */; };
 		2636462E2203A173009BB22B /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462D2203A173009BB22B /* ReportViewController.swift */; };
 		263646352204050F009BB22B /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 263646342204050F009BB22B /* awsconfiguration.json */; };
+		26364637220412C5009BB22B /* UStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26364636220412C5009BB22B /* UStringProtocol.swift */; };
 		2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
 		2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */; };
 		2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */; };
@@ -114,6 +115,7 @@
 		2636462B220393CD009BB22B /* PaginationPendingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPendingTableViewCell.swift; sourceTree = "<group>"; };
 		2636462D2203A173009BB22B /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		263646342204050F009BB22B /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = awsconfiguration.json; path = ../../awsconfiguration.json; sourceTree = "<group>"; };
+		26364636220412C5009BB22B /* UStringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UStringProtocol.swift; sourceTree = "<group>"; };
 		2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailDisplayOptionsTableViewCell.swift; sourceTree = "<group>"; };
 		2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUISegmentedControl.swift; sourceTree = "<group>"; };
 		2651C80320D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenu3ColumnGridTableViewCell.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				26CC94E420EE0459006AB058 /* UUIStackView.swift */,
 				26CC94E620EE3C69006AB058 /* UUIString.swift */,
 				267440FD21F01B980003E3FC /* UDateFormatter.swift */,
+				26364636220412C5009BB22B /* UStringProtocol.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				26AAFB8C20E58BF000DEE4E7 /* UValidator.swift in Sources */,
 				26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */,
 				26AAFB8E20E5973C00DEE4E7 /* UploadNavigationController.swift in Sources */,
+				26364637220412C5009BB22B /* UStringProtocol.swift in Sources */,
 				26FE879521E79D8D001AF76E /* Profile.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
 				26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */,

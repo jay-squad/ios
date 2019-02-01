@@ -26,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .USEast2, identityPoolId: "us-east-2:63649939-7564-42e9-8fe5-19d615ba557e")
+        let serviceConfig = AWSServiceConfiguration(region: .USEast2, credentialsProvider: credentialsProvider)
+        
+        AWSServiceManager.default()?.defaultServiceConfiguration = serviceConfig
+        
         //Instantiate AWSMobileClient to establish AWS user credentials
         AWSMobileClient.sharedInstance().initialize { (userState, error) in
             if let userState = userState {
