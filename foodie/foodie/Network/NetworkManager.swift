@@ -326,39 +326,6 @@ class NetworkManager {
         }
     }
     
-    func downloadData() {
-        var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
-        completionHandler = { (task, URL, data, error) -> Void in
-            DispatchQueue.main.async(execute: {
-                // Do something e.g. Alert a user for transfer completion.
-                // On failed downloads, `error` contains the error object.
-                print("Progress: \(task.progress)")
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                    
-                }
-            })
-        }
-        
-        let transferUtility = AWSS3TransferUtility.default()
-        transferUtility.downloadData(
-            fromBucket: kS3bucketName,
-            key: "a.png",
-            expression: nil,
-            completionHandler: completionHandler
-            ).continueWith {
-                (task) -> AnyObject? in if let error = task.error {
-                    print("Error: \(error.localizedDescription)")
-                }
-                
-                if task.result != nil {
-                    // Do something with downloadTask.
-                }
-                
-                return nil
-        }
-    }
-    
 }
 
 extension UIImage {
