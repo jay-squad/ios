@@ -63,6 +63,7 @@
 		26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94E820EE4594006AB058 /* OnboardingViewController.swift */; };
 		26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3686821E55E4F0093B223 /* MapViewController.swift */; };
 		26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3686E21E59FEF0093B223 /* ProfileViewController.swift */; };
+		26D8CD15221CBCF900794F10 /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D8CD14221CBCF900794F10 /* FacebookButton.swift */; };
 		26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */; };
 		26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */; };
 		26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */; };
@@ -150,6 +151,7 @@
 		26CC94E820EE4594006AB058 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		26D3686821E55E4F0093B223 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		26D3686E21E59FEF0093B223 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		26D8CD14221CBCF900794F10 /* FacebookButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookButton.swift; sourceTree = "<group>"; };
 		26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRedeemPointsTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDishSubmissionTableViewCell.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				26CC94E820EE4594006AB058 /* OnboardingViewController.swift */,
+				26D8CD14221CBCF900794F10 /* FacebookButton.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -671,6 +674,7 @@
 				26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 				2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
 				262B744620E428EB0019B8BF /* UploadViewController.swift in Sources */,
+				26D8CD15221CBCF900794F10 /* FacebookButton.swift in Sources */,
 				26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */,
 				2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */,
 				26BECED02202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift in Sources */,

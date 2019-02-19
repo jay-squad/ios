@@ -37,7 +37,7 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         label.heightAnchor.constraint(equalToConstant: 50).isActive = true
         contentView.applyAutoLayoutInsetsForAllMargins(to: label, with: UIEdgeInsets(top: 50, left: 40, bottom: 100, right: 40))
         
-        let loginButton = FBSDKLoginButton()
+        let loginButton = FacebookButton()
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(loginButton)

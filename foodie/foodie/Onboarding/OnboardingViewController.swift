@@ -111,7 +111,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let nextButton = UIButton()
-    let signupButton = FBSDKLoginButton()
+    let signupButton = FacebookButton()
     
     var index: Int?
     weak var onboardingDelegate: OnboardingCollectionViewCellDelegate?
@@ -197,7 +197,6 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         
         signupButton.centerXAnchor.constraint(equalTo: nextButton.centerXAnchor).isActive = true
         signupButton.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: -20).isActive = true
-        signupButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
         
         nextButton.widthAnchor.constraint(equalToConstant: 120.0).isActive = true
         nextButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true

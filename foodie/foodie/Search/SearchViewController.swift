@@ -65,11 +65,11 @@ class SearchViewController: UIViewController {
     }
     
     private func onboardingIfNeeded() {
-        if Defaults[.launchCount] == 0 {
+//        if Defaults[.launchCount] == 0 {
             Defaults[.launchCount] += 1
             let onboardingVC = OnboardingViewController()
             self.present(onboardingVC, animated: true, completion: nil)
-        }
+//        }
     }
     
     private func setupNavigation() {
