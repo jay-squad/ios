@@ -210,7 +210,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         nextButton.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         nextButton.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -135).isActive = true
         
-        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -20).isActive = true;
+        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -20).isActive = true
         legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
 

@@ -21,27 +21,7 @@ class Restaurant {
     var phoneNum: String?
     var location: CLLocationCoordinate2D
     var menu: Menu?
-
-    // TODO: remove this once server is good to go
-    init(id: Int,
-         name: String,
-         cuisine: [String],
-         priceRange: [Int],
-         location: CLLocationCoordinate2D,
-         description: String? = nil,
-         medals: [RestaurantMedal] = [],
-         website: String? = nil,
-         phoneNum: String? = nil) {
-        self.id = id
-        self.name = name
-        self.cuisine = cuisine
-        self.priceRange = priceRange
-        self.location = location
-        self.description = description
-        self.medals = medals
-        self.website = website
-        self.phoneNum = phoneNum
-    }
+    var metadata: Metadata
     
     init(json: JSON) {
         id = json["id"].int ?? -1
@@ -52,6 +32,8 @@ class Restaurant {
         phoneNum = json["phone_number"].string ?? ""
         description = json["description"].string ?? ""
         priceRange = [] // TODO
-        cuisine = [] // TODO
+        cuisine = [json["cuisine_type"].string ?? ""]
+        
+        metadata = Metadata(json: json)
     }
 }

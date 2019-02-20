@@ -9,12 +9,13 @@
 import Foundation
 
 class FoodieDateFormatter: DateFormatter {
-    static let shared = FoodieDateFormatter()
+    static let shared = FoodieDateFormatter(dateFormat: "MMMM dd, YYYY")
+    static let server = FoodieDateFormatter(dateFormat: "YYYY'-'MM'-'DD'T'HH':'mm':'ssZZZ")
     
-    private override init() {
+    private init(dateFormat: String) {
         super.init()
         timeStyle = .none
-        dateFormat = "MMMM dd, YYYY"
+        self.dateFormat = dateFormat
     }
     
     required init?(coder aDecoder: NSCoder) {

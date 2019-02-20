@@ -37,6 +37,7 @@ class MenuSection {
     var name: String?
     var rank: Int = -1
     var dishes: [Dish] = []
+    var metadata: Metadata
 
     init(json: JSON, rank: Int) {
         self.rank = rank
@@ -48,5 +49,6 @@ class MenuSection {
                 }
             }
         }
+        metadata = Metadata(json: json)
     }
 }

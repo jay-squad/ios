@@ -17,6 +17,8 @@ class Dish {
     var price: Float = 0
     var description: String = ""
     var restaurantId: Int
+    var itemMetadata: Metadata
+    var imageMetadata: Metadata
 
     init(json: JSON) {
         name = json["item"]["normalized_name"].string ?? ""
@@ -25,6 +27,8 @@ class Dish {
         description = json["item"]["description"].string ?? ""
         restaurantId = json["item"]["restaurant_id"].int ?? -1
         dishId = json["item"]["id"].int ?? -1
+        itemMetadata = Metadata(json: json["image"])
+        imageMetadata = Metadata(json: json["item"])
     }
 }
 

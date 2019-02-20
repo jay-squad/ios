@@ -40,7 +40,8 @@ class NetworkManager {
         case searchRestaurant(query: String)
         case searchDish(query: String)
         case insertMenuItem(restaurantId: Int, params: [String: AnyObject])
-        case getOwnProfile()
+        case getProfile(userId: Int)
+        case getProfileSelf()
         
         static let baseURLString = "https://foodie-server-prod.herokuapp.com/"
         
@@ -58,7 +59,9 @@ class NetworkManager {
                 return .get
             case .insertMenuItem:
                 return .post
-            case .getOwnProfile:
+            case .getProfile:
+                return .get
+            case .getProfileSelf:
                 return .get
             }
         }
@@ -77,8 +80,10 @@ class NetworkManager {
                 return "search/item/\(query)"
             case .insertMenuItem(let restaurantId, _):
                 return "restaurant/\(restaurantId)/item"
-            case .getOwnProfile():
-                return "profile"
+            case .getProfile(let userId):
+                return "fbuser/\(userId)"
+            case .getProfileSelf():
+                return "fbuser"
             }
         }
         
@@ -278,8 +283,9 @@ class NetworkManager {
         }
     }
     
-    func getOwnProfile( completion: @escaping (JSON?, Error?, Int) -> Void ) {
-        Alamofire.request(Router.getOwnProfile())
+    func getProfile( userId: Int,
+                     completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        Alamofire.request(Router.getProfile(userId: userId))
             .responseJSON { response in
                 let code = self.getStatusCode( response: response )
                 switch response.result {
@@ -291,6 +297,19 @@ class NetworkManager {
         }
     }
     
+    func getProfileSelf(completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        Alamofire.request(Router.getProfileSelf())
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
+        }
+    }
+        
     func uploadImage(image: UIImage?, restaurantId: Int,
                      completion: @escaping (URL?, Error?) -> Void) {
         

@@ -43,6 +43,9 @@ class ProfileViewController: UIViewController {
 
     private func loadProfileIfNeeded() {
         if FBSDKAccessToken.currentAccessTokenIsActive() {
+            NetworkManager.shared.getProfile(userId: 1) { (json, error, code) in
+                print(json)
+            }
             viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)
         } else {
             viewModel = nil
