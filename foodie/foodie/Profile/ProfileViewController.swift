@@ -115,7 +115,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileNeedsAuthTableViewCellId,
                                                             for: indexPath) as? ProfileNeedsAuthTableViewCell {
-                    //            cell.configureCell
+                    cell.configureCell(navigationBar: self.navigationController?.navigationBar, tabBar: self.tabBarController?.tabBar)
                     return cell
                 }
             }

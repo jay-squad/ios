@@ -11,6 +11,8 @@ import FBSDKLoginKit
 
 class ProfileNeedsAuthTableViewCell: UITableViewCell {
 
+    let externalContainerView = UIView()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
@@ -21,9 +23,23 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         buildComponents()
     }
     
+    func configureCell(navigationBar: UINavigationBar?, tabBar: UITabBar?) {
+        if let navigationBar = navigationBar, let tabBar = tabBar {
+            externalContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height - UIApplication.shared.statusBarFrame.height - navigationBar.frame.size.height - tabBar.frame.size.height).isActive = true
+        } else {
+            // arbitrary
+            externalContainerView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        }
+    }
+    
     private func buildComponents() {
         selectionStyle = .none
         
+        externalContainerView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(externalContainerView)
+        
+        externalContainerView.applyAutoLayoutInsetsForAllMargins(to: contentView, with: .zero)
+
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Log in to upload dishes and earn rewards!"
@@ -32,17 +48,26 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         
-        contentView.addSubview(label)
+        externalContainerView.addSubview(label)
         
         label.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        contentView.applyAutoLayoutInsetsForAllMargins(to: label, with: UIEdgeInsets(top: 50, left: 40, bottom: 100, right: 40))
+        label.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 40).isActive = true
+        label.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 50).isActive = true
+        label.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor, constant: -40).isActive = true
         
         let loginButton = FacebookButton()
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(loginButton)
+        externalContainerView.addSubview(loginButton)
         loginButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50).isActive = true
-        loginButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
+        
+        let legalLabel = FacebookButton.getLegalLabel()
+        externalContainerView.addSubview(legalLabel)
+        legalLabel.translatesAutoresizingMaskIntoConstraints = false
+        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -20).isActive = true
+        legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
+        legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
     }
     
 }

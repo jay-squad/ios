@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import ActiveLabel
 
 class OnboardingViewController: UIViewController {
 
@@ -112,6 +113,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     let subtitleLabel = UILabel()
     let nextButton = UIButton()
     let signupButton = FacebookButton()
+    let legalLabel = FacebookButton.getLegalLabel()
     
     var index: Int?
     weak var onboardingDelegate: OnboardingCollectionViewCellDelegate?
@@ -135,18 +137,21 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
             subtitleLabel.text = "Never question what your\nfood will look like ever again."
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
+            legalLabel.isHidden = true
         case 1:
             imageView.image = UIImage(named: "onboarding_2")
             titleLabel.text = "Get money\nback on meals"
             subtitleLabel.text = "Make cash by simply trying\nnew dishes."
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
+            legalLabel.isHidden = true
         case 2:
             imageView.image = UIImage(named: "onboarding_3")
             titleLabel.text = "Create an\naccount now"
             subtitleLabel.text = "Personalize your experience and\nstart making money."
             nextButton.layer.borderWidth = 0.0
             nextButton.setTitle("skip for now", for: .normal)
+            legalLabel.isHidden = false
         default:
             break
         }
@@ -166,6 +171,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         signupButton.translatesAutoresizingMaskIntoConstraints = false
+        legalLabel.translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.font = UIFont(font: .helveticaNeueBold, size: 50.0)
         titleLabel.numberOfLines = 2
@@ -187,6 +193,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         externalContainerView.addSubview(subtitleLabel)
         externalContainerView.addSubview(nextButton)
         externalContainerView.addSubview(signupButton)
+        externalContainerView.addSubview(legalLabel)
         
         titleLabel.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 20).isActive = true
         titleLabel.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 100).isActive = true
@@ -203,6 +210,10 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         nextButton.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         nextButton.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -135).isActive = true
         
+        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -20).isActive = true;
+        legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
+        legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
+
         externalContainerView.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
         externalContainerView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
         externalContainerView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true

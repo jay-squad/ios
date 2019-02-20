@@ -8,6 +8,7 @@
 
 import Foundation
 import FBSDKLoginKit
+import ActiveLabel
 
 class FacebookButton: FBSDKLoginButton {
     
@@ -44,6 +45,35 @@ class FacebookButton: FBSDKLoginButton {
         let titleX = imageRect.maxX
         let titleRect = CGRect(x: titleX, y: 0, width: contentRect.width - titleX, height: contentRect.height)
         return titleRect
+    }
+    
+    static func getLegalLabel() -> ActiveLabel {
+        let label = ActiveLabel()
+        let termsAndConditionsType = ActiveType.custom(pattern: "\\sterms and conditions\\b")
+        let privacyPolicyType = ActiveType.custom(pattern: "\\sprivacy policy\\b")
+        label.enabledTypes = [termsAndConditionsType, privacyPolicyType]
+        label.text = "By signing up to Foodie, you agree to our terms and conditions and our privacy policy"
+        label.customColor[termsAndConditionsType] = UIColor.ccOchre
+        label.customSelectedColor[termsAndConditionsType] = UIColor.ccOchre
+        label.customColor[privacyPolicyType] = UIColor.ccOchre
+        label.customSelectedColor[privacyPolicyType] = UIColor.ccOchre
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.font = label.font.withSize(11.0)
+        
+        label.handleCustomTap(for: termsAndConditionsType) { element in
+            if let link = URL(string: "https://beafoodie.com/termsandconditions.html") {
+                UIApplication.shared.open(link)
+            }
+        }
+        
+        label.handleCustomTap(for: privacyPolicyType) { element in
+            if let link = URL(string: "https://beafoodie.com/privacypolicy.html") {
+                UIApplication.shared.open(link)
+            }
+        }
+        
+        return label
     }
     
 }

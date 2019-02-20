@@ -1,4 +1,5 @@
 PODS:
+  - ActiveLabel (1.0.1)
   - Alamofire (4.8.0)
   - AWSAuthCore (2.8.4):
     - AWSCore (= 2.8.4)
@@ -93,6 +94,7 @@ PODS:
   - Validator (3.1.1)
 
 DEPENDENCIES:
+  - ActiveLabel (~> 1.0)
   - Alamofire (~> 4.7)
   - AWSAuthUI (~> 2.8.0)
   - AWSFacebookSignIn (~> 2.8.0)
@@ -112,6 +114,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - ActiveLabel
     - Alamofire
     - AWSAuthCore
     - AWSAuthUI
@@ -140,6 +143,7 @@ SPEC REPOS:
     - Validator
 
 SPEC CHECKSUMS:
+  ActiveLabel: b8b2396fe25308d563601437d6605bf691c3b5db
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   AWSAuthCore: ac2536f54f73a2914c236e266cbec02a49f57d69
   AWSAuthUI: dd68ce1af153c0f5aa7521c0bd89a633d0a24cc5
@@ -167,6 +171,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: e805b79cacd1b74a979df9cfcaa38daae56075dc
+PODFILE CHECKSUM: 77e4cc91dbdce0d18eb404cf6623460c24e5808b
 
 COCOAPODS: 1.5.3
