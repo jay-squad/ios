@@ -25,7 +25,7 @@ class RestaurantDetailMenu1ColumnGridTableViewCell: UITableViewCell {
     
     func configureCell(dish: Dish?) {
         self.dish = dish
-        if let imageUrl = dish?.image {
+        if let imageUrl = dish?.dishImage?.image {
             dishImageView.sd_setImage(with: URL(string: imageUrl))
         } else {
             dishImageView.image = nil

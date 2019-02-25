@@ -13,22 +13,29 @@ import SwiftyJSON
 class Dish {
     var dishId: Int
     var name: String = ""
-    var image: String?
     var price: Float = 0
     var description: String = ""
     var restaurantId: Int
+    var dishImage: DishImage?
     var itemMetadata: Metadata
-    var imageMetadata: Metadata
-
+    
     init(json: JSON) {
         name = json["item"]["normalized_name"].string ?? ""
-        image = json["image"]["link"].string
         price = json["item"]["price"].float ?? 0
         description = json["item"]["description"].string ?? ""
         restaurantId = json["item"]["restaurant_id"].int ?? -1
         dishId = json["item"]["id"].int ?? -1
-        itemMetadata = Metadata(json: json["image"])
-        imageMetadata = Metadata(json: json["item"])
+        dishImage = DishImage(json: json["image"])
+        itemMetadata = Metadata(json: json["item"])
+    }
+    
+    convenience init(dishJSON: JSON, dishImageJSON: JSON) {
+        self.init(json: [ "item": dishJSON,
+                          "image": dishImageJSON ])
+    }
+    
+    convenience init(dishJSON: JSON) {
+        self.init(json: [ "item": dishJSON ])
     }
 }
 
@@ -37,21 +44,4 @@ enum DishApprovalStatus: Int {
     case approved
     case pending
     case notapproved
-}
-
-class ProfileDish: Dish {
-    var date: Date
-    var approvalStatus: DishApprovalStatus
-    var notApprovedReason: String?
-
-    override init(json: JSON) {
-        date = Date(timeIntervalSince1970: json["profile"]["date"].double ?? 0)
-
-        approvalStatus = DishApprovalStatus(rawValue: json["profile"]["status"].int ?? 0) ?? .none
-        if approvalStatus == .notapproved {
-            notApprovedReason = json["profile"]["notapprovedreason"].string ?? ""
-        }
-
-        super.init(json: json)
-    }
 }

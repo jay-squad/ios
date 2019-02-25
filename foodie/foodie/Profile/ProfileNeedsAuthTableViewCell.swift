@@ -25,7 +25,7 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
     
     func configureCell(navigationBar: UINavigationBar?, tabBar: UITabBar?) {
         if let navigationBar = navigationBar, let tabBar = tabBar {
-            externalContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height - UIApplication.shared.statusBarFrame.height - navigationBar.frame.size.height - tabBar.frame.size.height).isActive = true
+            externalContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height - UIApplication.shared.statusBarFrame.height - (navigationBar.isHidden ? 0 : navigationBar.frame.size.height) - tabBar.frame.size.height).isActive = true
         } else {
             // arbitrary
             externalContainerView.heightAnchor.constraint(equalToConstant: 400).isActive = true
@@ -55,11 +55,22 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         label.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 50).isActive = true
         label.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor, constant: -40).isActive = true
         
+        let imageView = UIImageView(image: UIImage(named: "login_img"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        externalContainerView.addSubview(imageView)
+        
+        label.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: -30).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 100).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
+        
         let loginButton = FacebookButton()
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
         externalContainerView.addSubview(loginButton)
-        loginButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50).isActive = true
+        loginButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 70).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         
         let legalLabel = FacebookButton.getLegalLabel()

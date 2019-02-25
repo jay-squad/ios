@@ -33,17 +33,17 @@ class RestaurantDetailMenu3ColumnGridTableViewCell: UITableViewCell {
         self.dish1 = dish1
         self.dish2 = dish2
         dish0ImageView.image = nil
-        if let imageUrl = dish0?.image {
+        if let imageUrl = dish0?.dishImage?.image {
             dish0ImageView.sd_setImage(with: URL(string: imageUrl))
         }
         
         dish1ImageView.image = nil
-        if let imageUrl = dish1?.image {
+        if let imageUrl = dish1?.dishImage?.image {
             dish1ImageView.sd_setImage(with: URL(string: imageUrl))
         }
         
         dish2ImageView.image = nil
-        if let imageUrl = dish2?.image {
+        if let imageUrl = dish2?.dishImage?.image {
             dish2ImageView.sd_setImage(with: URL(string: imageUrl))
         }
     }

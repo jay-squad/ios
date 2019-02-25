@@ -148,7 +148,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         case 2:
             imageView.image = UIImage(named: "onboarding_3")
             titleLabel.text = "Create an\naccount now"
-            subtitleLabel.text = "Personalize your experience and\nstart making money."
+            subtitleLabel.text = "Personalize your experience and\nstart earning rewards."
             nextButton.layer.borderWidth = 0.0
             nextButton.setTitle("skip for now", for: .normal)
             legalLabel.isHidden = false

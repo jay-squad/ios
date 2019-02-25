@@ -25,7 +25,7 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
     lazy var dishDescriptionLabel = UILabel()
     lazy var dishApprovalStatusLabel = UILabel()
 
-    var profileDish: ProfileDish?
+    var profileDish: Dish?
     var restaurant: Restaurant?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,7 +38,7 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         buildComponents()
     }
 
-    func configureCell(profileDish: ProfileDish?) {
+    func configureCell(profileDish: Dish?) {
         if let profileDish = profileDish {
             self.profileDish = profileDish
             dishNameLabel.text = profileDish.name
@@ -61,9 +61,9 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
                                                                                           .kern: -0.5])
             dishDescriptionLabel.attributedText = descriptionLabelAttributedString
             
-            setDishApprovalStatusLabel(status: profileDish.approvalStatus)
+//            setDishApprovalStatusLabel(status: profileDish.approvalStatus)
 
-            if let imageUrl = profileDish.image {
+            if let imageUrl = profileDish.dishImage?.image {
                 dishImageView.sd_setImage(with: URL(string: imageUrl))
             } else {
                 dishImageView.image = nil

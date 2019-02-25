@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController {
     let kProfileDishSubmissionTableViewCellId = "ProfileDishSubmissionTableViewCellId"
     let kProfileNeedsAuthTableViewCellId = "ProfileNeedsAuthTableViewCellId"
 
+    var profileMode: Profile?
     var viewModel: ProfileDishSubmissionsViewModel?
     var rightNavBtn: UIBarButtonItem?
     
@@ -46,7 +47,7 @@ class ProfileViewController: UIViewController {
             NetworkManager.shared.getProfile(userId: 1) { (json, error, code) in
                 print(json)
             }
-            viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)
+//            viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)
         } else {
             viewModel = nil
         }
@@ -67,8 +68,9 @@ class ProfileViewController: UIViewController {
         if FBSDKAccessToken.currentAccessTokenIsActive() {
             rightNavBtn = UIBarButtonItem(image: UIImage(named: "btn_more"), style: .plain, target: self, action: #selector(onMoreButtonTapped(_:)))
             navigationItem.rightBarButtonItem = rightNavBtn
+            navigationController?.navigationBar.isHidden = false
         } else {
-            navigationItem.rightBarButtonItem = nil
+            navigationController?.navigationBar.isHidden = true
         }
     }
     
@@ -159,7 +161,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return nil
         default:
-            return DateFormatter.friendlyStringForDate(date: viewModel.sectionedDishes[section-1][0].date)
+            return "hello" //DateFormatter.friendlyStringForDate(date: viewModel.sectionedDishes[section-1][0].date)
         }
     }
     

@@ -65,6 +65,10 @@
 		26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3686E21E59FEF0093B223 /* ProfileViewController.swift */; };
 		26D8CD15221CBCF900794F10 /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D8CD14221CBCF900794F10 /* FacebookButton.swift */; };
 		26D8CD19221CDEE100794F10 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D8CD18221CDEE100794F10 /* Metadata.swift */; };
+		26D8CD1B221D069400794F10 /* DishImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D8CD1A221D069400794F10 /* DishImage.swift */; };
+		26D8CD1D221D09C600794F10 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D8CD1C221D09C600794F10 /* Submission.swift */; };
+		26F5DF362222671C00C134AB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F5DF352222671C00C134AB /* MapKit.framework */; };
+		26F5DF3A2223CF3F00C134AB /* MapRestaurantModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */; };
 		26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */; };
 		26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */; };
 		26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */; };
@@ -154,6 +158,10 @@
 		26D3686E21E59FEF0093B223 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		26D8CD14221CBCF900794F10 /* FacebookButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookButton.swift; sourceTree = "<group>"; };
 		26D8CD18221CDEE100794F10 /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
+		26D8CD1A221D069400794F10 /* DishImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishImage.swift; sourceTree = "<group>"; };
+		26D8CD1C221D09C600794F10 /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
+		26F5DF352222671C00C134AB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestaurantModalView.swift; sourceTree = "<group>"; };
 		26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRedeemPointsTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDishSubmissionTableViewCell.swift; sourceTree = "<group>"; };
@@ -168,6 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F5DF362222671C00C134AB /* MapKit.framework in Frameworks */,
 				1D0F07BD8F49708D59711F4B /* Pods_foodie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,6 +201,7 @@
 		217FA26827523BA2FE0FF870 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26F5DF352222671C00C134AB /* MapKit.framework */,
 				AD90E899697F34CA9BB15AD8 /* Pods_foodie.framework */,
 			);
 			name = Frameworks;
@@ -355,9 +365,11 @@
 				26C7171020C0FA190026C4EF /* Menu.swift */,
 				26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */,
 				26C7170320C0F7A00026C4EF /* Dish.swift */,
+				26D8CD1A221D069400794F10 /* DishImage.swift */,
 				262B743C20E042020019B8BF /* MenuViewModel.swift */,
 				26CC94D920ED544A006AB058 /* SearchResult.swift */,
 				26FE879421E79D8D001AF76E /* Profile.swift */,
+				26D8CD1C221D09C600794F10 /* Submission.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -384,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				26D3686821E55E4F0093B223 /* MapViewController.swift */,
+				26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -483,6 +496,11 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					2623B9FA20BF660200AD5605 = {
 						CreatedOnToolsVersion = 9.2;
@@ -686,8 +704,10 @@
 				26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
 				2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
+				26D8CD1D221D09C600794F10 /* Submission.swift in Sources */,
 				26AAFB8C20E58BF000DEE4E7 /* UValidator.swift in Sources */,
 				26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */,
+				26F5DF3A2223CF3F00C134AB /* MapRestaurantModalView.swift in Sources */,
 				26AAFB8E20E5973C00DEE4E7 /* UploadNavigationController.swift in Sources */,
 				26FE879521E79D8D001AF76E /* Profile.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
@@ -709,6 +729,7 @@
 				262B744320E428030019B8BF /* RootTabBarViewController.swift in Sources */,
 				26D8CD19221CDEE100794F10 /* Metadata.swift in Sources */,
 				2623B9EB20BF660200AD5605 /* AppDelegate.swift in Sources */,
+				26D8CD1B221D069400794F10 /* DishImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

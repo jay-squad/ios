@@ -46,7 +46,7 @@ class RestaurantDetailMenuExpandedView: UIView {
                                                                                       .kern: -0.5])
         descriptionLabel.attributedText = descriptionLabelAttributedString
         
-        if let imageUrl = dish.image {
+        if let imageUrl = dish.dishImage?.image {
             dishImageView.image = nil
             dishImageView.sd_setImage(with: URL(string: imageUrl))
         }
