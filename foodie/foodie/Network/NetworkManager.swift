@@ -129,7 +129,19 @@ class NetworkManager {
     
     // MARK: Public Functions
     
+    func refreshAuthToken(completion: ((Error?) -> Void)? = nil ) {
+        FBSDKAccessToken.refreshCurrentAccessToken { (_, _, error) in
+            completion?(error)
+        }
+    }
+    
     func setAuthedState() {
+        setUnAuthedState()
+        if let httpStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage,
+            let url = URL(string: NetworkManager.Router.baseURLString),
+            let cookies = httpStorage.cookies {
+            print(cookies)
+        }
         if let authCookie = HTTPCookie(properties: [.name: authCookieName,
                                                     .value: FBSDKAccessToken.current()?.tokenString as Any,
                                                     .path: authCookiePath,

@@ -24,27 +24,34 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadProfileIfNeeded()
+//        updateAuthState()
+//        loadProfileIfNeeded()
         setupTableView()
-        setupNavigation()
+//        setupNavigation()
         setupNibs()
         buildComponents()
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
-            if FBSDKAccessToken.current() != nil {
-                NetworkManager.shared.setAuthedState()
-            } else {
-                NetworkManager.shared.setUnAuthedState()
-            }
+            self.updateAuthState()
             self.loadProfileIfNeeded()
             self.setupNavigation()
             self.tableView.reloadData()
         }
+        
+        NetworkManager.shared.refreshAuthToken()
     }
 
+    private func updateAuthState() {
+        if FBSDKAccessToken.current() != nil {
+            NetworkManager.shared.setAuthedState()
+        } else {
+            NetworkManager.shared.setUnAuthedState()
+        }
+    }
+    
     private func loadProfileIfNeeded() {
         if FBSDKAccessToken.currentAccessTokenIsActive() {
-            NetworkManager.shared.getProfile(userId: 1) { (json, error, code) in
+            NetworkManager.shared.getProfileSelf { (json, error, code) in
                 print(json)
             }
 //            viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)

@@ -79,7 +79,7 @@ extension MapViewController: MKMapViewDelegate {
         
         let restaurantSearch = MKLocalSearch(request: restaurantRequest)
         restaurantSearch.start { (response, _) in
-            print(response)
+//            print(response)
             if let response = response {
                 for mapItem in response.mapItems where !(self.annotations[mapItem.placemark.coordinate] != nil) {
                     if mapItem.isCurrentLocation { continue; }
