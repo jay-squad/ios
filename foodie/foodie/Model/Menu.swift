@@ -38,6 +38,8 @@ class MenuSection {
     var rank: Int = -1
     var dishes: [Dish] = []
     var metadata: Metadata
+    
+    var restaurantId: Int = -1
 
     init(json: JSON, rank: Int) {
         self.rank = rank
@@ -49,6 +51,12 @@ class MenuSection {
                 }
             }
         }
+        metadata = Metadata(json: json)
+    }
+    
+    init(json: JSON) {
+        name = json["normalized_name"].string
+        restaurantId = json["restaurant_id"].int ?? -1
         metadata = Metadata(json: json)
     }
 }

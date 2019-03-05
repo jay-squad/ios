@@ -127,6 +127,20 @@ class NetworkManager {
         }
     }
     
+#if DEBUG
+    func grantAdminCookie() {
+        setUnAuthedState()
+        if let authCookie = HTTPCookie(properties: [.name: "admin_secret_key",
+                                                    .value: "udVHE9VWlU[tk]hL$fE9a7CXGg16cy$HiyXswvzaCCzokdb@GL1>Y%pg63qaH(<%" as Any,
+                                                    .path: authCookiePath,
+                                                    .domain: authCookieDomain,
+                                                    .secure: authCookieSecure,
+                                                    .expires: FBSDKAccessToken.current().expirationDate]) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(authCookie)
+        }
+    }
+#endif
+    
     // MARK: Public Functions
     
     func refreshAuthToken(completion: ((Error?) -> Void)? = nil ) {

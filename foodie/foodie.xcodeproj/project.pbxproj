@@ -71,7 +71,7 @@
 		26F5DF3A2223CF3F00C134AB /* MapRestaurantModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */; };
 		26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */; };
 		26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */; };
-		26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */; };
+		26FE879321E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift */; };
 		26FE879521E79D8D001AF76E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879421E79D8D001AF76E /* Profile.swift */; };
 		26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -164,7 +164,7 @@
 		26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestaurantModalView.swift; sourceTree = "<group>"; };
 		26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRedeemPointsTableViewCell.swift; sourceTree = "<group>"; };
-		26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDishSubmissionTableViewCell.swift; sourceTree = "<group>"; };
+		26FE879221E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSubmissionTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879421E79D8D001AF76E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		AD90E899697F34CA9BB15AD8 /* Pods_foodie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_foodie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,7 +408,7 @@
 				26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */,
 				26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */,
 				26FE878E21E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift */,
-				26FE879221E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift */,
+				26FE879221E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift */,
 				26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */,
 			);
 			path = Profile;
@@ -724,7 +724,7 @@
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				262B744F20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift in Sources */,
 				26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */,
-				26FE879321E79BC3001AF76E /* ProfileDishSubmissionTableViewCell.swift in Sources */,
+				26FE879321E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift in Sources */,
 				26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */,
 				262B744320E428030019B8BF /* RootTabBarViewController.swift in Sources */,
 				26D8CD19221CDEE100794F10 /* Metadata.swift in Sources */,
@@ -835,6 +835,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

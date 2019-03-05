@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileDishSubmissionTableViewCell: UITableViewCell {
+class ProfileSubmissionTableViewCell: UITableViewCell {
     
     let kTitleFontSize: CGFloat = 18
     let kDefaultFontSize: CGFloat = 14
@@ -25,7 +25,7 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
     lazy var dishDescriptionLabel = UILabel()
     lazy var dishApprovalStatusLabel = UILabel()
 
-    var profileDish: Dish?
+    var submission: Submission?
     var restaurant: Restaurant?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,37 +38,58 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         buildComponents()
     }
 
-    func configureCell(profileDish: Dish?) {
-        if let profileDish = profileDish {
-            self.profileDish = profileDish
-            dishNameLabel.text = profileDish.name
+    func configureCell(submission: Submission?) {
+        if let submission = submission {
+            self.submission = submission
+            let approvalStatus = getApprovalStatus(submission: submission)
             
-            self.dishRestaurantLabel.text = " "
-            // grab restaurant data
-            NetworkManager.shared.getRestaurant(restaurantId: profileDish.restaurantId) { (json, _, _) in
-                if let restaurantJSON = json {
-                    self.restaurant = Restaurant(json: restaurantJSON)
-                    DispatchQueue.main.async {
-                        self.dishRestaurantLabel.text = self.restaurant?.name
+            if let dish = submission.dish {
+                dishNameLabel.text = dish.name
+                
+                self.dishRestaurantLabel.text = " "
+                // grab restaurant data
+                NetworkManager.shared.getRestaurant(restaurantId: dish.restaurantId) { (json, _, _) in
+                    if let restaurantJSON = json {
+                        self.restaurant = Restaurant(json: restaurantJSON)
+                        DispatchQueue.main.async {
+                            self.dishRestaurantLabel.text = self.restaurant?.name
+                        }
                     }
                 }
+                
+                dishPriceLabel.text = String(format: "$ %.2f", dish.price)
+                
+                let descriptionLabelAttributedString = NSMutableAttributedString(string: dish.description,
+                                                                                 attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
+                                                                                              .kern: -0.5])
+                dishDescriptionLabel.attributedText = descriptionLabelAttributedString
+                
+                setDishApprovalStatusLabel(status: getApprovalStatus(submission: submission))
+                
+                if let imageUrl = submission.dishImage?.image {
+                    dishImageView.sd_setImage(with: URL(string: imageUrl))
+                } else {
+                    dishImageView.image = nil
+                }
             }
-
-            dishPriceLabel.text = String(format: "$ %.2f", profileDish.price)
             
-            let descriptionLabelAttributedString = NSMutableAttributedString(string: profileDish.description,
-                                                                             attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
-                                                                                          .kern: -0.5])
-            dishDescriptionLabel.attributedText = descriptionLabelAttributedString
-            
-//            setDishApprovalStatusLabel(status: profileDish.approvalStatus)
-
-            if let imageUrl = profileDish.dishImage?.image {
-                dishImageView.sd_setImage(with: URL(string: imageUrl))
-            } else {
-                dishImageView.image = nil
-            }
         }
+    }
+    
+    private func setRestaurantInformation() {
+        
+    }
+    
+    private func setDishInformation() {
+        
+    }
+    
+    private func setDishImageInformation() {
+        
+    }
+    
+    private func setMenuSectionInformation() {
+        
     }
 
     private func buildComponents() {
@@ -135,7 +156,7 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
 
     }
 
-    private func setDishApprovalStatusLabel(status: DishApprovalStatus) {
+    private func setDishApprovalStatusLabel(status: Metadata.ApprovalStatus) {
         var labelString = ""
         var labelColour = UIColor.cc74MediumGrey
 
@@ -143,7 +164,7 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         case .approved:
             labelString = "approved"
             labelColour = .ccMoneyGreen
-        case .notapproved:
+        case .rejected:
             labelString = "not approved"
             labelColour = .ccErrorRed
         case .pending:
@@ -154,5 +175,9 @@ class ProfileDishSubmissionTableViewCell: UITableViewCell {
         }
         dishApprovalStatusLabel.text = labelString
         dishApprovalStatusLabel.textColor = labelColour
+    }
+    
+    private func getApprovalStatus(submission: Submission) -> Metadata.ApprovalStatus {
+        return submission.metadata?.approvalStatus ?? .error
     }
 }

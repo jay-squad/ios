@@ -10,7 +10,7 @@ import Foundation
 
 class FoodieDateFormatter: DateFormatter {
     static let shared = FoodieDateFormatter(dateFormat: "MMMM dd, YYYY")
-    static let server = FoodieDateFormatter(dateFormat: "YYYY'-'MM'-'DD'T'HH':'mm':'ssZZZ")
+    static let server = FoodieDateFormatter(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
     
     private init(dateFormat: String) {
         super.init()

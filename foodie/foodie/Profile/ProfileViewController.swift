@@ -13,29 +13,32 @@ import FBSDKLoginKit
 class ProfileViewController: UIViewController {
 
     let tableView = UITableView()
+    var refreshControl = UIRefreshControl()
+    
     let kProfileSummaryTableViewCellId = "ProfileSummaryTableViewCellId"
-    let kProfileDishSubmissionTableViewCellId = "ProfileDishSubmissionTableViewCellId"
+    let kProfileSubmissionTableViewCellId = "ProfileSubmissionTableViewCellId"
     let kProfileNeedsAuthTableViewCellId = "ProfileNeedsAuthTableViewCellId"
 
-    var profileMode: Profile?
-    var viewModel: ProfileDishSubmissionsViewModel?
+    var profileModel: Profile?
+    var viewModel: ProfileSubmissionsViewModel?
     var rightNavBtn: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        updateAuthState()
-//        loadProfileIfNeeded()
+        
         setupTableView()
-//        setupNavigation()
         setupNibs()
         buildComponents()
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
             self.updateAuthState()
+            
+            #if DEBUG
+            NetworkManager.shared.grantAdminCookie()
+            #endif
+            
             self.loadProfileIfNeeded()
             self.setupNavigation()
-            self.tableView.reloadData()
         }
         
         NetworkManager.shared.refreshAuthToken()
@@ -50,13 +53,20 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadProfileIfNeeded() {
+        refreshControl.beginRefreshing()
         if FBSDKAccessToken.currentAccessTokenIsActive() {
-            NetworkManager.shared.getProfileSelf { (json, error, code) in
+            NetworkManager.shared.getProfile(userId: 1) { (json, _, _) in
                 print(json)
+                if let json = json {
+                    self.profileModel = Profile(json: json)
+                    self.tableView.reloadData()
+                    self.viewModel = ProfileSubmissionsViewModel(profile: self.profileModel)
+                }
+                self.refreshControl.endRefreshing()
             }
-//            viewModel = ProfileDishSubmissionsViewModel(json: [], mock: true)
         } else {
             viewModel = nil
+            self.refreshControl.endRefreshing()
         }
     }
 
@@ -65,8 +75,16 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .onDrag
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        tableView.refreshControl = refreshControl
     }
 
+    @objc func refresh(_ sender: AnyObject) {
+        loadProfileIfNeeded()
+    }
+    
     private func setupNavigation() {
         self.setDefaultNavigationBarStyle()
 
@@ -96,8 +114,8 @@ class ProfileViewController: UIViewController {
     private func setupNibs() {
         tableView.register(ProfileSummaryTableViewCell.self,
                            forCellReuseIdentifier: kProfileSummaryTableViewCellId)
-        tableView.register(ProfileDishSubmissionTableViewCell.self,
-                           forCellReuseIdentifier: kProfileDishSubmissionTableViewCellId)
+        tableView.register(ProfileSubmissionTableViewCell.self,
+                           forCellReuseIdentifier: kProfileSubmissionTableViewCellId)
         tableView.register(ProfileNeedsAuthTableViewCell.self,
                            forCellReuseIdentifier: kProfileNeedsAuthTableViewCellId)
     }
@@ -134,9 +152,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             guard let viewModel = viewModel else { return UITableViewCell() }
 
-            if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileDishSubmissionTableViewCellId,
-                                                        for: indexPath) as? ProfileDishSubmissionTableViewCell {
-                cell.configureCell(profileDish: viewModel.sectionedDishes[indexPath.section-1][indexPath.row])
+            if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSubmissionTableViewCellId,
+                                                        for: indexPath) as? ProfileSubmissionTableViewCell {
+                cell.configureCell(submission: viewModel.sectionedSubmissions[indexPath.section-1][indexPath.row])
                 return cell
             }
         }
@@ -147,7 +165,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let viewModel = viewModel else { return 1 }
 
-        return 1 + viewModel.sectionedDishes.count
+        return 1 + viewModel.sectionedSubmissions.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -157,7 +175,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return 1
         default:
-            return viewModel.sectionedDishes[section-1].count
+            return viewModel.sectionedSubmissions[section-1].count
         }
     }
 
@@ -168,7 +186,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return nil
         default:
-            return "hello" //DateFormatter.friendlyStringForDate(date: viewModel.sectionedDishes[section-1][0].date)
+            return DateFormatter.friendlyStringForDate(date: viewModel.dateOf(viewModel.sectionedSubmissions[section-1][0]))
         }
     }
     

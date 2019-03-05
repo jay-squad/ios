@@ -11,13 +11,20 @@ import SwiftyJSON
 
 class Metadata {
     
+    enum ApprovalStatus: String {
+        case pending = "pending"
+        case rejected = "rejected"
+        case approved = "approved"
+        case error = ""
+    }
+    
     var createdAt: Date?
     var updatedAt: Date?
-    var isApproved: Bool
+    var approvalStatus: ApprovalStatus
     
     init(json: JSON) {
         createdAt = FoodieDateFormatter.server.date(from: json["created_at"].string ?? "")
         updatedAt = FoodieDateFormatter.server.date(from: json["updated_at"].string ?? "")
-        isApproved = json["is_approved"].bool ?? true
+        approvalStatus = ApprovalStatus(rawValue: json["approval_status"].string ?? "") ?? .error
     }
 }

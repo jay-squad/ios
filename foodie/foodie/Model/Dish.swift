@@ -38,10 +38,3 @@ class Dish {
         self.init(json: [ "item": dishJSON ])
     }
 }
-
-enum DishApprovalStatus: Int {
-    case none
-    case approved
-    case pending
-    case notapproved
-}

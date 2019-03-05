@@ -23,31 +23,10 @@ class Profile {
         points = json["points"].int ?? -1
         metadata = Metadata(json: json)
         
-        var submittedDishes: [Dish] = []
-        var submittedDishImages: [DishImage] = []
-        var submittedMenuSections: [MenuSection] = []
-        var submittedRestaurants: [Restaurant] = []
-        
-        for restaurantJSON in json["submitted_restaurants"].array ?? [] {
-            let restaurant = Restaurant(json: restaurantJSON)
-            submittedRestaurants.append(restaurant)
-        }
-        
-        var rank = 0
-        for menuSectionJSON in json["submitted_menu_sections"].array ?? [] {
-            let menuSection = MenuSection(json: menuSectionJSON, rank: rank)
-            submittedMenuSections.append(menuSection)
-            rank += 1
-        }
-        
-        for itemJSON in json["submitted_items"].array ?? [] {
-            let item = Dish(json: itemJSON)
-            submittedDishes.append(item)
-        }
-        
-        for itemImageJSON in json["submitted_item_images"].array ?? [] {
-            let itemImage = DishImage(json: itemImageJSON)
-            submittedDishImages.append(itemImage)
+        if let submissions = json.array?[0]["submissions"].array {
+            for submission in submissions {
+                self.submissions.append(Submission(json: submission))
+            }
         }
     }
 }
