@@ -201,6 +201,16 @@ class RestaurantDetailViewController: UIViewController {
         blurView.removeFromSuperview()
         peekView = nil
     }
+    
+    public static func push(navigationController: UINavigationController?, restaurant: Restaurant?) {
+        if let restaurant = restaurant,
+            let navigationController = navigationController,
+            let detailedRestaurantVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(
+                withIdentifier: CommonIdentifiers.RestaurantDetailViewControllerId) as? RestaurantDetailViewController {
+            detailedRestaurantVC.restaurant = restaurant
+            navigationController.pushViewController(detailedRestaurantVC, animated: true)
+        }
+    }
 }
 
 extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSource {

@@ -159,8 +159,8 @@ class SearchDishTableViewCellComponent: UIView {
         
         stackView.topAnchor.constraint(equalTo: gradientView.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: gradientView.bottomAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor, constant: 8.0).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor, constant: -8.0).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor, constant: 2).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor, constant: -2).isActive = true
         
         dishPriceLabel.widthAnchor.constraint(equalToConstant: 32.0).isActive = true
     }

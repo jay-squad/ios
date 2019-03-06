@@ -43,4 +43,17 @@ class Submission {
         }
     }
     
+    func getRestaurantId() -> Int? {
+        if let dish = dish {
+            return dish.restaurantId
+        }
+        if let menuSection = menuSection {
+            return menuSection.restaurantId
+        }
+        if let restaurant = restaurant {
+            return restaurant.id
+        }
+        return nil
+    }
+    
 }

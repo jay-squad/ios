@@ -241,22 +241,13 @@ class SearchViewController: UIViewController {
                         let pointInCell = gestureRecognizer.location(in: cell)
 
                         if cell.searchResult1 != nil, cell.viewComponent1.frame.contains(pointInCell) {
-                            segueToRestaurantDetailedVC(restaurant: cell.searchResult1!.restaurant)
+                            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: cell.searchResult1!.restaurant)
                         } else if cell.searchResult2 != nil, cell.viewComponent2.frame.contains(pointInCell) {
-                            segueToRestaurantDetailedVC(restaurant: cell.searchResult2!.restaurant)
+                            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: cell.searchResult2!.restaurant)
                         }
                     }
                 }
             }
-        }
-    }
-    
-    private func segueToRestaurantDetailedVC(restaurant: Restaurant?) {
-        if let restaurant = restaurant,
-            let detailedRestaurantVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(
-            withIdentifier: CommonIdentifiers.RestaurantDetailViewControllerId) as? RestaurantDetailViewController {
-            detailedRestaurantVC.restaurant = restaurant
-            self.navigationController?.pushViewController(detailedRestaurantVC, animated: true)
         }
     }
     
@@ -265,14 +256,14 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == tableView.numberOfSections-1
-            && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 {
-            // TODO: and check that it's not the last page of pagination
-            if let cell = tableView.dequeueReusableCell(withIdentifier: kPaginationPendingTableViewCellId,
-                                                        for: indexPath) as? PaginationPendingTableViewCell {
-                return cell
-            }
-        }
+//        if indexPath.section == tableView.numberOfSections-1
+//            && indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1 {
+//            // TODO: and check that it's not the last page of pagination
+//            if let cell = tableView.dequeueReusableCell(withIdentifier: kPaginationPendingTableViewCellId,
+//                                                        for: indexPath) as? PaginationPendingTableViewCell {
+//                return cell
+//            }
+//        }
         
         switch searchResultType {
         case .restaurant:
@@ -300,16 +291,16 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch searchResultType {
         case .restaurant:
-            return searchResults.count + 1
+            return searchResults.count //+ 1
         case .dish:
-            return searchResults.count/2 + 1
+            return searchResults.count/2 //+ 1
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isLastRow(indexPath: indexPath) {
-            segueToRestaurantDetailedVC(restaurant: searchResults[indexPath.row].restaurant)
-        }
+//        if !isLastRow(indexPath: indexPath) {
+            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: searchResults[indexPath.row].restaurant)
+//        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -81,21 +81,21 @@ class SearchRestaurantTableViewCell: UITableViewCell {
         }
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.font = UIFont(font: .helveticaNeueMedium, size: 24.0)
+        nameLabel.font = UIFont(font: .helveticaNeueMedium, size: 16)
         nameLabel.textColor = UIColor.cc74MediumGrey
         
         contentView.addSubview(externalContainerView)
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.axis = .vertical
-        verticalStackView.spacing = 4.0
+        verticalStackView.spacing = 2.0
         
         rowStackView1.translatesAutoresizingMaskIntoConstraints = false
         rowStackView1.axis = .horizontal
         rowStackView2.translatesAutoresizingMaskIntoConstraints = false
         rowStackView2.axis = .horizontal
-        rowStackView1.spacing = 4.0
-        rowStackView2.spacing = 4.0
+        rowStackView1.spacing = 2.0
+        rowStackView2.spacing = 2.0
         
         verticalStackView.addArrangedSubview(rowStackView1)
         
@@ -120,7 +120,7 @@ class SearchRestaurantTableViewCell: UITableViewCell {
         nameLabel.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 16.0).isActive = true
         nameLabel.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
                                             constant: -16.0).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
         let imageSize = (UIScreen.main.bounds.width - 24.0) / 3.0
         for dishImageView in dishImageViews {
@@ -128,9 +128,9 @@ class SearchRestaurantTableViewCell: UITableViewCell {
         }
         
         verticalStackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor,
-                                                   constant: 6).isActive = true
+                                                   constant: 0).isActive = true
         verticalStackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
-                                                    constant: -6).isActive = true
+                                                    constant: 0).isActive = true
         verticalStackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor).isActive = true
         
         rowStackView1.heightAnchor.constraint(equalToConstant: imageSize).isActive = true

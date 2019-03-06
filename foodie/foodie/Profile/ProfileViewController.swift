@@ -59,8 +59,8 @@ class ProfileViewController: UIViewController {
                 print(json)
                 if let json = json {
                     self.profileModel = Profile(json: json)
-                    self.tableView.reloadData()
                     self.viewModel = ProfileSubmissionsViewModel(profile: self.profileModel)
+                    self.tableView.reloadData()
                 }
                 self.refreshControl.endRefreshing()
             }
@@ -154,7 +154,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
             if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSubmissionTableViewCellId,
                                                         for: indexPath) as? ProfileSubmissionTableViewCell {
-                cell.configureCell(submission: viewModel.sectionedSubmissions[indexPath.section-1][indexPath.row])
+                cell.configureCell(submission: getSubmissionFor(indexPath: indexPath))
                 return cell
             }
         }
@@ -197,5 +197,26 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             return 64
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let retrievedSubmission = getSubmissionFor(indexPath: indexPath)
+        guard let submission = retrievedSubmission else { return; }
+        
+        if let restaurant = submission.restaurant {
+            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: restaurant)
+        } else {
+            if let restaurantId = submission.getRestaurantId() {
+                NetworkManager.shared.getRestaurant(restaurantId: restaurantId) { (json, _, _) in
+                    if let restaurantJSON = json {
+                        RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: Restaurant(json: restaurantJSON))
+                    }
+                }
+            }
+        }
+    }
+    
+    private func getSubmissionFor(indexPath: IndexPath) -> Submission? {
+        return viewModel?.sectionedSubmissions[indexPath.section-1][indexPath.row]
     }
 }
