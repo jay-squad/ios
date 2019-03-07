@@ -70,6 +70,26 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>bb1e8c9b6cda4c18226499df172b707ae1e248d5</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+            <dict>
+                <key>KitInfo</key>
+                <dict/>
+                <key>KitName</key>
+                <string>Answers</string>
+            </dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>2097330147147894</string>
 	<key>FacebookDisplayName</key>
@@ -96,10 +116,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>To take a photo of your dish.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To upload dishes onto the app, you will have to include a picture.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To view nearby restaurants, your current location is required</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To upload dishes onto the app, you will have to include a picture.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

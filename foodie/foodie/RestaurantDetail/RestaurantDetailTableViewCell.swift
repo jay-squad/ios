@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol RestaurantDetailTableViewCellDelegate: class {
+    func onMoreButtonTapped()
+}
+
 class RestaurantDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var externalContainerView: UIView!
@@ -22,8 +26,10 @@ class RestaurantDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var restaurantWebsiteButton: UIButton!
     @IBOutlet weak var restaurantCallButton: UIButton!
     @IBOutlet weak var restaurantMedalsStackView: UIStackView!
-
+    let restaurantMoreButton = UIButton()
+    
     private var restaurant: Restaurant?
+    weak var delegate: RestaurantDetailTableViewCellDelegate?
     
     var mapView = MKMapView()
 
@@ -87,17 +93,23 @@ class RestaurantDetailTableViewCell: UITableViewCell {
     }
     
     private func buildComponents() {
+        restaurantMedalsStackView.isHidden = true
+        
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.mapType = .standard
         mapView.isZoomEnabled = false
         mapView.isScrollEnabled = false
         
         mapContainerView.addSubview(mapView)
+        mapContainerView.applyAutoLayoutInsetsForAllMargins(to: mapView, with: .zero)
         
-        mapView.topAnchor.constraint(equalTo: mapContainerView.topAnchor).isActive = true
-        mapView.leadingAnchor.constraint(equalTo: mapContainerView.leadingAnchor).isActive = true
-        mapView.bottomAnchor.constraint(equalTo: mapContainerView.bottomAnchor).isActive = true
-        mapView.trailingAnchor.constraint(equalTo: mapContainerView.trailingAnchor).isActive = true
+        restaurantMoreButton.translatesAutoresizingMaskIntoConstraints = false
+        restaurantMoreButton.setImage(UIImage(named: "btn_more_yellow"), for: .normal)
+        restaurantMoreButton.heightAnchor.constraint(equalToConstant: 30)
+        restaurantMoreButton.widthAnchor.constraint(equalToConstant: 30)
+        restaurantMoreButton.contentMode = .scaleAspectFit
+        restaurantMoreButton.addTarget(self, action: #selector(onRestaurantMoreButtonTapped(_:)), for: .touchUpInside)
+        buttonsStackView.addArrangedSubview(restaurantMoreButton)
     }
     
     @objc private func onMapViewTapped() {
@@ -120,6 +132,10 @@ class RestaurantDetailTableViewCell: UITableViewCell {
                 UIApplication.shared.open(phoneCallURL)
             }
         }
+    }
+    
+    @objc private func onRestaurantMoreButtonTapped(_ sender: UIButton!) {
+        delegate?.onMoreButtonTapped()
     }
     
 }

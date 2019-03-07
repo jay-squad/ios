@@ -9,6 +9,8 @@
 import Foundation
 import SwiftyJSON
 
+let kNoSection = "(no section)"
+
 class Menu {
     var sections: [MenuSection] = []
     
@@ -45,6 +47,9 @@ class MenuSection {
         self.rank = rank
         if let arr = json.array {
             name = arr[0].string
+            if name == "" {
+                name = kNoSection
+            }
             if let items = arr[1].array {
                 for item in items {
                     dishes.append(Dish(json: item))

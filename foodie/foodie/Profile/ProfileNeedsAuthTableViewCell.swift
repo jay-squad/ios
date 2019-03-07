@@ -80,5 +80,4 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
     }
-    
 }

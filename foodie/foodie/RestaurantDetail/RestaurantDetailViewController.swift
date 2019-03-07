@@ -23,6 +23,7 @@ class RestaurantDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    let kSectionHeaderHeight: CGFloat = 65
     let kRowAnimationType: UITableView.RowAnimation = .middle
     var gridTapGestureRecognizer: UITapGestureRecognizer?
     var gridLongPressGestureRecognizer: UILongPressGestureRecognizer?
@@ -236,6 +237,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                 withIdentifier: kRestaurantDetailTableViewCellId,
                 for: indexPath)
                 as? RestaurantDetailTableViewCell {
+                cell.delegate = self
                 cell.configureCell(restaurant: restaurant)
                 return cell
             }
@@ -363,7 +365,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
         case 0, 1:
             return 0
         default:
-            return 65
+            return kSectionHeaderHeight
         }
     }
     
@@ -381,6 +383,22 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
             header.textLabel?.font = UIFont(font: .helveticaNeueMedium, size: 18)
             header.textLabel?.textColor = UIColor.cc74MediumGrey
             header.backgroundView?.backgroundColor = UIColor.white
+            
+            if view.subviews.last as? UIButton != nil {
+                return
+            }
+            let kButtonSize: CGFloat = 25
+            let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 50, y: (kSectionHeaderHeight - kButtonSize)/2, width: kButtonSize, height: kButtonSize))
+            button.setImage(UIImage(named: "btn_more"), for: .normal)
+            button.addTarget(self, action: #selector(self.onHeaderButtonTapped(_:)), for: .touchUpInside)
+            view.addSubview(button)
+        }
+    }
+    
+    @objc private func onHeaderButtonTapped(_ sender: UIButton) {
+        if let header = sender.superview as? UITableViewHeaderFooterView {
+            let section = header.textLabel?.text
+            UpdateRequestViewController.presentActionSheet(.section, sender: self)
         }
     }
     
@@ -443,5 +461,13 @@ extension RestaurantDetailViewController: UIGestureRecognizerDelegate {
 extension RestaurantDetailViewController: UploadViewControllerDelegate {
     func onSuccessfulUpload() {
         setupDataSource()
+    }
+}
+
+extension RestaurantDetailViewController: RestaurantDetailTableViewCellDelegate {
+    func onMoreButtonTapped() {
+        if let restaurant = restaurant {
+            UpdateRequestViewController.presentActionSheet(.restaurant, sender: self)
+        }
     }
 }

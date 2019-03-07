@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="486.5"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N4t-S7-Ey3">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="-0.5" width="320" height="0.5"/>
                                         <color key="backgroundColor" red="0.83137254900000002" green="0.68627450980000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="3og-X4-tt1"/>
@@ -76,8 +76,8 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hql-uU-Xwp">
-                                                <rect key="frame" x="272" y="20" width="30" height="70"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Hql-uU-Xwp">
+                                                <rect key="frame" x="272" y="20" width="30" height="75"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e3g-cP-lbU">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -88,12 +88,12 @@
                                                         <state key="normal" image="btn_link"/>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWP-NF-d9p">
-                                                        <rect key="frame" x="0.0" y="40" width="30" height="30"/>
+                                                        <rect key="frame" x="0.0" y="45" width="30" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="mil-uj-tUZ"/>
                                                             <constraint firstAttribute="height" constant="30" id="x9J-GR-UDh"/>
                                                         </constraints>
-                                                        <state key="normal" title="Button" image="btn_call"/>
+                                                        <state key="normal" image="btn_call"/>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -109,6 +109,7 @@
                                             <constraint firstItem="hPf-T6-oLu" firstAttribute="top" secondItem="pHP-yc-AWG" secondAttribute="top" constant="20" id="21B-mj-ibX"/>
                                             <constraint firstItem="lIX-pQ-F8n" firstAttribute="top" secondItem="hPf-T6-oLu" secondAttribute="bottom" id="7Tt-dR-TEj"/>
                                             <constraint firstItem="hPf-T6-oLu" firstAttribute="leading" secondItem="pHP-yc-AWG" secondAttribute="leading" constant="20" id="Gip-PT-b6c"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Hql-uU-Xwp" secondAttribute="bottom" constant="20" id="GwF-fz-ul8"/>
                                             <constraint firstItem="Hql-uU-Xwp" firstAttribute="top" secondItem="hPf-T6-oLu" secondAttribute="top" id="IBB-Nd-d9C"/>
                                             <constraint firstAttribute="trailing" secondItem="lIX-pQ-F8n" secondAttribute="trailing" constant="20" id="OW6-OV-ePt"/>
                                             <constraint firstAttribute="trailing" secondItem="Hql-uU-Xwp" secondAttribute="trailing" constant="18" id="TOy-AS-sIV"/>
@@ -118,7 +119,7 @@
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pZ5-lP-34F">
-                                        <rect key="frame" x="0.0" y="486.5" width="320" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="486.5" width="320" height="0.5"/>
                                         <color key="backgroundColor" red="0.83137254900000002" green="0.68627450980000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="KMs-aP-VqW"/>

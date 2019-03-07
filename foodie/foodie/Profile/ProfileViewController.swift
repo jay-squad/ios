@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import Crashlytics
 
 class ProfileViewController: UIViewController {
 
@@ -40,6 +41,12 @@ class ProfileViewController: UIViewController {
             
             self.loadProfileIfNeeded()
             self.setupNavigation()
+            
+            if FBSDKAccessToken.currentAccessTokenIsActive() {
+                Answers.logSignUp(withMethod: AnswersKeys.profile_signup_method_facebook, success: true, customAttributes: nil)
+            } else {
+                Answers.logSignUp(withMethod: AnswersKeys.profile_signup_method_facebook, success: false, customAttributes: nil)
+            }
         }
         
         NetworkManager.shared.refreshAuthToken()

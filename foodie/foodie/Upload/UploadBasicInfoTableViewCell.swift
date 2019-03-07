@@ -13,8 +13,6 @@ import DropDown
 
 class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     
-    let kNoSection = "(no section)"
-    
     let dishSectionTextField = HoshiTextField()
     let dishSectionDropDown = DropDown()
     let dishTextField = HoshiTextField()
@@ -36,7 +34,7 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     
     func configureCell(menu: Menu?) {
         if let menu = menu {
-            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? kNoSection })
+            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
             dishSectionDropDown.dataSource.append("+ Add a Menu Section")
         }
     }

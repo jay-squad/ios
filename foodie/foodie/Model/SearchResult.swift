@@ -9,7 +9,7 @@
 import Foundation
 
 class SearchResult {
-    enum ResultType {
+    enum ResultType: String {
         case restaurant
         case dish
     }

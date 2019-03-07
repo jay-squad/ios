@@ -12,7 +12,7 @@ class UpdateRequestViewController: UIViewController {
 
     let kUpdateRequestTableViewCellId = "UpdateRequestTableViewCellId"
     
-    enum UpdateSource {
+    enum UpdateSource: String {
         case dish
         case section
         case restaurant
@@ -175,7 +175,7 @@ class UpdateRequestViewController: UIViewController {
     public static func presentActionSheet(_ source: UpdateSource, sender: UIViewController) {
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let amend = UIAlertAction(title: "Amend this dish", style: .default) { _ in
+        let amend = UIAlertAction(title: "Amend this \(source.rawValue)", style: .default) { _ in
             var vc: UpdateRequestViewController
             switch source {
             case .dish:
@@ -187,7 +187,7 @@ class UpdateRequestViewController: UIViewController {
             }
             presentUpdateRequest(vc)
         }
-        let report = UIAlertAction(title: "Report this dish", style: .destructive) { _ in
+        let report = UIAlertAction(title: "Report this \(source.rawValue)", style: .destructive) { _ in
             var vc: UpdateRequestViewController
             switch source {
             case .dish:

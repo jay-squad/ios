@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import SwiftyJSON
 import SwiftyUserDefaults
+import Crashlytics
 
 extension DefaultsKeys {
     static let launchCount = DefaultsKey<Int>("user_launch_count")
@@ -187,6 +188,7 @@ class SearchViewController: UIViewController {
     }
     
     func query(with query: String?) {
+        Answers.logSearch(withQuery: query, customAttributes: ["type": nextSearchResultType.rawValue])
         self.searchResults.removeAll()
         switch nextSearchResultType {
         case .restaurant:

@@ -12,6 +12,8 @@ import AWSMobileClient
 import AWSS3
 import FBSDKCoreKit
 import DropDown
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Fabric.with([Crashlytics.self])
+        Fabric.with([Answers.self])
         
         DropDown.startListeningToKeyboard()
         
