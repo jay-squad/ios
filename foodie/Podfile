@@ -20,4 +20,7 @@ target 'foodie' do
   pod 'AWSMobileClient', '~> 2.8.0'
   pod 'AWSUserPoolsSignIn', '~> 2.8.0'
   pod 'AWSS3', '~> 2.8.0'
+  
+  pod 'Fabric'
+  pod 'Crashlytics'
 end
