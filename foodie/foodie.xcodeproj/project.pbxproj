@@ -20,12 +20,12 @@
 		262B744620E428EB0019B8BF /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B744520E428EB0019B8BF /* UploadViewController.swift */; };
 		262B744B20E43C370019B8BF /* UploadImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B744A20E43C370019B8BF /* UploadImageTableViewCell.swift */; };
 		262B744F20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B744E20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift */; };
-		262B745320E43C6E0019B8BF /* UploadAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745220E43C6E0019B8BF /* UploadAdditionalInfoTableViewCell.swift */; };
+		262B745320E43C6E0019B8BF /* AdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745220E43C6E0019B8BF /* AdditionalInfoTableViewCell.swift */; };
 		262B745720E43C7E0019B8BF /* UploadEarningsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745620E43C7E0019B8BF /* UploadEarningsTableViewCell.swift */; };
-		262B745B20E446B00019B8BF /* UploadFormComponentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745A20E446B00019B8BF /* UploadFormComponentTableViewCell.swift */; };
+		262B745B20E446B00019B8BF /* FormComponentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745A20E446B00019B8BF /* FormComponentTableViewCell.swift */; };
 		262B745F20E453CC0019B8BF /* UUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B745E20E453CC0019B8BF /* UUIView.swift */; };
 		2636462C220393CD009BB22B /* PaginationPendingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462B220393CD009BB22B /* PaginationPendingTableViewCell.swift */; };
-		2636462E2203A173009BB22B /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462D2203A173009BB22B /* ReportViewController.swift */; };
+		2636462E2203A173009BB22B /* UpdateRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636462D2203A173009BB22B /* UpdateRequestViewController.swift */; };
 		263646352204050F009BB22B /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 263646342204050F009BB22B /* awsconfiguration.json */; };
 		2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */; };
 		2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */; };
@@ -54,6 +54,12 @@
 		26C7170420C0F7A00026C4EF /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170320C0F7A00026C4EF /* Dish.swift */; };
 		26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */; };
 		26C7171120C0FA190026C4EF /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7171020C0FA190026C4EF /* Menu.swift */; };
+		26CBE3EB2230607D000778C9 /* UpdateRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBE3EA2230607D000778C9 /* UpdateRequestTableViewCell.swift */; };
+		26CBE3EF2230D0CF000778C9 /* DishDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBE3EE2230D0CF000778C9 /* DishDetailViewController.swift */; };
+		26CBE3F12230D932000778C9 /* UUILayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBE3F02230D932000778C9 /* UUILayoutGuide.swift */; };
+		26CBE3F62230E1E5000778C9 /* DishMetadataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBE3F52230E1E5000778C9 /* DishMetadataTableViewCell.swift */; };
+		26CBE3F82230E341000778C9 /* CommonMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBE3F72230E341000778C9 /* CommonMargins.swift */; };
+		26CBE3FC2230F2A5000778C9 /* SpacerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBE3FB2230F2A5000778C9 /* SpacerTableViewCell.swift */; };
 		26CC94DA20ED544A006AB058 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94D920ED544A006AB058 /* SearchResult.swift */; };
 		26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */; };
 		26CC94DE20ED95B6006AB058 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC94DD20ED95B6006AB058 /* NetworkManager.swift */; };
@@ -113,12 +119,12 @@
 		262B744520E428EB0019B8BF /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		262B744A20E43C370019B8BF /* UploadImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageTableViewCell.swift; sourceTree = "<group>"; };
 		262B744E20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadBasicInfoTableViewCell.swift; sourceTree = "<group>"; };
-		262B745220E43C6E0019B8BF /* UploadAdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
+		262B745220E43C6E0019B8BF /* AdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
 		262B745620E43C7E0019B8BF /* UploadEarningsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadEarningsTableViewCell.swift; sourceTree = "<group>"; };
-		262B745A20E446B00019B8BF /* UploadFormComponentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFormComponentTableViewCell.swift; sourceTree = "<group>"; };
+		262B745A20E446B00019B8BF /* FormComponentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormComponentTableViewCell.swift; sourceTree = "<group>"; };
 		262B745E20E453CC0019B8BF /* UUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIView.swift; sourceTree = "<group>"; };
 		2636462B220393CD009BB22B /* PaginationPendingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationPendingTableViewCell.swift; sourceTree = "<group>"; };
-		2636462D2203A173009BB22B /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		2636462D2203A173009BB22B /* UpdateRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestViewController.swift; sourceTree = "<group>"; };
 		263646342204050F009BB22B /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = awsconfiguration.json; path = ../../awsconfiguration.json; sourceTree = "<group>"; };
 		2651C7F720D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailDisplayOptionsTableViewCell.swift; sourceTree = "<group>"; };
 		2651C7FF20D769CC00E4D9EC /* UUISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUISegmentedControl.swift; sourceTree = "<group>"; };
@@ -147,6 +153,12 @@
 		26C7170320C0F7A00026C4EF /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
 		26C7170C20C0F8830026C4EF /* RestaurantMedal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMedal.swift; sourceTree = "<group>"; };
 		26C7171020C0FA190026C4EF /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		26CBE3EA2230607D000778C9 /* UpdateRequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequestTableViewCell.swift; sourceTree = "<group>"; };
+		26CBE3EE2230D0CF000778C9 /* DishDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDetailViewController.swift; sourceTree = "<group>"; };
+		26CBE3F02230D932000778C9 /* UUILayoutGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUILayoutGuide.swift; sourceTree = "<group>"; };
+		26CBE3F52230E1E5000778C9 /* DishMetadataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishMetadataTableViewCell.swift; sourceTree = "<group>"; };
+		26CBE3F72230E341000778C9 /* CommonMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMargins.swift; sourceTree = "<group>"; };
+		26CBE3FB2230F2A5000778C9 /* SpacerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerTableViewCell.swift; sourceTree = "<group>"; };
 		26CC94D920ED544A006AB058 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonIdentifiers.swift; sourceTree = "<group>"; };
 		26CC94DD20ED95B6006AB058 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -240,11 +252,13 @@
 				26CC94EA20EE459F006AB058 /* Onboarding */,
 				26CC94DF20ED95BB006AB058 /* Network */,
 				26AAFB9120ED4CA900DEE4E7 /* Search */,
+				26CBE3EC22309672000778C9 /* FormComponents */,
 				262B744920E428EF0019B8BF /* Upload */,
-				2636462F2203A179009BB22B /* Report */,
+				2636462F2203A179009BB22B /* UpdateRequest */,
 				262B744420E428070019B8BF /* TabBar */,
 				2652649F20C2728400D97EE8 /* Common */,
 				26C7170720C0F7A80026C4EF /* Model */,
+				26CBE3F22230E194000778C9 /* DishDetail */,
 				26C716FE20C0F6F60026C4EF /* RestaurantDetail */,
 				2652649A20C2629300D97EE8 /* Util */,
 				2623B9F120BF660200AD5605 /* Assets.xcassets */,
@@ -287,20 +301,19 @@
 				262B744520E428EB0019B8BF /* UploadViewController.swift */,
 				26AAFB8D20E5973C00DEE4E7 /* UploadNavigationController.swift */,
 				262B744A20E43C370019B8BF /* UploadImageTableViewCell.swift */,
-				262B745A20E446B00019B8BF /* UploadFormComponentTableViewCell.swift */,
 				262B744E20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift */,
-				262B745220E43C6E0019B8BF /* UploadAdditionalInfoTableViewCell.swift */,
 				262B745620E43C7E0019B8BF /* UploadEarningsTableViewCell.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
 		};
-		2636462F2203A179009BB22B /* Report */ = {
+		2636462F2203A179009BB22B /* UpdateRequest */ = {
 			isa = PBXGroup;
 			children = (
-				2636462D2203A173009BB22B /* ReportViewController.swift */,
+				2636462D2203A173009BB22B /* UpdateRequestViewController.swift */,
+				26CBE3EA2230607D000778C9 /* UpdateRequestTableViewCell.swift */,
 			);
-			path = Report;
+			path = UpdateRequest;
 			sourceTree = "<group>";
 		};
 		2652649A20C2629300D97EE8 /* Util */ = {
@@ -316,6 +329,7 @@
 				26CC94E420EE0459006AB058 /* UUIStackView.swift */,
 				26CC94E620EE3C69006AB058 /* UUIString.swift */,
 				267440FD21F01B980003E3FC /* UDateFormatter.swift */,
+				26CBE3F02230D932000778C9 /* UUILayoutGuide.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -325,6 +339,8 @@
 			children = (
 				2652649B20C2727D00D97EE8 /* CommonColours.swift */,
 				26CC94DB20ED59D7006AB058 /* CommonIdentifiers.swift */,
+				26CBE3F72230E341000778C9 /* CommonMargins.swift */,
+				26CBE3FB2230F2A5000778C9 /* SpacerTableViewCell.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -372,6 +388,24 @@
 				26D8CD1C221D09C600794F10 /* Submission.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		26CBE3EC22309672000778C9 /* FormComponents */ = {
+			isa = PBXGroup;
+			children = (
+				262B745220E43C6E0019B8BF /* AdditionalInfoTableViewCell.swift */,
+				262B745A20E446B00019B8BF /* FormComponentTableViewCell.swift */,
+			);
+			path = FormComponents;
+			sourceTree = "<group>";
+		};
+		26CBE3F22230E194000778C9 /* DishDetail */ = {
+			isa = PBXGroup;
+			children = (
+				26CBE3EE2230D0CF000778C9 /* DishDetailViewController.swift */,
+				26CBE3F52230E1E5000778C9 /* DishMetadataTableViewCell.swift */,
+			);
+			path = DishDetail;
 			sourceTree = "<group>";
 		};
 		26CC94DF20ED95BB006AB058 /* Network */ = {
@@ -676,17 +710,19 @@
 				26CC94DE20ED95B6006AB058 /* NetworkManager.swift in Sources */,
 				26AAFB9320ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift in Sources */,
 				26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */,
-				262B745320E43C6E0019B8BF /* UploadAdditionalInfoTableViewCell.swift in Sources */,
+				262B745320E43C6E0019B8BF /* AdditionalInfoTableViewCell.swift in Sources */,
+				26CBE3EB2230607D000778C9 /* UpdateRequestTableViewCell.swift in Sources */,
 				2636462C220393CD009BB22B /* PaginationPendingTableViewCell.swift in Sources */,
 				26C716F720C0E8E00026C4EF /* RestaurantDetailMedalView.swift in Sources */,
 				262B745720E43C7E0019B8BF /* UploadEarningsTableViewCell.swift in Sources */,
 				2651C80C20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */,
 				2651C80820D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */,
 				26AAFB8520E4AB6300DEE4E7 /* UUIViewController.swift in Sources */,
+				26CBE3EF2230D0CF000778C9 /* DishDetailViewController.swift in Sources */,
 				26AAFB9020ED4CA400DEE4E7 /* SearchViewController.swift in Sources */,
 				262B744B20E43C370019B8BF /* UploadImageTableViewCell.swift in Sources */,
 				2651C7F920D6362200E4D9EC /* RestaurantDetailDisplayOptionsTableViewCell.swift in Sources */,
-				262B745B20E446B00019B8BF /* UploadFormComponentTableViewCell.swift in Sources */,
+				262B745B20E446B00019B8BF /* FormComponentTableViewCell.swift in Sources */,
 				26AAFB8720E4C37F00DEE4E7 /* UDKImagePickerController.swift in Sources */,
 				26C7171120C0FA190026C4EF /* Menu.swift in Sources */,
 				267440FE21F01B980003E3FC /* UDateFormatter.swift in Sources */,
@@ -711,12 +747,16 @@
 				26AAFB8E20E5973C00DEE4E7 /* UploadNavigationController.swift in Sources */,
 				26FE879521E79D8D001AF76E /* Profile.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
+				26CBE3F62230E1E5000778C9 /* DishMetadataTableViewCell.swift in Sources */,
+				26CBE3FC2230F2A5000778C9 /* SpacerTableViewCell.swift in Sources */,
 				26CC94E720EE3C69006AB058 /* UUIString.swift in Sources */,
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */,
 				2674410021F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift in Sources */,
 				26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */,
-				2636462E2203A173009BB22B /* ReportViewController.swift in Sources */,
+				26CBE3F82230E341000778C9 /* CommonMargins.swift in Sources */,
+				2636462E2203A173009BB22B /* UpdateRequestViewController.swift in Sources */,
+				26CBE3F12230D932000778C9 /* UUILayoutGuide.swift in Sources */,
 				26CC94E520EE0459006AB058 /* UUIStackView.swift in Sources */,
 				26CC94DC20ED59D7006AB058 /* CommonIdentifiers.swift in Sources */,
 				262B743D20E042020019B8BF /* MenuViewModel.swift in Sources */,

@@ -11,10 +11,10 @@ import DKImagePickerController
 import Photos.PHImageManager
 import Validator
 
-let kUploadFormComponentTableViewCellId = "UploadFormComponentTableViewCellId"
+let kFormComponentTableViewCellId = "FormComponentTableViewCellId"
 let kUploadImageTableViewCellId = "UploadImageTableViewCellId"
 let kUploadBasicInfoTableViewCellId = "UploadBasicInfoTableViewCellId"
-let kUploadAdditionalInfoTableViewCellId = "UploadAdditionalInfoTableViewCellId"
+let kAdditionalInfoTableViewCellId = "AdditionalInfoTableViewCellId"
 let kUploadEarningsTableViewCellId = "UploadEarningsTableViewCellId"
 
 enum UploadFormError: Error {
@@ -49,14 +49,14 @@ class UploadViewController: UIViewController {
     private var estimatedHeightDict: [IndexPath: CGFloat] = [:]
     
     private func setupNibs() {
-        tableView.register(UploadFormComponentTableViewCell.self,
-                           forCellReuseIdentifier: kUploadFormComponentTableViewCellId)
+        tableView.register(FormComponentTableViewCell.self,
+                           forCellReuseIdentifier: kFormComponentTableViewCellId)
         tableView.register(UploadImageTableViewCell.self,
                            forCellReuseIdentifier: kUploadImageTableViewCellId)
         tableView.register(UploadBasicInfoTableViewCell.self,
                            forCellReuseIdentifier: kUploadBasicInfoTableViewCellId)
-        tableView.register(UploadAdditionalInfoTableViewCell.self,
-                           forCellReuseIdentifier: kUploadAdditionalInfoTableViewCellId)
+        tableView.register(AdditionalInfoTableViewCell.self,
+                           forCellReuseIdentifier: kAdditionalInfoTableViewCellId)
         tableView.register(UploadEarningsTableViewCell.self,
                            forCellReuseIdentifier: kUploadEarningsTableViewCellId)
     }
@@ -90,7 +90,7 @@ class UploadViewController: UIViewController {
                 
                 var description: String?
                 if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0))
-                    as? UploadAdditionalInfoTableViewCell,
+                    as? AdditionalInfoTableViewCell,
                     let desc = cell.additionalNotesTextField.text {
                     description = desc
                 }
@@ -130,28 +130,17 @@ class UploadViewController: UIViewController {
         setupTableView()
         setupNavigation()
         hideKeyboardWhenTappedAround()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        shiftViewWhenKeyboardAppears()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
-                if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? UploadImageTableViewCell {
-                    cell.isUserInteractionEnabled = false
-                }
+    @objc override func shiftViewKeyboardWillShow(notification: NSNotification) {
+        super.shiftViewKeyboardWillShow(notification: notification)
+        if viewIsShiftedFromKeyboard() {
+            if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? UploadImageTableViewCell {
+                cell.isUserInteractionEnabled = false
             }
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
         }
     }
     
@@ -179,8 +168,11 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             }
         case 2:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadAdditionalInfoTableViewCellId,
-                                                        for: indexPath) as? UploadAdditionalInfoTableViewCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: kAdditionalInfoTableViewCellId,
+                                                        for: indexPath) as? AdditionalInfoTableViewCell {
+                cell.configureCell(title: "Additional Notes",
+                                   subtitle: "Let us know if you’ve changed anything about your dish from its original form.",
+                                   placeholder: "e.g. extra rice, salad instead of fries")
                 return cell
             }
         case 3:

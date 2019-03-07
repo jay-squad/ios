@@ -27,4 +27,30 @@ extension UIViewController {
             [NSAttributedString.Key.font: UIFont(font: .helveticaNeueBold, size: 18.0)!,
              NSAttributedString.Key.foregroundColor: UIColor.cc45DarkGrey]
     }
+    
+    func shiftViewWhenKeyboardAppears() {
+        NotificationCenter.default.addObserver(self, selector: #selector(shiftViewKeyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(shiftViewKeyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func shiftViewKeyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func shiftViewKeyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    func viewIsShiftedFromKeyboard() -> Bool {
+        return self.view.frame.origin.y != 0
+    }
+
 }

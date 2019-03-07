@@ -29,7 +29,8 @@ class ProfileViewController: UIViewController {
         setupTableView()
         setupNibs()
         buildComponents()
-        
+        setupNavigation()
+
         NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
             self.updateAuthState()
             
@@ -123,10 +124,7 @@ class ProfileViewController: UIViewController {
     private func buildComponents() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.applyAutoLayoutInsetsForAllMargins(to: view.safeAreaLayoutGuide, with: .zero)
     }
 
 }
@@ -186,7 +184,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return nil
         default:
-            return DateFormatter.friendlyStringForDate(date: viewModel.dateOf(viewModel.sectionedSubmissions[section-1][0]))
+            if viewModel.sectionedSubmissions.count > section-1 && viewModel.sectionedSubmissions[section-1].count > 0 {
+                return DateFormatter.friendlyStringForDate(date: viewModel.dateOf(viewModel.sectionedSubmissions[section-1][0]))
+            }
+            return nil
         }
     }
     
@@ -204,12 +205,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         guard let submission = retrievedSubmission else { return; }
         
         if let restaurant = submission.restaurant {
-            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: restaurant)
+            RestaurantDetailViewController.push(self.navigationController, restaurant)
         } else {
             if let restaurantId = submission.getRestaurantId() {
                 NetworkManager.shared.getRestaurant(restaurantId: restaurantId) { (json, _, _) in
                     if let restaurantJSON = json {
-                        RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: Restaurant(json: restaurantJSON))
+                        RestaurantDetailViewController.push(self.navigationController, Restaurant(json: restaurantJSON))
                     }
                 }
             }

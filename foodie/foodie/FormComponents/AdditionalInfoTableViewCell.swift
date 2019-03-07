@@ -1,5 +1,5 @@
 //
-//  UploadAdditionalInfoTableViewCell.swift
+//  AdditionalInfoTableViewCell.swift
 //  foodie
 //
 //  Created by Austin Du on 2018-06-27.
@@ -9,7 +9,7 @@
 import UIKit
 import TextFieldEffects
 
-class UploadAdditionalInfoTableViewCell: UploadFormComponentTableViewCell {
+class AdditionalInfoTableViewCell: FormComponentTableViewCell {
     
     var additionalNotesView = UIView()
     let additionalNotesTextField = HoshiTextField()
@@ -22,11 +22,14 @@ class UploadAdditionalInfoTableViewCell: UploadFormComponentTableViewCell {
         super.init(coder: aDecoder)
     }
     
+    func configureCell(title: String, subtitle: String, placeholder: String) {
+        setCellHeader(title: title,
+                      subtitle: subtitle)
+        additionalNotesTextField.placeholder = placeholder
+    }
+    
     override func buildComponents() {
         super.buildComponents()
-        
-        setCellHeader(title: "Additional Notes",
-                      subtitle: "Let us know if you’ve changed anything about your dish from its original form.")
         
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +43,6 @@ class UploadAdditionalInfoTableViewCell: UploadFormComponentTableViewCell {
         
         additionalNotesTextField.translatesAutoresizingMaskIntoConstraints = false
         additionalNotesTextField.defaultStyle()
-        additionalNotesTextField.placeholder = "e.g. extra rice, salad instead of fries"
         additionalNotesTextField.tag = UploadFormComponent.notes.rawValue
         additionalNotesView.addSubview(additionalNotesTextField)
 

@@ -241,9 +241,9 @@ class SearchViewController: UIViewController {
                         let pointInCell = gestureRecognizer.location(in: cell)
 
                         if cell.searchResult1 != nil, cell.viewComponent1.frame.contains(pointInCell) {
-                            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: cell.searchResult1!.restaurant)
+                            RestaurantDetailViewController.push(self.navigationController, cell.searchResult1!.restaurant)
                         } else if cell.searchResult2 != nil, cell.viewComponent2.frame.contains(pointInCell) {
-                            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: cell.searchResult2!.restaurant)
+                            RestaurantDetailViewController.push( self.navigationController, cell.searchResult2!.restaurant)
                         }
                     }
                 }
@@ -299,7 +299,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if !isLastRow(indexPath: indexPath) {
-            RestaurantDetailViewController.push(navigationController: self.navigationController, restaurant: searchResults[indexPath.row].restaurant)
+            RestaurantDetailViewController.push(self.navigationController, searchResults[indexPath.row].restaurant)
 //        }
     }
     

@@ -61,9 +61,9 @@ class RestaurantDetailViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
-//        gridTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleGridTap(_:)))
-//        gridTapGestureRecognizer?.delegate = self
-//        self.tableView.addGestureRecognizer(gridTapGestureRecognizer!)
+        gridTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleGridTap(_:)))
+        gridTapGestureRecognizer?.delegate = self
+        self.tableView.addGestureRecognizer(gridTapGestureRecognizer!)
         
         gridLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleGridLongPress(_:)))
         gridLongPressGestureRecognizer?.delegate = self
@@ -138,30 +138,42 @@ class RestaurantDetailViewController: UIViewController {
         
     }
 
-    @objc private func handleGridLongPress(_ gestureRecognizer: UITapGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            if let tableView = gestureRecognizer.view as? UITableView {
-                let p = gestureRecognizer.location(in: gestureRecognizer.view)
-                if let indexPath = tableView.indexPathForRow(at: p) {
-                    if let cell = tableView.cellForRow(at: indexPath) as? RestaurantDetailMenu3ColumnGridTableViewCell {
-                        let pointInCell = gestureRecognizer.location(in: cell)
-                        
-                        if let dish0 = cell.dish0, cell.dish0ImageView.frame.contains(pointInCell) {
-                            peekExpandedForm(dish: dish0)
-                        } else if let dish1 = cell.dish1, cell.dish1ImageView.frame.contains(pointInCell) {
-                            peekExpandedForm(dish: dish1)
-                        } else if let dish2 = cell.dish2, cell.dish2ImageView.frame.contains(pointInCell) {
-                            peekExpandedForm(dish: dish2)
-                        }
-                    }
-                }
-            }
+    @objc private func handleGridTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        if let dish = getDish(gestureRecognizer), let restaurant = restaurant {
+            let vc = DishDetailViewController(dish: dish, restaurant: restaurant)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @objc private func handleGridLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began, let dish = getDish(gestureRecognizer) {
+            peekExpandedForm(dish: dish)
         } else if gestureRecognizer.state == .ended {
             unpeekExpandedForm()
         }
     }
     
-    func peekExpandedForm(dish: Dish) {
+    private func getDish(_ gestureRecognizer: UIGestureRecognizer) -> Dish? {
+        if let tableView = gestureRecognizer.view as? UITableView {
+            let p = gestureRecognizer.location(in: gestureRecognizer.view)
+            if let indexPath = tableView.indexPathForRow(at: p) {
+                if let cell = tableView.cellForRow(at: indexPath) as? RestaurantDetailMenu3ColumnGridTableViewCell {
+                    let pointInCell = gestureRecognizer.location(in: cell)
+                    
+                    if let dish0 = cell.dish0, cell.dish0ImageView.frame.contains(pointInCell) {
+                        return dish0
+                    } else if let dish1 = cell.dish1, cell.dish1ImageView.frame.contains(pointInCell) {
+                        return dish1
+                    } else if let dish2 = cell.dish2, cell.dish2ImageView.frame.contains(pointInCell) {
+                        return dish2
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    private func peekExpandedForm(dish: Dish) {
         guard peekView == nil else { return }
         
         peekView = RestaurantDetailMenuExpandedView()
@@ -202,7 +214,7 @@ class RestaurantDetailViewController: UIViewController {
         peekView = nil
     }
     
-    public static func push(navigationController: UINavigationController?, restaurant: Restaurant?) {
+    public static func push(_ navigationController: UINavigationController?, _ restaurant: Restaurant?) {
         if let restaurant = restaurant,
             let navigationController = navigationController,
             let detailedRestaurantVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(
@@ -297,6 +309,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                                     cell.configureCell(dish: menu.getDish(section: indexPath.section-2,
                                                                           row: currentExpandedGridCellIndex.row * 3
                                                                                 + offset))
+                                    cell.addShadow()
                                 }
                             default:
                                 cell.configureCell(dish: menu.getDish(section: indexPath.section-2, row: indexPath.row))
@@ -372,27 +385,16 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section >= 2 else { return }
         if let model = menuView {
             switch model.activeMenuType {
             case .grid:
                 // grid taps are handled by gridTapGestureRecognizer
                 break
-            case .list:
-                switch indexPath.section {
-                case 0, 1:
-                    break
-                default:
-                    if menuView?.orders[.list]![indexPath.section-2][indexPath.row] == .condensed {
-                        menuView?.orders[.list]![indexPath.section-2][indexPath.row] = .expanded
-                    } else {
-                        menuView?.orders[.list]![indexPath.section-2][indexPath.row] = .condensed
-                    }
-                    tableView.beginUpdates()
-                    tableView.reloadRows(at: [indexPath], with: kRowAnimationType)
-                    tableView.endUpdates()
-                }
-            case .expanded:
-                break
+            default:
+                DishDetailViewController.push(navigationController,
+                                              menu?.getDish(section: indexPath.section-2, row: indexPath.row),
+                                              restaurant)
             }
         }
     }

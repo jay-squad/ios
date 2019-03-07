@@ -83,9 +83,9 @@ class RestaurantDetailMenu3ColumnGridTableViewCell: UITableViewCell {
         
         dishStackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor).isActive = true
         dishStackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor,
-                                               constant: 5.0).isActive = true
+                                               constant: 0).isActive = true
         dishStackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
-                                                constant: -5.0).isActive = true
+                                                constant: 0).isActive = true
         dishStackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor).isActive = true
         
         dish0ImageView.widthAnchor.constraint(equalTo: dish1ImageView.widthAnchor).isActive = true

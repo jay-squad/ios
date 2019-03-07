@@ -28,6 +28,10 @@ class RestaurantDetailMenuExpandedTableViewCell: UITableViewCell {
         expandedView.configureView(dish: dish)
     }
     
+    func addShadow() {
+        expandedView.addShadow()
+    }
+    
     private func buildComponents() {
         selectionStyle = .none
         expandedView.translatesAutoresizingMaskIntoConstraints = false

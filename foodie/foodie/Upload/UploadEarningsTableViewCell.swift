@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UploadEarningsTableViewCell: UploadFormComponentTableViewCell {
+class UploadEarningsTableViewCell: FormComponentTableViewCell {
 
     var earningsLabel = UILabel()
     var pointsEarned: Int = 0

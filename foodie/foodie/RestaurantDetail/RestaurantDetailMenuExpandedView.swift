@@ -13,6 +13,7 @@ class RestaurantDetailMenuExpandedView: UIView {
     let kMaximumLineHeight: CGFloat = 16
     let dishDescriptionParagraphStyle = NSMutableParagraphStyle()
     
+    let externalContainerView = UIView()
     let dishImageView = UIImageView()
     let nameLabel = UILabel()
     let priceLabel = UILabel()
@@ -52,6 +53,10 @@ class RestaurantDetailMenuExpandedView: UIView {
         }
     }
     
+    func addShadow() {
+        externalContainerView.applyDefaultShadow()
+    }
+    
     private func setup() {
         buildComponents()
     }
@@ -60,10 +65,8 @@ class RestaurantDetailMenuExpandedView: UIView {
         
         backgroundColor = UIColor.cc253UltraLightGrey
         
-        let externalContainerView = UIView()
         externalContainerView.backgroundColor = .white
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false
-        externalContainerView.applyDefaultShadow()
         
         let externalStackView = UIStackView()
         externalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,9 +78,12 @@ class RestaurantDetailMenuExpandedView: UIView {
         
         let metadataStackView = UIStackView()
         metadataStackView.translatesAutoresizingMaskIntoConstraints = false
-        metadataStackView.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        metadataStackView.layoutMargins = UIEdgeInsets(top: 8,
+                                                       left: CommonMargins.metadataStackViewHorizonalMargin,
+                                                       bottom: 8,
+                                                       right: CommonMargins.metadataStackViewHorizonalMargin)
         metadataStackView.isLayoutMarginsRelativeArrangement = true
-        metadataStackView.spacing = 3.0
+        metadataStackView.spacing = CommonMargins.metadataStackViewSpacing
         
         metadataStackView.axis = .vertical
         
@@ -118,19 +124,8 @@ class RestaurantDetailMenuExpandedView: UIView {
         
         nameAndPriceStackView.heightAnchor.constraint(equalToConstant: 39.0).isActive = true
         
-        externalContainerView.topAnchor.constraint(equalTo: topAnchor,
-                                                   constant: 5.0).isActive = true
-        externalContainerView.leadingAnchor.constraint(equalTo: leadingAnchor,
-                                                       constant: 5.0).isActive = true
-        externalContainerView.trailingAnchor.constraint(equalTo: trailingAnchor,
-                                                        constant: -5.0).isActive = true
-        externalContainerView.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                                      constant: -5.0).isActive = true
-        
-        externalStackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor).isActive = true
-        externalStackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor).isActive = true
-        externalStackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor).isActive = true
-        externalStackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor).isActive = true
+        externalContainerView.applyAutoLayoutInsetsForAllMargins(to: self, with: .zero)
+        externalStackView.applyAutoLayoutInsetsForAllMargins(to: externalContainerView, with: .zero)
         
         dishImageView.widthAnchor.constraint(equalTo: dishImageView.heightAnchor).isActive = true
         

@@ -11,7 +11,9 @@ import TextFieldEffects
 import Validator
 import DropDown
 
-class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
+class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
+    
+    let kNoSection = "(no section)"
     
     let dishSectionTextField = HoshiTextField()
     let dishSectionDropDown = DropDown()
@@ -34,7 +36,7 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
     
     func configureCell(menu: Menu?) {
         if let menu = menu {
-            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
+            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? kNoSection })
             dishSectionDropDown.dataSource.append("+ Add a Menu Section")
         }
     }
@@ -135,10 +137,7 @@ class UploadBasicInfoTableViewCell: UploadFormComponentTableViewCell {
         priceTextField.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         
         // boilerplate
-        stackView.topAnchor.constraint(equalTo: customViewContainer.topAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: customViewContainer.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: customViewContainer.trailingAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: customViewContainer.bottomAnchor).isActive = true
+        stackView.applyAutoLayoutInsetsForAllMargins(to: customViewContainer, with: .zero)
     }
     
     private func addValidationRules() {

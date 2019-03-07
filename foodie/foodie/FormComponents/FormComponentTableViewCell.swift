@@ -1,5 +1,5 @@
 //
-//  UploadFormComponentTableViewCell.swift
+//  FormComponentTableViewCell.swift
 //  foodie
 //
 //  Created by Austin Du on 2018-06-27.
@@ -16,7 +16,7 @@ enum UploadFormComponent: Int {
     case notes
 }
 
-class UploadFormComponentTableViewCell: UITableViewCell {
+class FormComponentTableViewCell: UITableViewCell {
 
     let kTextFieldHeight: CGFloat = 50.0
     private var titleLabel = UILabel()

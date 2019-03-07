@@ -23,4 +23,11 @@ extension UIView {
         trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: margins.right).isActive = true
         bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: margins.bottom).isActive = true
     }
+    
+    func applyAutoLayoutInsetsForAllMargins(to layoutGuide: UILayoutGuide, with margins: UIEdgeInsets) {
+        topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: -margins.top).isActive = true
+        leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: -margins.left).isActive = true
+        trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: margins.right).isActive = true
+        bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: margins.bottom).isActive = true
+    }
 }
