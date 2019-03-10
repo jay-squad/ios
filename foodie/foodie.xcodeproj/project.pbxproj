@@ -36,6 +36,7 @@
 		2652649C20C2727D00D97EE8 /* CommonColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2652649B20C2727D00D97EE8 /* CommonColours.swift */; };
 		265264A120C272E300D97EE8 /* UUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265264A020C272E300D97EE8 /* UUIColor.swift */; };
 		266BEF3B2231726400244FFD /* AnswersKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BEF3A2231726400244FFD /* AnswersKeys.swift */; };
+		266BEF3E223583A500244FFD /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BEF3D223583A500244FFD /* SearchTextField.swift */; };
 		267440FE21F01B980003E3FC /* UDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267440FD21F01B980003E3FC /* UDateFormatter.swift */; };
 		2674410021F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */; };
 		26AAFB8520E4AB6300DEE4E7 /* UUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */; };
@@ -136,6 +137,7 @@
 		2652649B20C2727D00D97EE8 /* CommonColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColours.swift; sourceTree = "<group>"; };
 		265264A020C272E300D97EE8 /* UUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIColor.swift; sourceTree = "<group>"; };
 		266BEF3A2231726400244FFD /* AnswersKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersKeys.swift; sourceTree = "<group>"; };
+		266BEF3D223583A500244FFD /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		267440FD21F01B980003E3FC /* UDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDateFormatter.swift; sourceTree = "<group>"; };
 		267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenuExpandedView.swift; sourceTree = "<group>"; };
 		26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIViewController.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				26CBE3F22230E194000778C9 /* DishDetail */,
 				26C716FE20C0F6F60026C4EF /* RestaurantDetail */,
 				2652649A20C2629300D97EE8 /* Util */,
+				266BEF3C2235838E00244FFD /* ManualPods */,
 				2623B9F120BF660200AD5605 /* Assets.xcassets */,
 				2623B9F320BF660200AD5605 /* LaunchScreen.storyboard */,
 				2623B9F620BF660200AD5605 /* Info.plist */,
@@ -346,6 +349,14 @@
 				266BEF3A2231726400244FFD /* AnswersKeys.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		266BEF3C2235838E00244FFD /* ManualPods */ = {
+			isa = PBXGroup;
+			children = (
+				266BEF3D223583A500244FFD /* SearchTextField.swift */,
+			);
+			path = ManualPods;
 			sourceTree = "<group>";
 		};
 		26AAFB9120ED4CA900DEE4E7 /* Search */ = {
@@ -623,12 +634,8 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
@@ -662,6 +669,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
@@ -691,6 +699,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
@@ -754,6 +763,7 @@
 				262B745F20E453CC0019B8BF /* UUIView.swift in Sources */,
 				26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */,
 				2651C80420D7758600E4D9EC /* RestaurantDetailMenu3ColumnGridTableViewCell.swift in Sources */,
+				266BEF3E223583A500244FFD /* SearchTextField.swift in Sources */,
 				262B744620E428EB0019B8BF /* UploadViewController.swift in Sources */,
 				26D8CD15221CBCF900794F10 /* FacebookButton.swift in Sources */,
 				26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */,

@@ -36,7 +36,7 @@ class ProfileViewController: UIViewController {
             self.updateAuthState()
             
             #if DEBUG
-            NetworkManager.shared.grantAdminCookie()
+//            NetworkManager.shared.grantAdminCookie()
             #endif
             
             self.loadProfileIfNeeded()
@@ -63,7 +63,7 @@ class ProfileViewController: UIViewController {
     private func loadProfileIfNeeded() {
         refreshControl.beginRefreshing()
         if FBSDKAccessToken.currentAccessTokenIsActive() {
-            NetworkManager.shared.getProfile(userId: 1) { (json, _, _) in
+            NetworkManager.shared.getProfileSelf { (json, _, _) in
                 print(json)
                 if let json = json {
                     self.profileModel = Profile(json: json)

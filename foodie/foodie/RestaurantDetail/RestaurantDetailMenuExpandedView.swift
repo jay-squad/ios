@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ImageSlideshow
 
 class RestaurantDetailMenuExpandedView: UIView {
     
@@ -14,7 +15,7 @@ class RestaurantDetailMenuExpandedView: UIView {
     let dishDescriptionParagraphStyle = NSMutableParagraphStyle()
     
     let externalContainerView = UIView()
-    let dishImageView = UIImageView()
+    let dishImageSlideshow = ImageSlideshow()
     let nameLabel = UILabel()
     let priceLabel = UILabel()
     let descriptionLabel = UILabel()
@@ -47,10 +48,13 @@ class RestaurantDetailMenuExpandedView: UIView {
                                                                                       .kern: -0.5])
         descriptionLabel.attributedText = descriptionLabelAttributedString
         
-        if let imageUrl = dish.dishImage?.image {
-            dishImageView.image = nil
-            dishImageView.sd_setImage(with: URL(string: imageUrl))
+        var inputSources: [InputSource] = []
+        for dishImage in dish.dishImages {
+            if let imageUrl = dishImage.image, let sdWebImageSource = SDWebImageSource(urlString: imageUrl) {
+                inputSources.append(sdWebImageSource)
+            }
         }
+        dishImageSlideshow.setImageInputs(inputSources)
     }
     
     func addShadow() {
@@ -72,9 +76,8 @@ class RestaurantDetailMenuExpandedView: UIView {
         externalStackView.translatesAutoresizingMaskIntoConstraints = false
         externalStackView.axis = .vertical
         
-        dishImageView.translatesAutoresizingMaskIntoConstraints = false
-        dishImageView.contentMode = .scaleAspectFill
-        dishImageView.clipsToBounds = true
+        dishImageSlideshow.translatesAutoresizingMaskIntoConstraints = false
+        dishImageSlideshow.contentScaleMode = .scaleAspectFill
         
         let metadataStackView = UIStackView()
         metadataStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,7 +112,7 @@ class RestaurantDetailMenuExpandedView: UIView {
         addSubview(externalContainerView)
         externalContainerView.addSubview(externalStackView)
         
-        externalStackView.addArrangedSubview(dishImageView)
+        externalStackView.addArrangedSubview(dishImageSlideshow)
         externalStackView.addArrangedSubview(metadataStackView)
         
         metadataStackView.addArrangedSubview(nameAndPriceStackView)
@@ -127,7 +130,7 @@ class RestaurantDetailMenuExpandedView: UIView {
         externalContainerView.applyAutoLayoutInsetsForAllMargins(to: self, with: .zero)
         externalStackView.applyAutoLayoutInsetsForAllMargins(to: externalContainerView, with: .zero)
         
-        dishImageView.widthAnchor.constraint(equalTo: dishImageView.heightAnchor).isActive = true
+        dishImageSlideshow.widthAnchor.constraint(equalTo: dishImageSlideshow.heightAnchor).isActive = true
         
         // if we want fixed height for the data panel
         //        metadataStackView.heightAnchor.constraint(equalToConstant: 125.0).isActive = true

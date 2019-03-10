@@ -201,7 +201,9 @@ class SearchViewController: UIViewController {
                         var images: [String?] = []
                         if let minimenu = restaurantJSON["menu"].array {
                             for item in minimenu {
-                                images.append(item["image"]["link"].string)
+                                if let imageUrl = item[1][0]["item_images"][0]["link"].string {
+                                    images.append(imageUrl)
+                                }
                             }
                         }
                         self.searchResults.append(SearchResult(restaurant:

@@ -106,7 +106,7 @@ class SearchDishTableViewCellComponent: UIView {
     func configureView(dish: Dish?) {
         self.dish = dish
         if let dish = dish {
-            if let imageUrl = dish.dishImage?.image {
+            if let imageUrl = dish.dishImages.first?.image {
                 dishImageView.sd_setImage(with: URL(string: imageUrl))
             }
             dishNameLabel.text = dish.name

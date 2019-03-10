@@ -16,7 +16,7 @@ class Dish {
     var price: Float = 0
     var description: String = ""
     var restaurantId: Int
-    var dishImage: DishImage?
+    var dishImages: [DishImage] = []
     var itemMetadata: Metadata
     
     init(json: JSON) {
@@ -25,7 +25,11 @@ class Dish {
         description = json["item"]["description"].string ?? ""
         restaurantId = json["item"]["restaurant_id"].int ?? -1
         dishId = json["item"]["id"].int ?? -1
-        dishImage = DishImage(json: json["image"])
+        if let images = json["item_images"].array {
+            for image in images {
+                dishImages.append(DishImage(json: image))
+            }
+        }
         itemMetadata = Metadata(json: json["item"])
     }
     

@@ -13,6 +13,7 @@ let kNoSection = "(no section)"
 
 class Menu {
     var sections: [MenuSection] = []
+    var flatDishList: [String] = []
     
     init(json: JSON) {
         var i = 0
@@ -23,6 +24,7 @@ class Menu {
                 sections.append(newSection)
                 i += 1
 //            }
+            flatDishList.append(contentsOf: newSection.dishes.map({ $0.name }))
         }
         sections.sort {$0.rank < $1.rank}
     }

@@ -15,3 +15,4 @@ disabled_rules:
   - line_length
   - type_body_length
   - discarded_notification_center_observer
+  - force_cast

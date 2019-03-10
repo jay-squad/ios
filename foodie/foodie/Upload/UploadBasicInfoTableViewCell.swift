@@ -15,7 +15,7 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     
     let dishSectionTextField = HoshiTextField()
     let dishSectionDropDown = DropDown()
-    let dishTextField = HoshiTextField()
+    let dishTextField = SearchTextField()
     let priceTextField = HoshiTextField()
     
     var isPreviousSelectedDishSectionCustom: Bool = false
@@ -36,6 +36,8 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         if let menu = menu {
             dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
             dishSectionDropDown.dataSource.append("+ Add a Menu Section")
+            
+            dishTextField.filterStrings(menu.flatDishList)
         }
     }
     
@@ -104,6 +106,7 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         dishTextField.placeholder = "Dish Name"
         dishTextField.tag = UploadFormComponent.dish.rawValue
         dishTextField.autocorrectionType = .no
+        dishTextField.theme.font = dishTextField.theme.font.withSize(14)
         dishSelectView.addSubview(dishTextField)
         
         priceTextField.translatesAutoresizingMaskIntoConstraints = false
