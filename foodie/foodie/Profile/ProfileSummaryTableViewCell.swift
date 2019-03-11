@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKCoreKit
 
 class ProfileSummaryTableViewCell: UITableViewCell {
 
@@ -18,6 +19,7 @@ class ProfileSummaryTableViewCell: UITableViewCell {
 
     var profileModel: Profile?
 
+    lazy var profilePicImageView = UIImageView()
     lazy var nameLabel = UILabel()
     lazy var numberOfDishesLabel = UILabel()
     lazy var numberOfPointsLabel = UILabel()
@@ -38,6 +40,11 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         nameLabel.text = profileModel.name
         setNumberOfDishesLabel(numberOfDishes: profileModel.submissions.count)
         setNumberOfPointsLabel(numberOfPoints: profileModel.points)
+        
+        if let fbid = FBSDKAccessToken.current()?.userID, let url = URL(string: "https://graph.facebook.com/v3.2/\(fbid)/picture") {
+            profilePicImageView.sd_setImage(with: url)
+        }
+        
     }
 
     private func buildComponents() {
@@ -81,7 +88,20 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         spacer.translatesAutoresizingMaskIntoConstraints = false
         spacer.heightAnchor.constraint(equalToConstant: 16).isActive = true
 
-        stackView.addArrangedSubview(nameLabel)
+        profilePicImageView.contentMode = .scaleAspectFill
+        profilePicImageView.translatesAutoresizingMaskIntoConstraints = false
+        profilePicImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        profilePicImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
+        let personStackView = UIStackView()
+        personStackView.spacing = 15.0
+        personStackView.axis = .horizontal
+        
+        personStackView.addArrangedSubview(profilePicImageView)
+        personStackView.addArrangedSubview(nameLabel)
+        personStackView.addArrangedSubview(UIView())
+        
+        stackView.addArrangedSubview(personStackView)
         stackView.addArrangedSubview(spacer)
         stackView.addArrangedSubview(numberOfDishesLabel)
         stackView.addArrangedSubview(numberOfPointsLabel)
