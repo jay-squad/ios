@@ -10,6 +10,7 @@ import UIKit
 import DKImagePickerController
 import Photos.PHImageManager
 import Validator
+import GradientLoadingBar
 
 let kFormComponentTableViewCellId = "FormComponentTableViewCellId"
 let kUploadImageTableViewCellId = "UploadImageTableViewCellId"
@@ -28,21 +29,21 @@ protocol UploadViewControllerDelegate: class {
 
 class UploadViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    var tableView = UITableView()
     
     var restaurantId: Int = -1
     var restaurantMenu: Menu?
     var uploadImage: UIImage? {
         didSet {
-            if let tableView = tableView {
-                tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-            }
+            tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         }
     }
     
     var restaurantResult: ValidationResult?
     var dishResult: ValidationResult?
     var priceResult: ValidationResult?
+    
+    var prepopulatedSubmission: Submission?
     
     weak var delegate: UploadViewControllerDelegate?
     
@@ -80,6 +81,14 @@ class UploadViewController: UIViewController {
         
     }
     
+    func addDismissButton() {
+        let leftNavBtn = UIBarButtonItem(title: "Dismiss",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(onDismissButtonTapped(_:)))
+        navigationItem.leftBarButtonItem = leftNavBtn
+    }
+    
     @objc private func onSubmitButtonTapped(_ sender: UIBarButtonItem?) {
         if let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? UploadBasicInfoTableViewCell {
             restaurantResult = (cell.dishSectionTextField.text ?? "").validate(rule: Validator.requiredRule)
@@ -95,17 +104,40 @@ class UploadViewController: UIViewController {
                     description = desc
                 }
                 
-                NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
-                                                     itemName: cell.dishTextField.text,
-                                                     itemImage: uploadImage,
-                                                     description: description,
-                                                     sectionName: cell.dishSectionTextField.text,
-                                                     price: cell.priceFloat) { (_, error, _) in
-                    if error == nil {
-                        self.delegate?.onSuccessfulUpload()
-                        self.navigationController?.popViewController(animated: true)
+                GradientLoadingBar.shared.show()
+                sender?.isEnabled = false
+                if uploadImage != nil {
+                    NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
+                                                         itemName: cell.dishTextField.text,
+                                                         itemImage: uploadImage,
+                                                         description: description,
+                                                         sectionName: cell.dishSectionTextField.text,
+                                                         price: cell.priceFloat) { (_, error, _) in
+                                                            GradientLoadingBar.shared.hide()
+                                                            if error == nil {
+                                                                self.delegate?.onSuccessfulUpload()
+                                                                self.navigationController?.popViewController(animated: true)
+                                                            } else {
+                                                                sender?.isEnabled = true
+                                                            }
+                    }
+                } else {
+                    NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
+                                                         itemName: cell.dishTextField.text,
+                                                         itemImageUrl: prepopulatedSubmission?.dishImage?.image,
+                                                         description: description,
+                                                         sectionName: cell.dishSectionTextField.text,
+                                                         price: cell.priceFloat) { (_, error, _) in
+                                                            GradientLoadingBar.shared.hide()
+                                                            if error == nil {
+                                                                self.delegate?.onSuccessfulUpload()
+                                                                self.navigationController?.popViewController(animated: true)
+                                                            } else {
+                                                                sender?.isEnabled = true
+                                                            }
                     }
                 }
+                
             } else {
                 if !restaurantResult!.isValid {
                     cell.dishSectionTextField.errorStyle()
@@ -128,11 +160,22 @@ class UploadViewController: UIViewController {
         super.viewDidLoad()
         setupNibs()
         setupTableView()
+        buildComponents()
         setupNavigation()
         hideKeyboardWhenTappedAround()
         shiftViewWhenKeyboardAppears()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    private func buildComponents() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        tableView.applyAutoLayoutInsetsForAllMargins(to: view, with: .zero)
+    }
+    
+    func prepopulate(_ submission: Submission) {
+        prepopulatedSubmission = submission
     }
     
     @objc override func shiftViewKeyboardWillShow(notification: NSNotification) {
@@ -158,21 +201,31 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadImageTableViewCellId,
                                                         for: indexPath) as? UploadImageTableViewCell {
-                cell.configureCell(image: uploadImage)
+                if let prepopulatedSubmission = prepopulatedSubmission {
+                    cell.configureCell(imageUrl: prepopulatedSubmission.dishImage?.image)
+                } else {
+                    cell.configureCell(image: uploadImage)
+                }
                 return cell
             }
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadBasicInfoTableViewCellId,
                                                         for: indexPath) as? UploadBasicInfoTableViewCell {
-                cell.configureCell(menu: restaurantMenu)
+                if let prepopulatedSubmission = prepopulatedSubmission {
+                    cell.configureCell(menu: restaurantMenu, prefilledSubmission: prepopulatedSubmission)
+                } else {
+                    cell.configureCell(menu: restaurantMenu)
+                }
                 return cell
             }
         case 2:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kAdditionalInfoTableViewCellId,
                                                         for: indexPath) as? AdditionalInfoTableViewCell {
+                let prefilledDescription = prepopulatedSubmission?.dish?.description
                 cell.configureCell(title: "Additional Notes",
                                    subtitle: "Let us know if you’ve changed anything about your dish from its original form.",
-                                   placeholder: "e.g. extra rice, salad instead of fries")
+                                   placeholder: "e.g. extra rice, salad instead of fries",
+                                   prefilledDescription: prefilledDescription)
                 return cell
             }
         case 3:

@@ -22,7 +22,7 @@ let kRestaurantDetailMenuListTableViewCellId = "RestaurantDetailMenuListTableVie
 class RestaurantDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
+
     let kSectionHeaderHeight: CGFloat = 65
     let kRowAnimationType: UITableView.RowAnimation = .middle
     var gridTapGestureRecognizer: UITapGestureRecognizer?
@@ -35,6 +35,7 @@ class RestaurantDetailViewController: UIViewController {
                                                                                               .list: [:],
                                                                                               .expanded: [:]]
     private var currentExpandedGridCellIndex: IndexPath?
+    var locationManager = CLLocationManager()
     
     // peeking
     let kPeekAnimationDuration: TimeInterval = 0.15
@@ -95,11 +96,18 @@ class RestaurantDetailViewController: UIViewController {
         setupTableView()
         setupDataSource()
         setupNavigation()
+        setupLocationServices()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    private func setupLocationServices() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
     }
     
     private func setupNavigation() {
@@ -387,8 +395,9 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
             if view.subviews.last as? UIButton != nil {
                 return
             }
-            let kButtonSize: CGFloat = 25
+            let kButtonSize: CGFloat = 45
             let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 50, y: (kSectionHeaderHeight - kButtonSize)/2, width: kButtonSize, height: kButtonSize))
+//            button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
             button.setImage(UIImage(named: "btn_more"), for: .normal)
             button.addTarget(self, action: #selector(self.onHeaderButtonTapped(_:)), for: .touchUpInside)
             view.addSubview(button)
@@ -396,9 +405,8 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     @objc private func onHeaderButtonTapped(_ sender: UIButton) {
-        if let header = sender.superview as? UITableViewHeaderFooterView {
-            let section = header.textLabel?.text
-            UpdateRequestViewController.presentActionSheet(.section, sender: self)
+        if let header = sender.superview as? UITableViewHeaderFooterView, let section = header.textLabel?.text {
+            UpdateRequestViewController.presentActionSheet(.section, sender: self, id: section)
         }
     }
     
@@ -467,7 +475,7 @@ extension RestaurantDetailViewController: UploadViewControllerDelegate {
 extension RestaurantDetailViewController: RestaurantDetailTableViewCellDelegate {
     func onMoreButtonTapped() {
         if let restaurant = restaurant {
-            UpdateRequestViewController.presentActionSheet(.restaurant, sender: self)
+            UpdateRequestViewController.presentActionSheet(.restaurant, sender: self, id: "\(restaurant.id)")
         }
     }
 }

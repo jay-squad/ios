@@ -10,22 +10,24 @@ import Foundation
 import SwiftyJSON
 
 class Profile {
-    var id: Int
-    var name: String
-    var points: Int
-    var metadata: Metadata
+    var id: Int = -1
+    var name: String = "You"
+    var points: Int = -1
+    var metadata: Metadata?
     
     var submissions: [Submission] = []
     
     init(json: JSON) {
-        id = json["id"].int ?? -1
-        name = json["name"].string ?? ""
-        points = json["points"].int ?? -1
-        metadata = Metadata(json: json)
-        
-        if let submissions = json.array?[0]["submissions"].array {
-            for submission in submissions {
-                self.submissions.append(Submission(json: submission))
+        if let profileJson = json.array?[0] {
+            id = profileJson["id"].int ?? -1
+            name = profileJson["name"].string ?? ""
+            points = profileJson["points"].int ?? 0
+            metadata = Metadata(json: profileJson)
+            
+            if let submissions = profileJson["submissions"].array {
+                for submission in submissions {
+                    self.submissions.append(Submission(json: submission))
+                }
             }
         }
     }

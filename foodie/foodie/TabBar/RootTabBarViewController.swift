@@ -20,6 +20,7 @@ class RootTabBarViewController: UITabBarController {
             tabBarItem.title = nil
             tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         }
+        viewControllers?.remove(at: 1)
     }
     
 }

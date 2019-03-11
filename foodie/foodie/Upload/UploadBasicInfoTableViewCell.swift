@@ -41,6 +41,24 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         }
     }
     
+    func configureCell(menu: Menu?, prefilledSubmission: Submission) {
+        if let menu = menu {
+            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
+            dishSectionDropDown.dataSource.append("+ Add a Menu Section")
+            
+            dishTextField.filterStrings(menu.flatDishList)
+        }
+        
+        dishTextField.text = prefilledSubmission.dish?.name
+        dishSectionTextField.text = prefilledSubmission.menuSection?.name
+        if let price = prefilledSubmission.dish?.price {
+            priceFloat = price
+            priceTextField.text = "$ \(price)"
+            amountTypedString = "\(price)".replacingOccurrences(of: ".", with: "")
+        }
+        
+    }
+    
 //    func configureCell(restaurantResult: ValidationResult?,
 //                       dishResult: ValidationResult?,
 //                       priceResult: ValidationResult?) {

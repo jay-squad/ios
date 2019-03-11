@@ -47,7 +47,7 @@ class SearchDishTableViewCell: UITableViewCell {
         
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 6.0
+        stackView.spacing = 2.0
         stackView.axis = .horizontal
         
         viewComponent1.translatesAutoresizingMaskIntoConstraints = false
@@ -65,9 +65,9 @@ class SearchDishTableViewCell: UITableViewCell {
         
         stackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor,
-                                           constant: 6.0).isActive = true
+                                           constant: 0).isActive = true
         stackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
-                                            constant: -6.0).isActive = true
+                                            constant: 0).isActive = true
         stackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor).isActive = true
         
         externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -159,8 +159,8 @@ class SearchDishTableViewCellComponent: UIView {
         
         stackView.topAnchor.constraint(equalTo: gradientView.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: gradientView.bottomAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor, constant: 2).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor, constant: -2).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor, constant: 5).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor, constant: -5).isActive = true
         
         dishPriceLabel.widthAnchor.constraint(equalToConstant: 32.0).isActive = true
     }

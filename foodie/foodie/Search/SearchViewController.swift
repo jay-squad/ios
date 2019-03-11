@@ -44,7 +44,7 @@ class SearchViewController: UIViewController {
         setupTableView()
         setupNavigation()
         buildComponents()
-//        hideKeyboardWhenTappedAround()
+        hideKeyboardWhenTapping(view: tableView)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
@@ -57,7 +57,7 @@ class SearchViewController: UIViewController {
         searchTypeToggleButton.addTarget(self,
                                          action: #selector(onSearchTypeToggleButtonTapped(_:)),
                                          for: .touchUpInside)
-        query(with: " ")
+        query(with: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {

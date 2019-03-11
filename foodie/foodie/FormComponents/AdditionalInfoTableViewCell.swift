@@ -22,10 +22,13 @@ class AdditionalInfoTableViewCell: FormComponentTableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func configureCell(title: String, subtitle: String, placeholder: String) {
+    func configureCell(title: String, subtitle: String, placeholder: String, prefilledDescription: String?) {
         setCellHeader(title: title,
                       subtitle: subtitle)
         additionalNotesTextField.placeholder = placeholder
+        if let prefilledDescription = prefilledDescription, prefilledDescription != "" {
+            additionalNotesTextField.text = prefilledDescription
+        }
     }
     
     override func buildComponents() {

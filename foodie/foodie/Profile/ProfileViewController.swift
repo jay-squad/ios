@@ -144,7 +144,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             if FBSDKAccessToken.currentAccessTokenIsActive() {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSummaryTableViewCellId,
                                                             for: indexPath) as? ProfileSummaryTableViewCell {
-                    //            cell.configureCell
+                    if let profileModel = profileModel {
+                        cell.configureCell(profileModel: profileModel)
+                    }
                     return cell
                 }
             } else {
@@ -159,6 +161,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
             if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSubmissionTableViewCellId,
                                                         for: indexPath) as? ProfileSubmissionTableViewCell {
+                cell.delegate = self
                 cell.configureCell(submission: getSubmissionFor(indexPath: indexPath))
                 return cell
             }
@@ -226,5 +229,27 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func getSubmissionFor(indexPath: IndexPath) -> Submission? {
         return viewModel?.sectionedSubmissions[indexPath.section-1][indexPath.row]
+    }
+}
+
+extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
+    func onResubmitButtonTapped(submission: Submission?) {
+        if let submission = submission {
+            let vc = UploadViewController()
+            if let restaurantId = submission.getRestaurantId() {
+                vc.restaurantId = restaurantId
+                
+                NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
+                    if let menuJSONs = json {
+                        vc.prepopulate(submission)
+                        vc.restaurantMenu = Menu(json: menuJSONs)
+                        let nc = UINavigationController(rootViewController: vc)
+                        vc.addDismissButton()
+                        
+                        self.present(nc, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
 }

@@ -76,18 +76,28 @@ class RestaurantDetailTableViewCell: UITableViewCell {
         mapView.addAnnotation(annotation)
         
         mapView.setRegion(MKCoordinateRegion(center: restaurant.location,
-                                             span: MKCoordinateSpan(latitudeDelta: 0.0275, longitudeDelta: 0.0275)),
+                                             span: MKCoordinateSpan(latitudeDelta: 0.0075, longitudeDelta: 0.0075)),
                           animated: false)
 
         mapView.setCenter(restaurant.location, animated: false)
         mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onMapViewTapped)))
+        mapView.showsUserLocation = true
         
-        restaurantWebsiteButton.addTarget(self,
-                                          action: #selector(onRestaurantWebsiteButtonTapped(_:)),
-                                          for: .touchUpInside)
-        restaurantCallButton.addTarget(self,
-                                       action: #selector(onRestaurantCallButtonTapped(_:)),
-                                       for: .touchUpInside)
+        if restaurant.website != "" {
+            restaurantWebsiteButton.addTarget(self,
+                                              action: #selector(onRestaurantWebsiteButtonTapped(_:)),
+                                              for: .touchUpInside)
+        } else if restaurantWebsiteButton != nil {
+            restaurantWebsiteButton.removeFromSuperview()
+        }
+        
+        if restaurant.phoneNum != "" {
+            restaurantCallButton.addTarget(self,
+                                           action: #selector(onRestaurantCallButtonTapped(_:)),
+                                           for: .touchUpInside)
+        } else if restaurantCallButton != nil {
+            restaurantCallButton.removeFromSuperview()
+        }
         
         buildComponents()
     }

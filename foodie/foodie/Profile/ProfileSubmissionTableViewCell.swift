@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProfileSubmissionTableViewCellDelegate: class {
+    func onResubmitButtonTapped(submission: Submission?)
+}
+
 class ProfileSubmissionTableViewCell: UITableViewCell {
     
     let kTitleFontSize: CGFloat = 18
@@ -24,9 +28,12 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     lazy var dishPriceLabel = UILabel()
     lazy var dishDescriptionLabel = UILabel()
     lazy var dishApprovalStatusLabel = UILabel()
+    lazy var dishResubmitButton = UIButton(type: .custom)
 
     var submission: Submission?
     var restaurant: Restaurant?
+    
+    weak var delegate: ProfileSubmissionTableViewCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -110,6 +117,9 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         dishDescriptionParagraphStyle.lineSpacing = 0
         dishDescriptionParagraphStyle.maximumLineHeight = kMaximumLineHeight
         dishApprovalStatusLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
+        
+        dishResubmitButton.setImage(UIImage(named: "btn_retry"), for: .normal)
+        dishResubmitButton.addTarget(self, action: #selector(onResubmitButtonTapped(_:)), for: .touchUpInside)
 
         let externalContainerView = UIView()
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -134,6 +144,7 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         horizontalStackView.addArrangedSubview(dishImageView)
         dishImageView.contentMode = .scaleAspectFill
         dishImageView.widthAnchor.constraint(equalToConstant: kImageWidth).isActive = true
+        dishImageView.clipsToBounds = true
 
         let verticalStackView = UIStackView()
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -151,6 +162,14 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         verticalStackView.addArrangedSubview(dishDescriptionLabel)
         verticalStackView.addArrangedSubview(spacer)
         verticalStackView.addArrangedSubview(dishApprovalStatusLabel)
+        
+        contentView.addSubview(dishResubmitButton)
+        dishResubmitButton.translatesAutoresizingMaskIntoConstraints = false
+        dishResubmitButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        dishResubmitButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        dishResubmitButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        dishResubmitButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        dishResubmitButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
 
         horizontalStackView.addArrangedSubview(verticalStackView)
 
@@ -164,12 +183,15 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         case .approved:
             labelString = "approved"
             labelColour = .ccMoneyGreen
+            dishResubmitButton.isHidden = false
         case .rejected:
             labelString = "not approved"
             labelColour = .ccErrorRed
+            dishResubmitButton.isHidden = false
         case .pending:
             labelString = "pending approval"
             labelColour = .ccPendingBlue
+            dishResubmitButton.isHidden = false
         default:
             break
         }
@@ -179,5 +201,9 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     
     private func getApprovalStatus(submission: Submission) -> Metadata.ApprovalStatus {
         return submission.metadata?.approvalStatus ?? .error
+    }
+    
+    @objc private func onResubmitButtonTapped(_ sender: UIButton) {
+        delegate?.onResubmitButtonTapped(submission: submission)
     }
 }

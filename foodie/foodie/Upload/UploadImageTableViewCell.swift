@@ -27,6 +27,12 @@ class UploadImageTableViewCell: UITableViewCell {
         uploadImageView.image = image
     }
     
+    func configureCell(imageUrl: String?) {
+        if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
+            uploadImageView.sd_setImage(with: url, completed: nil)
+        }
+    }
+    
     private func buildComponents() {
         selectionStyle = .none
         clipsToBounds = true

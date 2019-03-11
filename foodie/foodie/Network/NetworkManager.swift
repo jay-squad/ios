@@ -42,6 +42,7 @@ class NetworkManager {
         case insertMenuItem(restaurantId: Int, params: [String: AnyObject])
         case getProfile(userId: Int)
         case getProfileSelf()
+        case submitAmend(params: [String: AnyObject])
         
         static let baseURLString = "https://foodie-server-prod.herokuapp.com/"
         
@@ -63,6 +64,8 @@ class NetworkManager {
                 return .get
             case .getProfileSelf:
                 return .get
+            case .submitAmend:
+                return .post
             }
         }
         
@@ -84,6 +87,8 @@ class NetworkManager {
                 return "fbuser/\(userId)"
             case .getProfileSelf():
                 return "fbuser"
+            case .submitAmend(_):
+                return "suggest_amendment"
             }
         }
         
@@ -92,6 +97,8 @@ class NetworkManager {
             case .updateMenuItem(_, _, let imageUrl):
                 return RequestBodyFactory.shared.updateMenuItem(imageUrl: imageUrl)
             case .insertMenuItem(_, let params):
+                return params
+            case .submitAmend(let params):
                 return params
             default:
                 return [:]
@@ -185,6 +192,38 @@ class NetworkManager {
         AWSMobileClient.sharedInstance().signOut()
     }
     
+    func submitAmend(reason: String?,
+                     identifier: String?,
+                     specifics: String?,
+                     isReport: Bool,
+                     completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        
+        var json: JSON = JSON([:])
+        
+        if let reason = reason {
+            json["reason"].string = reason
+        }
+        if let identifier = identifier {
+            json["identifier"].string = identifier
+        }
+        if let specifics = specifics {
+            json["specifics"].string = specifics
+        }
+        json["amendment_type"].string = isReport ? "report" : "amendment"
+        
+        Alamofire.request(Router.submitAmend(params: json.dictionaryObject as! [String: AnyObject]))
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
+        }
+    }
+    
     func insertMenuItem(restaurantId: Int,
                         itemName: String?,
                         itemImage: UIImage?,
@@ -196,34 +235,51 @@ class NetworkManager {
         
         uploadImage(image: itemImage, restaurantId: restaurantId) { (url, error) in
             if let urlString = url?.absoluteString, error == nil {
-                
-                var json: JSON = JSON([:])
-                
-                json["item_name"].string = itemName!
-                json["item_image"].string = urlString
-                
-                if let description = description {
-                    json["description"].string = description
-                }
-                if let sectionName = sectionName {
-                    json["section_name"].string = sectionName
-                }
-                if let price = price {
-                    json["price"].float = price
-                }
-                
-                Alamofire.request(Router.insertMenuItem(restaurantId: restaurantId,
-                                                        params: json.dictionaryObject! as [String: AnyObject]))
-                    .responseJSON { response in
-                        let code = self.getStatusCode( response: response )
-                        switch response.result {
-                        case .success(let value):
-                            completion(JSON(value), nil, code)
-                        case .failure(let error):
-                            completion(nil, error, code)
-                        }
-                }
+                self.insertMenuItem(restaurantId: restaurantId,
+                                   itemName: itemName,
+                                   itemImageUrl: urlString,
+                                   description: description,
+                                   sectionName: sectionName,
+                                   price: price,
+                                   completion: completion)
             }
+        }
+    }
+    
+    func insertMenuItem(restaurantId: Int,
+                        itemName: String?,
+                        itemImageUrl: String?,
+                        description: String?,
+                        sectionName: String?,
+                        price: Float?,
+                        completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        guard restaurantId >= 0, itemName != nil, itemImageUrl != nil else { return }
+
+        var json: JSON = JSON([:])
+        
+        json["item_name"].string = itemName!
+        json["item_image"].string = itemImageUrl
+        
+        if let description = description {
+            json["description"].string = description
+        }
+        if let sectionName = sectionName {
+            json["section_name"].string = sectionName
+        }
+        if let price = price {
+            json["price"].float = price
+        }
+        
+        Alamofire.request(Router.insertMenuItem(restaurantId: restaurantId,
+                                                params: json.dictionaryObject! as [String: AnyObject]))
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
         }
     }
     

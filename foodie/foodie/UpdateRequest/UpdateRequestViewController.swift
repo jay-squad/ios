@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GradientLoadingBar
 
 class UpdateRequestViewController: UIViewController {
 
@@ -94,9 +95,11 @@ class UpdateRequestViewController: UIViewController {
     
     var dataSource: UpdateRequestType
     var selectedIndexPath: IndexPath?
+    var id: String?
     
-    init(_ type: UpdateRequestType) {
+    init(_ type: UpdateRequestType, id: String) {
         dataSource = type
+        self.id = id
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -157,33 +160,52 @@ class UpdateRequestViewController: UIViewController {
     @objc private func onSendButtonTapped(_ sender: UIBarButtonItem?) {
         if let row = selectedIndexPath?.row {
             let reason = dataSource.reasons[row]
-            let description: String?
+            var description: String?
             if let cell = tableView.cellForRow(at: IndexPath(row: tableView.numberOfRows(inSection: 0)-1, section: 0))
                 as? AdditionalInfoTableViewCell,
                 let desc = cell.additionalNotesTextField.text {
                 description = desc
             }
             
-            // SEND ACTION HERE
+            var isReport: Bool
+            switch dataSource {
+            case .dishReport, .sectionReport, .restaurantReport:
+                isReport = true
+            case .dishAmend, .sectionAmend, .restaurantAmend:
+                isReport = false
+            default:
+                isReport = false
+            }
             
-            self.dismiss(animated: true, completion: nil)
+            GradientLoadingBar.shared.show()
+            sender?.isEnabled = false
+            NetworkManager.shared.submitAmend(reason: reason,
+                                              identifier: id ?? "",
+                                              specifics: description ?? "",
+                                              isReport: isReport) { (json, error, code) in
+                GradientLoadingBar.shared.hide()
+                sender?.isEnabled = true
+                if error == nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
         }
         
         // TODO: ux feedback when no reason is selected
     }
     
-    public static func presentActionSheet(_ source: UpdateSource, sender: UIViewController) {
+    public static func presentActionSheet(_ source: UpdateSource, sender: UIViewController, id: String) {
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let amend = UIAlertAction(title: "Amend this \(source.rawValue)", style: .default) { _ in
             var vc: UpdateRequestViewController
             switch source {
             case .dish:
-                vc = UpdateRequestViewController(.dishAmend)
+                vc = UpdateRequestViewController(.dishAmend, id: id)
             case .restaurant:
-                vc = UpdateRequestViewController(.restaurantAmend)
+                vc = UpdateRequestViewController(.restaurantAmend, id: id)
             case .section:
-                vc = UpdateRequestViewController(.sectionAmend)
+                vc = UpdateRequestViewController(.sectionAmend, id: id)
             }
             presentUpdateRequest(vc)
         }
@@ -191,11 +213,11 @@ class UpdateRequestViewController: UIViewController {
             var vc: UpdateRequestViewController
             switch source {
             case .dish:
-                vc = UpdateRequestViewController(.dishReport)
+                vc = UpdateRequestViewController(.dishReport, id: id)
             case .restaurant:
-                vc = UpdateRequestViewController(.restaurantReport)
+                vc = UpdateRequestViewController(.restaurantReport, id: id)
             case .section:
-                vc = UpdateRequestViewController(.sectionReport)
+                vc = UpdateRequestViewController(.sectionReport, id: id)
             }
             presentUpdateRequest(vc)
         }
@@ -218,7 +240,7 @@ extension UpdateRequestViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section)-1,
             let cell = tableView.dequeueReusableCell(withIdentifier: kAdditionalInfoTableViewCellId) as? AdditionalInfoTableViewCell {
-            cell.configureCell(title: "Additional details", subtitle: "Give further details/reasoning if you have any to make the review process smoother", placeholder: "e.g. \"spaghetti\" was spelled wrong")
+            cell.configureCell(title: "Additional details", subtitle: "Give further details/reasoning if you have any to make the review process smoother", placeholder: "e.g. \"spaghetti\" was spelled wrong", prefilledDescription: nil)
             return cell
         }
         

@@ -29,6 +29,8 @@ class Dish {
             for image in images {
                 dishImages.append(DishImage(json: image))
             }
+        } else {
+            dishImages.append(DishImage(json: json["image"]))
         }
         itemMetadata = Metadata(json: json["item"])
     }

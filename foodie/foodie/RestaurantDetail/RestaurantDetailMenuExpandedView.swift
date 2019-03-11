@@ -138,3 +138,14 @@ class RestaurantDetailMenuExpandedView: UIView {
     }
     
 }
+
+extension ImageSlideshow {
+    override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        if hitView == self {
+            return nil
+        } else {
+            return hitView
+        }
+    }
+}

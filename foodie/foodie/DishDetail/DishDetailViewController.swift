@@ -64,7 +64,9 @@ class DishDetailViewController: UIViewController {
     }
     
     @objc private func onMoreButtonTapped() {
-        UpdateRequestViewController.presentActionSheet(.dish, sender: self)
+        if let restaurantId = restaurant?.id, let dishId = dish?.dishId {
+            UpdateRequestViewController.presentActionSheet(.dish, sender: self, id: "\(restaurantId),\(dishId)")
+        }
     }
     
     public static func push(_ navigationController: UINavigationController?, _ dish: Dish?, _ restaurant: Restaurant?) {
