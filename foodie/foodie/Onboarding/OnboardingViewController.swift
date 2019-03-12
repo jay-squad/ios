@@ -140,15 +140,15 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         switch index {
         case 0:
             imageView.image = UIImage(named: "onboarding_1")
-            titleLabel.text = "One app,\n1M+ menus"
+            titleLabel.text = "One app,\nmany menus"
             subtitleLabel.text = "Never question what your\nfood will look like ever again."
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
             legalLabel.isHidden = true
         case 1:
             imageView.image = UIImage(named: "onboarding_2")
-            titleLabel.text = "Get money\nback on meals"
-            subtitleLabel.text = "Make cash by simply trying\nnew dishes."
+            titleLabel.text = "Get points\nfrom meals"
+            subtitleLabel.text = "Earn points by simply trying\nnew dishes."
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
             legalLabel.isHidden = true

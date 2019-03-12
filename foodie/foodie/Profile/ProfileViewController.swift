@@ -74,6 +74,7 @@ class ProfileViewController: UIViewController {
             }
         } else {
             viewModel = nil
+            self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
     }
@@ -84,7 +85,7 @@ class ProfileViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .onDrag
         
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+//        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
     }

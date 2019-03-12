@@ -109,13 +109,13 @@ class ProfileSummaryTableViewCell: UITableViewCell {
 
     private func setNumberOfDishesLabel(numberOfDishes: Int) {
         let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(numberOfDishes) dishes added", attributes: defaultLabelAttributes)
-        numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: NSRange(location: 0, length: 1))
+        numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: NSRange(location: 0, length: "\(numberOfDishes)".count))
         numberOfDishesLabel.attributedText = numberOfDishesAttributedString
     }
 
     private func setNumberOfPointsLabel(numberOfPoints: Int) {
         let numberOfPointsAttributedString = NSMutableAttributedString(string: "\(numberOfPoints) points", attributes: defaultLabelAttributes)
-        numberOfPointsAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 28)!, range: NSRange(location: 0, length: 1))
+        numberOfPointsAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 28)!, range: NSRange(location: 0, length: "\(numberOfPoints)".count))
         numberOfPointsLabel.attributedText = numberOfPointsAttributedString
     }
 }

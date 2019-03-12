@@ -38,7 +38,7 @@ class RestaurantDetailMenuListTableViewCell: UITableViewCell {
         externalContainerView.translatesAutoresizingMaskIntoConstraints = false
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.font = UIFont(font: .helveticaNeueBold, size: 18)
+        nameLabel.font = UIFont(font: .helveticaNeue, size: 18)
         nameLabel.textColor = UIColor.cc45DarkGrey
         
         priceLabel.translatesAutoresizingMaskIntoConstraints = false

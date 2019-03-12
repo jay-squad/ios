@@ -73,7 +73,7 @@ class SearchDishTableViewCell: UITableViewCell {
         externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         externalContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         externalContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6.0).isActive = true
+        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2.0).isActive = true
     }
 
 }

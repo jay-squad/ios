@@ -81,9 +81,9 @@ class RestaurantDetailMenuExpandedView: UIView {
         
         let metadataStackView = UIStackView()
         metadataStackView.translatesAutoresizingMaskIntoConstraints = false
-        metadataStackView.layoutMargins = UIEdgeInsets(top: 8,
+        metadataStackView.layoutMargins = UIEdgeInsets(top: CommonMargins.metadataStackViewHorizonalMargin,
                                                        left: CommonMargins.metadataStackViewHorizonalMargin,
-                                                       bottom: 8,
+                                                       bottom: 0,
                                                        right: CommonMargins.metadataStackViewHorizonalMargin)
         metadataStackView.isLayoutMarginsRelativeArrangement = true
         metadataStackView.spacing = CommonMargins.metadataStackViewSpacing
@@ -101,7 +101,7 @@ class RestaurantDetailMenuExpandedView: UIView {
         priceLabel.textColor = UIColor.cc45DarkGrey
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.font = UIFont(font: .avenirBook, size: 14)
+        descriptionLabel.font = UIFont(font: .avenirBook, size: 15)
         descriptionLabel.textColor = UIColor.ccGreyishBrown
         descriptionLabel.numberOfLines = 5
         dishDescriptionParagraphStyle.lineSpacing = 0

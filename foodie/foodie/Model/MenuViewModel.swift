@@ -29,10 +29,6 @@ class MenuViewModel {
     func setDataSource(menu: Menu) {
         var sectionindex: Int = 0
         for menusection in menu.sections {
-            if menusection.name == kNoSection && menusection.dishes.count == 0 {
-                continue
-            }
-
             orders[.grid]?.append([])
             orders[.expanded]?.append([])
             orders[.list]?.append([])

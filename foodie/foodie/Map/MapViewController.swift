@@ -73,26 +73,26 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let restaurantRequest = MKLocalSearch.Request()
-        restaurantRequest.naturalLanguageQuery = "restaurant"
-        restaurantRequest.region = mapView.region
-        
-        let restaurantSearch = MKLocalSearch(request: restaurantRequest)
-        restaurantSearch.start { (response, _) in
-//            print(response)
-            if let response = response {
-                for mapItem in response.mapItems where !(self.annotations[mapItem.placemark.coordinate] != nil) {
-                    if mapItem.isCurrentLocation { continue; }
-                    let point = MKPointAnnotation()
-                    point.coordinate = mapItem.placemark.coordinate
-                    point.title = mapItem.name
-                    self.mapItems[mapItem.placemark.coordinate] = mapItem
-                    self.annotations[mapItem.placemark.coordinate] = point
-                }
-                
-                mapView.addAnnotations(Array(self.annotations.values.map { $0 }))
-            }
-        }
+//        let restaurantRequest = MKLocalSearch.Request()
+//        restaurantRequest.naturalLanguageQuery = "restaurant"
+//        restaurantRequest.region = mapView.region
+//
+//        let restaurantSearch = MKLocalSearch(request: restaurantRequest)
+//        restaurantSearch.start { (response, _) in
+////            print(response)
+//            if let response = response {
+//                for mapItem in response.mapItems where !(self.annotations[mapItem.placemark.coordinate] != nil) {
+//                    if mapItem.isCurrentLocation { continue; }
+//                    let point = MKPointAnnotation()
+//                    point.coordinate = mapItem.placemark.coordinate
+//                    point.title = mapItem.name
+//                    self.mapItems[mapItem.placemark.coordinate] = mapItem
+//                    self.annotations[mapItem.placemark.coordinate] = point
+//                }
+//
+//                mapView.addAnnotations(Array(self.annotations.values.map { $0 }))
+//            }
+//        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

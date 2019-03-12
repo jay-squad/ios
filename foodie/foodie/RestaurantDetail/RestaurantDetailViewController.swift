@@ -373,7 +373,13 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
         case 0, 1:
             return 0
         default:
-            return kSectionHeaderHeight
+            if let menu = menu {
+                if menu.sections[section-2].dishes.count == 0 {
+                    return 0
+                }
+                return kSectionHeaderHeight
+            }
+            return 0
         }
     }
     
@@ -388,7 +394,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let header = view as? UITableViewHeaderFooterView {
-            header.textLabel?.font = UIFont(font: .helveticaNeueMedium, size: 18)
+            header.textLabel?.font = UIFont(font: .helveticaNeueBold, size: 18)
             header.textLabel?.textColor = UIColor.cc74MediumGrey
             header.backgroundView?.backgroundColor = UIColor.white
             

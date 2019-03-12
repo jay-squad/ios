@@ -27,8 +27,8 @@ class SearchViewController: UIViewController {
     let searchTextField = UITextField()
     let searchActionButton = UIButton()
     let searchTypeToggleButton = UIButton()
-    let searchByDishText = "Search by dish"
-    let searchByRestaurantText = "Search by restaurant"
+    let searchByDishText = "Searching by dish"
+    let searchByRestaurantText = "Searching by restaurant"
     
     var searchResults: [SearchResult] = []
     var searchResultType: SearchResult.ResultType = .restaurant
@@ -245,9 +245,9 @@ class SearchViewController: UIViewController {
                         let pointInCell = gestureRecognizer.location(in: cell)
 
                         if cell.searchResult1 != nil, cell.viewComponent1.frame.contains(pointInCell) {
-                            RestaurantDetailViewController.push(self.navigationController, cell.searchResult1!.restaurant)
+                            DishDetailViewController.push(self.navigationController, cell.searchResult1!.dish, cell.searchResult1?.restaurant)
                         } else if cell.searchResult2 != nil, cell.viewComponent2.frame.contains(pointInCell) {
-                            RestaurantDetailViewController.push( self.navigationController, cell.searchResult2!.restaurant)
+                            DishDetailViewController.push(self.navigationController, cell.searchResult2!.dish, cell.searchResult2?.restaurant)
                         }
                     }
                 }

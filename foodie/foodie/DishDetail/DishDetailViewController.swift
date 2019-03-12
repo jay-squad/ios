@@ -35,6 +35,11 @@ class DishDetailViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     private func buildComponents() {
         view.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,6 +94,7 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kDishMetadataTableViewCellId) as? DishMetadataTableViewCell {
                 cell.configureCell(dish)
+                cell.delegate = self
                 return cell
             }
         default:
@@ -104,5 +110,11 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
+    }
+}
+
+extension DishDetailViewController: DishMetadataTableViewCellDelegate {
+    func onRestaurantTapped(restaurant: Restaurant) {
+        RestaurantDetailViewController.push(self.navigationController, restaurant)
     }
 }

@@ -170,6 +170,7 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         dishResubmitButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
         dishResubmitButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
         dishResubmitButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        dishResubmitButton.isHidden = true
 
         horizontalStackView.addArrangedSubview(verticalStackView)
 
@@ -183,7 +184,7 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         case .approved:
             labelString = "approved"
             labelColour = .ccMoneyGreen
-            dishResubmitButton.isHidden = false
+            dishResubmitButton.isHidden = true
         case .rejected:
             labelString = "not approved"
             labelColour = .ccErrorRed
@@ -191,7 +192,7 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         case .pending:
             labelString = "pending approval"
             labelColour = .ccPendingBlue
-            dishResubmitButton.isHidden = false
+            dishResubmitButton.isHidden = true
         default:
             break
         }

@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 
 class CommonMargins {
-    static let metadataStackViewHorizonalMargin: CGFloat = 12.0
-    static let metadataStackViewSpacing: CGFloat = 3.0
+    static let metadataStackViewHorizonalMargin: CGFloat = 15.0
+    static let metadataStackViewSpacing: CGFloat = 15.0
 }
