@@ -1,0 +1,18 @@
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+  - foodieTests
+  - foodieUITests
+disabled_rules:
+  - function_body_length
+  - file_length
+  - type_name
+  - identifier_name
+  - trailing_whitespace
+  - cyclomatic_complexity
+  - empty_enum_arguments
+  - todo
+  - function_parameter_count
+  - line_length
+  - type_body_length
+  - discarded_notification_center_observer
+  - force_cast

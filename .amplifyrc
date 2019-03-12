@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "iosfoodie-20190131175433-authRole",
+            "UnauthRoleArn": "arn:aws:iam::870237454365:role/iosfoodie-20190131175433-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::870237454365:role/iosfoodie-20190131175433-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "iosfoodie-20190131175433-deployment",
+            "UnauthRoleName": "iosfoodie-20190131175433-unauthRole",
+            "StackName": "iosfoodie-20190131175433",
+            "StackId": "arn:aws:cloudformation:us-east-2:870237454365:stack/iosfoodie-20190131175433/2d5cc2c0-25ab-11e9-828f-0a84bc2bb20a"
+        }
+    }
+}
