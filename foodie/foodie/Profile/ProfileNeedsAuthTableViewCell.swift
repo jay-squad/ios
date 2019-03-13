@@ -42,7 +42,7 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Log in to upload dishes and earn rewards!"
+        label.text = "Log in to upload dishes, earn points, and contribute to Foodie!"
         label.font = UIFont(font: .helveticaNeueBold, size: 18.0)
         label.textColor = .cc45DarkGrey
         label.numberOfLines = 0

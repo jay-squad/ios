@@ -27,25 +27,13 @@ extension DateFormatter {
     
     static func friendlyStringForDate(date: Date) -> String {
         // Fetch the default calendar
-        let calendar = Calendar.current
-        let unitFlags: NSCalendar.Unit = [.day]
-        
-        // Compute days difference between the two
-        let delta = (calendar as NSCalendar).components(unitFlags, from: date, to: Date(), options: [])
-        
-        if let day = delta.day {
-            
-            switch day {
-            case 0:
-                return "Today"
-                
-            case 1:
-                return "Yesterday"
-                
-            default:
-                return FoodieDateFormatter.shared.string(from: date)
-            }
+        let calendar = Calendar.current        
+        if calendar.isDateInToday(date) {
+            return "Today"
+        } else if calendar.isDateInYesterday(date) {
+            return "Yesterday"
+        } else {
+            return FoodieDateFormatter.shared.string(from: date)
         }
-        return ""
     }
 }

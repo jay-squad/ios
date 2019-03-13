@@ -11,6 +11,8 @@ import CoreLocation
 import SwiftyJSON
 import DKImagePickerController
 import Photos.PHImageManager
+import FBSDKCoreKit
+import NotificationBannerSwift
 
 let kRestaurantDetailTableViewCellId = "RestaurantDetailTableViewCellId"
 let kRestaurantDetailDisplayOptionsTableViewCellId = "RestaurantDetailDisplayOptionsTableViewCellId"
@@ -95,8 +97,8 @@ class RestaurantDetailViewController: UIViewController {
         setupNibs()
         setupTableView()
         setupDataSource()
-        setupNavigation()
         setupLocationServices()
+        setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +120,16 @@ class RestaurantDetailViewController: UIViewController {
     }
     
     @objc private func onUploadButtonTapped() {
+        guard FBSDKAccessToken.currentAccessTokenIsActive() else {
+            let banner = NotificationBanner(title: nil, subtitle: "You must be logged in to upload content", style: .info)
+            banner.haptic = .none
+            banner.subtitleLabel?.textAlignment = .center
+            banner.show()
+            if let tabBarVCs = tabBarController?.viewControllers {
+                tabBarController?.selectedViewController = tabBarVCs[tabBarVCs.count-1]
+            }
+            return
+        }
         guard let restaurant = restaurant else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         

@@ -47,6 +47,9 @@ class Submission {
         if let dish = dish {
             return dish.restaurantId
         }
+        if let dishImage = dishImage {
+            return dishImage.restaurantId
+        }
         if let menuSection = menuSection {
             return menuSection.restaurantId
         }

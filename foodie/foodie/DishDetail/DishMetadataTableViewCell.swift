@@ -73,7 +73,7 @@ class DishMetadataTableViewCell: UITableViewCell {
                                                        right: CommonMargins.metadataStackViewHorizonalMargin)
         
         contentView.addSubview(stackView)
-        contentView.applyAutoLayoutInsetsForAllMargins(to: stackView, with: .zero)
+        contentView.applyAutoLayoutInsetsForAllMargins(to: stackView, with: UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0))
         
         restaurantLabelButton.translatesAutoresizingMaskIntoConstraints = false
         restaurantLabelButton.heightAnchor.constraint(equalToConstant: 16).isActive = true

@@ -88,6 +88,10 @@ PODS:
   - ImageSlideshow/SDWebImage (1.7.0):
     - ImageSlideshow/Core
     - SDWebImage (< 5.0, >= 3.7)
+  - MarqueeLabel/Swift (3.2.0)
+  - NotificationBannerSwift (2.0.1):
+    - MarqueeLabel/Swift (~> 3.2.0)
+    - SnapKit (~> 4.2.0)
   - Observable (1.4.0)
   - SDWebImage (4.4.3):
     - SDWebImage/Core (= 4.4.3)
@@ -95,6 +99,7 @@ PODS:
   - SDWebImage/GIF (4.4.3):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
+  - SnapKit (4.2.0)
   - SwiftLint (0.29.3)
   - SwiftyJSON (4.2.0)
   - SwiftyUserDefaults (4.0.0-alpha.1)
@@ -118,6 +123,7 @@ DEPENDENCIES:
   - FBSDKLoginKit (~> 4.40.0)
   - GradientLoadingBar
   - ImageSlideshow/SDWebImage
+  - NotificationBannerSwift
   - SDWebImage (~> 4.0)
   - SwiftLint (~> 0.25)
   - SwiftyJSON (~> 4.0)
@@ -151,8 +157,11 @@ SPEC REPOS:
     - FLAnimatedImage
     - GradientLoadingBar
     - ImageSlideshow
+    - MarqueeLabel
+    - NotificationBannerSwift
     - Observable
     - SDWebImage
+    - SnapKit
     - SwiftLint
     - SwiftyJSON
     - SwiftyUserDefaults
@@ -185,8 +194,11 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   GradientLoadingBar: f8fcc481f121b3ae651c7b27abec540b7be7fe60
   ImageSlideshow: f8eec5e37a980f60923b585ff23b0e140fd24018
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
+  NotificationBannerSwift: 007774aa590cc9680647b92b2f217bef5c00c32c
   Observable: 4b2ee25de74d007d57acdff801925e39f9613544
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftLint: bfa7ca7b4d170cfaf0d236ca3ffd969e88a2f002
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
@@ -195,6 +207,6 @@ SPEC CHECKSUMS:
   UIFontComplete: 5b0f59a83308816c610164b79a2540b3520f9b72
   Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: 4f3624b44c7c37c86a63c6a38622189017e17ef6
+PODFILE CHECKSUM: 42f86c55a4670566688f1644231abbc283608707
 
 COCOAPODS: 1.5.3

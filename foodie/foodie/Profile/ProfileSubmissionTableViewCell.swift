@@ -18,7 +18,7 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     let kDefaultFontSize: CGFloat = 14
     let kDefaultPadding: CGFloat = 16
     let kMaximumLineHeight: CGFloat = 16
-    let kCellHeight: CGFloat = 170
+    let kCellHeight: CGFloat = 180
     let kImageWidth: CGFloat = 120
     let dishDescriptionParagraphStyle = NSMutableParagraphStyle()
     
@@ -31,7 +31,6 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     lazy var dishResubmitButton = UIButton(type: .custom)
 
     var submission: Submission?
-    var restaurant: Restaurant?
     
     weak var delegate: ProfileSubmissionTableViewCellDelegate?
 
@@ -48,39 +47,69 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     func configureCell(submission: Submission?) {
         if let submission = submission {
             self.submission = submission
-            let approvalStatus = getApprovalStatus(submission: submission)
+            
+            dishNameLabel.text = nil
+            dishRestaurantLabel.text = nil
+            dishPriceLabel.text = nil
+            dishDescriptionLabel.text = nil
+            setDishApprovalStatusLabel(status: .error)
             
             if let dish = submission.dish {
-                dishNameLabel.text = dish.name
+                updateCellWithDish(dish: dish, submission: submission)
                 
-                self.dishRestaurantLabel.text = " "
-                // grab restaurant data
-                NetworkManager.shared.getRestaurant(restaurantId: dish.restaurantId) { (json, _, _) in
-                    if let restaurantJSON = json {
-                        self.restaurant = Restaurant(json: restaurantJSON)
-                        DispatchQueue.main.async {
-                            self.dishRestaurantLabel.text = self.restaurant?.name
-                        }
-                    }
-                }
-                
-                dishPriceLabel.text = String(format: "$ %.2f", dish.price)
-                
-                let descriptionLabelAttributedString = NSMutableAttributedString(string: dish.description,
-                                                                                 attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
-                                                                                              .kern: -0.5])
-                dishDescriptionLabel.attributedText = descriptionLabelAttributedString
-                
-                setDishApprovalStatusLabel(status: getApprovalStatus(submission: submission))
-                
-                if let imageUrl = submission.dishImage?.image {
-                    dishImageView.sd_setImage(with: URL(string: imageUrl))
-                } else {
-                    dishImageView.image = nil
-                }
             }
             
+            dishImageView.image = nil
+            if let dishImage = submission.dishImage {
+                if submission.dish == nil {
+                    if let restaurantId = dishImage.restaurantId {
+                        NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
+                            if let menuJSONs = json {
+                                let menu = Menu(json: menuJSONs)
+                                if let dish = menu.getDish(id: dishImage.dishId) {
+                                    self.submission?.dish = dish
+                                    self.submission?.dish?.dishImages = [dishImage]
+                                    self.updateCellWithDish(dish: dish, submission: submission)
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    self.submission?.dish?.dishImages = [dishImage]
+                }
+                if let imageUrl = dishImage.image {
+                    dishImageView.sd_setImage(with: URL(string: imageUrl))
+                }
+            }
         }
+    }
+    
+    private func updateCellWithDish(dish: Dish, submission: Submission) {
+        dishNameLabel.text = dish.name
+        
+        dishRestaurantLabel.text = " "
+        // grab restaurant data if needed
+        if self.submission?.restaurant == nil {
+            NetworkManager.shared.getRestaurant(restaurantId: dish.restaurantId) { (json, _, _) in
+                if let restaurantJSON = json {
+                    self.submission?.restaurant = Restaurant(json: restaurantJSON)
+                    DispatchQueue.main.async {
+                        self.dishRestaurantLabel.text = self.submission?.restaurant?.name
+                    }
+                }
+            }
+        } else {
+            self.dishRestaurantLabel.text = self.submission?.restaurant?.name
+        }
+        
+        dishPriceLabel.text = String(format: "$ %.2f", dish.price)
+        
+        let descriptionLabelAttributedString = NSMutableAttributedString(string: dish.description,
+                                                                         attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
+                                                                                      .kern: -0.5])
+        dishDescriptionLabel.attributedText = descriptionLabelAttributedString
+        
+        setDishApprovalStatusLabel(status: getApprovalStatus(submission: submission))
     }
     
     private func setRestaurantInformation() {
@@ -107,16 +136,28 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
 
         dishNameLabel.font = UIFont(font: .helveticaNeueBold, size: kTitleFontSize)
         dishNameLabel.textColor = .cc45DarkGrey
+        dishNameLabel.numberOfLines = 2
+        dishNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        dishNameLabel.text = " "
         dishRestaurantLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
         dishRestaurantLabel.textColor = .cc45DarkGrey
+        dishRestaurantLabel.numberOfLines = 1
+        dishRestaurantLabel.translatesAutoresizingMaskIntoConstraints = false
+        dishRestaurantLabel.text = " "
         dishPriceLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
         dishPriceLabel.textColor = .cc45DarkGrey
+        dishPriceLabel.translatesAutoresizingMaskIntoConstraints = false
+        dishPriceLabel.text = " "
         dishDescriptionLabel.font = UIFont(font: .avenirBook, size: kDefaultFontSize)
         dishDescriptionLabel.textColor = .ccGreyishBrown
-        dishDescriptionLabel.numberOfLines = 3
+        dishDescriptionLabel.numberOfLines = 2
+        dishDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        dishDescriptionLabel.text = " "
         dishDescriptionParagraphStyle.lineSpacing = 0
         dishDescriptionParagraphStyle.maximumLineHeight = kMaximumLineHeight
         dishApprovalStatusLabel.font = UIFont(font: .helveticaNeue, size: kDefaultFontSize)
+        dishApprovalStatusLabel.translatesAutoresizingMaskIntoConstraints = false
+        dishApprovalStatusLabel.text = " "
         
         dishResubmitButton.setImage(UIImage(named: "btn_retry"), for: .normal)
         dishResubmitButton.addTarget(self, action: #selector(onResubmitButtonTapped(_:)), for: .touchUpInside)
@@ -194,7 +235,8 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
             labelColour = .ccPendingBlue
             dishResubmitButton.isHidden = true
         default:
-            break
+            labelString = ""
+            dishResubmitButton.isHidden = true
         }
         dishApprovalStatusLabel.text = labelString
         dishApprovalStatusLabel.textColor = labelColour

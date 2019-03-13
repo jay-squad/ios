@@ -49,13 +49,24 @@ class UpdateRequestTableViewCell: UITableViewCell {
         
         contentView.applyAutoLayoutInsetsForAllMargins(to: stackView, with: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
 
+        let kMarkerSize: CGFloat = 25
         selectedMarker.image = UIImage(named: "icn_unchecked")
         selectedMarker.contentMode = .scaleAspectFit
         selectedMarker.translatesAutoresizingMaskIntoConstraints = false
-        selectedMarker.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        selectedMarker.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        stackView.addArrangedSubview(selectedMarker)
+        selectedMarker.widthAnchor.constraint(equalToConstant: kMarkerSize).isActive = true
+        selectedMarker.heightAnchor.constraint(equalToConstant: kMarkerSize).isActive = true
         
+        let selectedMarkerContainer = UIView()
+        selectedMarkerContainer.translatesAutoresizingMaskIntoConstraints = false
+        selectedMarkerContainer.addSubview(selectedMarker)
+        selectedMarkerContainer.centerXAnchor.constraint(equalTo: selectedMarker.centerXAnchor).isActive = true
+        selectedMarkerContainer.centerYAnchor.constraint(equalTo: selectedMarker.centerYAnchor).isActive = true
+        selectedMarkerContainer.widthAnchor.constraint(equalToConstant: kMarkerSize).isActive = true
+        selectedMarkerContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: kMarkerSize).isActive = true
+        
+        stackView.addArrangedSubview(selectedMarkerContainer)
+        
+        reasonLabel.translatesAutoresizingMaskIntoConstraints = false
         reasonLabel.font = UIFont(font: .helveticaNeue, size: 16)
         reasonLabel.numberOfLines = 0
         reasonLabel.textColor = UIColor.cc45DarkGrey

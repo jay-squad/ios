@@ -14,10 +14,12 @@ class DishImage {
     var image: String?
     var imageMetadata: Metadata
     var dishId: Int = -1
+    var restaurantId: Int?
     
     init(json: JSON) {
         image = json["link"].string
         imageMetadata = Metadata(json: json)
         dishId = json["menu_item_id"].int ?? -1
+        restaurantId = json["restaurant_id"].int
     }
 }

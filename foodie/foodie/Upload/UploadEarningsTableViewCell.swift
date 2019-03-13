@@ -31,8 +31,8 @@ class UploadEarningsTableViewCell: FormComponentTableViewCell {
         super.buildComponents()
         
         setCellHeader(title: "Earnings",
-                      subtitle: "Your earnings is based on the amount of submissions " +
-                                "that already exist for this dish.")
+                      subtitle: "Once your submission is approved, the points you earn " +
+                                "for this dish will be added to your account.")
         
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false

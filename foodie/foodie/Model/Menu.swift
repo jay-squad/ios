@@ -18,12 +18,17 @@ class Menu {
     init(json: JSON) {
         var i = 0
         
+        var sectionDeduplicator: [String: MenuSection] = [:]
+        
         for section in json.array ?? [] {
             let newSection = MenuSection(json: section, rank: i)
-//            if newSection.dishes.count > 0 {
+            if sectionDeduplicator[newSection.name] == nil {
                 sections.append(newSection)
+                sectionDeduplicator[newSection.name] = newSection
                 i += 1
-//            }
+            } else {
+                sectionDeduplicator[newSection.name]?.dishes.append(contentsOf: newSection.dishes)
+            }
             flatDishList.append(contentsOf: newSection.dishes.map({ $0.name }))
         }
         sections.sort {$0.rank < $1.rank}
@@ -34,11 +39,20 @@ class Menu {
         return sections[section].dishes[row]
     }
     
+    func getDish(id: Int) -> Dish? {
+        for section in sections {
+            for dish in section.dishes where dish.dishId == id {
+                return dish
+            }
+        }
+        return nil
+    }
+    
 }
 
 class MenuSection {
     
-    var name: String?
+    var name: String = kNoSection
     var rank: Int = -1
     var dishes: [Dish] = []
     var metadata: Metadata
@@ -48,7 +62,7 @@ class MenuSection {
     init(json: JSON, rank: Int) {
         self.rank = rank
         if let arr = json.array {
-            name = arr[0].string
+            name = arr[0].string ?? kNoSection
             if name == "" {
                 name = kNoSection
             }
@@ -62,7 +76,7 @@ class MenuSection {
     }
     
     init(json: JSON) {
-        name = json["normalized_name"].string
+        name = json["normalized_name"].string ?? kNoSection
         restaurantId = json["restaurant_id"].int ?? -1
         metadata = Metadata(json: json)
     }

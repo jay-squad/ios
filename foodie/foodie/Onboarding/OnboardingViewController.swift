@@ -141,21 +141,21 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         case 0:
             imageView.image = UIImage(named: "onboarding_1")
             titleLabel.text = "One app,\nmany menus"
-            subtitleLabel.text = "Never question what your\nfood will look like ever again."
+            subtitleLabel.text = "Never question what your\nfood will look like ever again"
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
             legalLabel.isHidden = true
         case 1:
             imageView.image = UIImage(named: "onboarding_2")
             titleLabel.text = "Get points\nfrom meals"
-            subtitleLabel.text = "Earn points by simply trying\nnew dishes."
+            subtitleLabel.text = "Simply take images of your restaurant orders to earn points"
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
             legalLabel.isHidden = true
         case 2:
             imageView.image = UIImage(named: "onboarding_3")
             titleLabel.text = "Create an\naccount now"
-            subtitleLabel.text = "Personalize your experience and\nstart earning rewards."
+            subtitleLabel.text = "Crowdsourced menus await,\nbecome a contributor today"
             nextButton.layer.borderWidth = 0.0
             nextButton.setTitle("skip for now", for: .normal)
             legalLabel.isHidden = false

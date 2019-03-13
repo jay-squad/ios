@@ -8,6 +8,8 @@
 
 import UIKit
 import GradientLoadingBar
+import FBSDKLoginKit
+import NotificationBannerSwift
 
 class UpdateRequestViewController: UIViewController {
 
@@ -55,18 +57,22 @@ class UpdateRequestViewController: UIViewController {
                         "The description contains offensive text",
                         "The dish does not exist",
                         "The image does not match the dish",
-                        "The description is misleading"]
+                        "The description is misleading",
+                        "Other"]
             case .dishAmend:
                 return ["The dish name contains a typo",
                         "The dish is in the wrong section",
                         "The description contains a typo",
                         "The description could be better",
-                        "The price is wrong"]
+                        "The price is wrong",
+                        "Other"]
             case .sectionReport:
                 return ["The section name contains offensive text",
-                        "The section name does not exist"]
+                        "The section name does not exist",
+                        "Other"]
             case .sectionAmend:
-                return ["The section name contains a typo"]
+                return ["The section name contains a typo",
+                        "Other"]
             case .restaurantAmend:
                 return [
                         "The restaurant name contains a typo",
@@ -75,13 +81,15 @@ class UpdateRequestViewController: UIViewController {
                         "The restaurant cuisine type is wrong",
                         "The restaurant phone number is wrong",
                         "The restaurant website is wrong",
-                        "The restaurant location is wrong"]
+                        "The restaurant location is wrong",
+                        "Other"]
             case .restaurantReport:
                 return ["The restaurant name contains offensive text",
                         "The restaurant description contains offensive text",
                         "The restaurant cuisine contains offensive text",
                         "The restaurant does not exist",
-                        "The restaurant description is misleading"]
+                        "The restaurant description is misleading",
+                        "Other"]
             case .error:
                 return []
             }
@@ -198,6 +206,7 @@ class UpdateRequestViewController: UIViewController {
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let amend = UIAlertAction(title: "Amend this \(source.rawValue)", style: .default) { _ in
+            if goToProfilePageIfUnauthenticated(sender: sender) { return }
             var vc: UpdateRequestViewController
             switch source {
             case .dish:
@@ -210,6 +219,7 @@ class UpdateRequestViewController: UIViewController {
             presentUpdateRequest(vc)
         }
         let report = UIAlertAction(title: "Report this \(source.rawValue)", style: .destructive) { _ in
+            if goToProfilePageIfUnauthenticated(sender: sender) { return }
             var vc: UpdateRequestViewController
             switch source {
             case .dish:
@@ -230,6 +240,20 @@ class UpdateRequestViewController: UIViewController {
         func presentUpdateRequest(_ vc: UpdateRequestViewController) {
             let nc = UINavigationController(rootViewController: vc)
             sender.present(nc, animated: true, completion: nil)
+        }
+        
+        func goToProfilePageIfUnauthenticated(sender: UIViewController) -> Bool {
+            if !FBSDKAccessToken.currentAccessTokenIsActive() {
+                let banner = NotificationBanner(title: nil, subtitle: "You must be logged in to report/amend content", style: .info)
+                banner.haptic = .none
+                banner.subtitleLabel?.textAlignment = .center
+                banner.show()
+                if let tabBarVCs = sender.tabBarController?.viewControllers {
+                    sender.tabBarController?.selectedViewController = tabBarVCs[tabBarVCs.count-1]
+                }
+                return true
+            }
+            return false
         }
         
     }
@@ -270,15 +294,22 @@ extension UpdateRequestViewController: UITableViewDelegate, UITableViewDataSourc
         return 1
     }
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.row >= dataSource.reasons.count {
+            return nil
+        }
+        return indexPath
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectedIndexPath = selectedIndexPath {
-            tableView.cellForRow(at: selectedIndexPath)?.isSelected = false
-        }
-        if selectedIndexPath == indexPath {
-            selectedIndexPath = nil
-        } else {
-            selectedIndexPath = indexPath
-        }
+            if let selectedIndexPath = selectedIndexPath {
+                tableView.cellForRow(at: selectedIndexPath)?.isSelected = false
+            }
+            if selectedIndexPath == indexPath {
+                selectedIndexPath = nil
+            } else {
+                selectedIndexPath = indexPath
+            }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

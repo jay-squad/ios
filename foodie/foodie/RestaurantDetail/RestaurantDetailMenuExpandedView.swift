@@ -11,7 +11,9 @@ import ImageSlideshow
 
 class RestaurantDetailMenuExpandedView: UIView {
     
-    let kMaximumLineHeight: CGFloat = 16
+    let kMaximumDescriptionLineHeight: CGFloat = 16
+    let kMaximumNameLineHeight: CGFloat = 19
+    let dishNameParagraphStyle = NSMutableParagraphStyle()
     let dishDescriptionParagraphStyle = NSMutableParagraphStyle()
     
     let externalContainerView = UIView()
@@ -40,7 +42,10 @@ class RestaurantDetailMenuExpandedView: UIView {
     
     func configureView(dish: Dish?) {
         guard let dish = dish else { return }
-        nameLabel.text = dish.name
+        let nameLabelAttributedString = NSMutableAttributedString(string: dish.name,
+                                                                         attributes: [.paragraphStyle: dishNameParagraphStyle,
+                                                                                      .kern: 0])
+        nameLabel.attributedText = nameLabelAttributedString
         priceLabel.text = String(format: "$ %.2f", dish.price)
         
         let descriptionLabelAttributedString = NSMutableAttributedString(string: dish.description,
@@ -95,6 +100,9 @@ class RestaurantDetailMenuExpandedView: UIView {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = UIFont(font: .helveticaNeueBold, size: 18)
         nameLabel.textColor = UIColor.cc45DarkGrey
+        nameLabel.numberOfLines = 2
+        dishNameParagraphStyle.lineSpacing = 0
+        dishNameParagraphStyle.maximumLineHeight = kMaximumNameLineHeight
         
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.font = UIFont(font: .helveticaNeue, size: 14)
@@ -105,7 +113,7 @@ class RestaurantDetailMenuExpandedView: UIView {
         descriptionLabel.textColor = UIColor.ccGreyishBrown
         descriptionLabel.numberOfLines = 5
         dishDescriptionParagraphStyle.lineSpacing = 0
-        dishDescriptionParagraphStyle.maximumLineHeight = kMaximumLineHeight
+        dishDescriptionParagraphStyle.maximumLineHeight = kMaximumDescriptionLineHeight
         
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -124,8 +132,9 @@ class RestaurantDetailMenuExpandedView: UIView {
         nameAndPriceStackView.addArrangedSubview(priceLabel)
         nameAndPriceStackView.axis = .vertical
         nameAndPriceStackView.spacing = 0
+        nameAndPriceStackView.setContentCompressionResistancePriority(.required, for: .vertical)
         
-        nameAndPriceStackView.heightAnchor.constraint(equalToConstant: 39.0).isActive = true
+//        nameAndPriceStackView.heightAnchor.constraint(equalToConstant: 39.0).isActive = true
         
         externalContainerView.applyAutoLayoutInsetsForAllMargins(to: self, with: .zero)
         externalStackView.applyAutoLayoutInsetsForAllMargins(to: externalContainerView, with: .zero)

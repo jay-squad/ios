@@ -12,7 +12,7 @@ import FBSDKCoreKit
 class ProfileSummaryTableViewCell: UITableViewCell {
 
     let defaultLabelAttributes: [NSAttributedString.Key: Any] = [
-        .font: UIFont(font: .helveticaNeue, size: 18)!,
+        .font: UIFont(font: .helveticaNeue, size: 16)!,
         .foregroundColor: UIColor.cc74MediumGrey,
         .kern: -0.5
     ]
@@ -21,7 +21,9 @@ class ProfileSummaryTableViewCell: UITableViewCell {
 
     lazy var profilePicImageView = UIImageView()
     lazy var nameLabel = UILabel()
-    lazy var numberOfDishesLabel = UILabel()
+    lazy var numberOfAcceptedDishesLabel = UILabel()
+    lazy var numberOfPendingDishesLabel = UILabel()
+    lazy var numberOfRejectedDishesLabel = UILabel()
     lazy var numberOfPointsLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,7 +40,27 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         self.profileModel = profileModel
 
         nameLabel.text = profileModel.name
-        setNumberOfDishesLabel(numberOfDishes: profileModel.submissions.count)
+        
+        var acceptedDishes: Int = 0
+        var pendingDishes: Int = 0
+        var rejectedDishes: Int = 0
+        for submission in profileModel.submissions {
+            if let status = submission.metadata?.approvalStatus {
+                switch status {
+                case .approved:
+                    acceptedDishes += 1
+                case .pending:
+                    pendingDishes += 1
+                case .rejected:
+                    rejectedDishes += 1
+                default:
+                    break
+                }
+            }
+        }
+        setNumberOfAcceptedDishesLabel(numberOfDishes: acceptedDishes)
+        setNumberOfPendingDishesLabel(numberOfDishes: pendingDishes)
+        setNumberOfRejectedDishesLabel(numberOfDishes: rejectedDishes)
         setNumberOfPointsLabel(numberOfPoints: profileModel.points)
         
         if let fbid = FBSDKAccessToken.current()?.userID, let url = URL(string: "https://graph.facebook.com/v3.2/\(fbid)/picture") {
@@ -67,6 +89,7 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 2.0
 
         externalContainerView.addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 24.0).isActive = true
@@ -78,16 +101,23 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         nameLabel.font = UIFont(font: .helveticaNeueBold, size: 18)
         nameLabel.text = "You"
 
-        numberOfDishesLabel.translatesAutoresizingMaskIntoConstraints = false
-        setNumberOfDishesLabel(numberOfDishes: 0)
+        numberOfAcceptedDishesLabel.translatesAutoresizingMaskIntoConstraints = false
+        setNumberOfAcceptedDishesLabel(numberOfDishes: -1)
+        
+        numberOfPendingDishesLabel.translatesAutoresizingMaskIntoConstraints = false
+        setNumberOfPendingDishesLabel(numberOfDishes: -1)
+        
+        numberOfRejectedDishesLabel.translatesAutoresizingMaskIntoConstraints = false
+        setNumberOfRejectedDishesLabel(numberOfDishes: -1)
 
         numberOfPointsLabel.translatesAutoresizingMaskIntoConstraints = false
-        setNumberOfPointsLabel(numberOfPoints: 0)
+        setNumberOfPointsLabel(numberOfPoints: -1)
 
         let spacer = UIView()
         spacer.translatesAutoresizingMaskIntoConstraints = false
         spacer.heightAnchor.constraint(equalToConstant: 16).isActive = true
 
+        profilePicImageView.image = Bundle.main.icon
         profilePicImageView.contentMode = .scaleAspectFill
         profilePicImageView.translatesAutoresizingMaskIntoConstraints = false
         profilePicImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
@@ -103,19 +133,46 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         
         stackView.addArrangedSubview(personStackView)
         stackView.addArrangedSubview(spacer)
-        stackView.addArrangedSubview(numberOfDishesLabel)
+        stackView.addArrangedSubview(numberOfAcceptedDishesLabel)
+        stackView.addArrangedSubview(numberOfPendingDishesLabel)
+        stackView.addArrangedSubview(numberOfRejectedDishesLabel)
         stackView.addArrangedSubview(numberOfPointsLabel)
     }
 
-    private func setNumberOfDishesLabel(numberOfDishes: Int) {
-        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(numberOfDishes) dishes added", attributes: defaultLabelAttributes)
-        numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: NSRange(location: 0, length: "\(numberOfDishes)".count))
-        numberOfDishesLabel.attributedText = numberOfDishesAttributedString
+    private func setNumberOfAcceptedDishesLabel(numberOfDishes: Int) {
+        let counterString = "\(numberOfDishes >= 0 ? "\(numberOfDishes)" : "-")"
+        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "dish" : "dishes") approved", attributes: defaultLabelAttributes)
+        let range = NSRange(location: 0, length: counterString.count)
+        numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: range)
+        
+        numberOfAcceptedDishesLabel.attributedText = numberOfDishesAttributedString
+        numberOfAcceptedDishesLabel.textColor = .ccMoneyGreen
+    }
+    
+    private func setNumberOfPendingDishesLabel(numberOfDishes: Int) {
+        let counterString = "\(numberOfDishes >= 0 ? "\(numberOfDishes)" : "-")"
+        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "dish" : "dishes") pending", attributes: defaultLabelAttributes)
+        let range = NSRange(location: 0, length: counterString.count)
+        numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: range)
+
+        numberOfPendingDishesLabel.attributedText = numberOfDishesAttributedString
+        numberOfPendingDishesLabel.textColor = .ccPendingBlue
+    }
+    
+    private func setNumberOfRejectedDishesLabel(numberOfDishes: Int) {
+        let counterString = "\(numberOfDishes >= 0 ? "\(numberOfDishes)" : "-")"
+        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "dish" : "dishes") not approved", attributes: defaultLabelAttributes)
+        let range = NSRange(location: 0, length: counterString.count)
+        numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: range)
+
+        numberOfRejectedDishesLabel.attributedText = numberOfDishesAttributedString
+        numberOfRejectedDishesLabel.textColor = .ccErrorRed
     }
 
     private func setNumberOfPointsLabel(numberOfPoints: Int) {
-        let numberOfPointsAttributedString = NSMutableAttributedString(string: "\(numberOfPoints) points", attributes: defaultLabelAttributes)
-        numberOfPointsAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 28)!, range: NSRange(location: 0, length: "\(numberOfPoints)".count))
+        let counterString = "\(numberOfPoints >= 0 ? "\(numberOfPoints)" : "-")"
+        let numberOfPointsAttributedString = NSMutableAttributedString(string: "\(counterString) points", attributes: defaultLabelAttributes)
+        numberOfPointsAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 28)!, range: NSRange(location: 0, length: counterString.count))
         numberOfPointsLabel.attributedText = numberOfPointsAttributedString
     }
 }

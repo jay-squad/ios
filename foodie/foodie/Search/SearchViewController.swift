@@ -11,6 +11,7 @@ import MapKit
 import SwiftyJSON
 import SwiftyUserDefaults
 import Crashlytics
+import GradientLoadingBar
 
 extension DefaultsKeys {
     static let launchCount = DefaultsKey<Int>("user_launch_count")
@@ -188,15 +189,17 @@ class SearchViewController: UIViewController {
     }
     
     func query(with query: String?) {
+        GradientLoadingBar.shared.show()
         Answers.logSearch(withQuery: query, customAttributes: ["type": nextSearchResultType.rawValue])
-        self.searchResults.removeAll()
         switch nextSearchResultType {
         case .restaurant:
             if dishesTapGestureRecognizer != nil {
                 self.tableView.removeGestureRecognizer(dishesTapGestureRecognizer!)
             }
             NetworkManager.shared.searchRestaurant(query: query) { (json, error, code) in
+                GradientLoadingBar.shared.hide()
                 if let restaurantJSONs = json?.array {
+                    self.searchResults.removeAll()
                     for restaurantJSON in restaurantJSONs {
                         var images: [String?] = []
                         if let minimenu = restaurantJSON["menu"].array {
@@ -222,7 +225,9 @@ class SearchViewController: UIViewController {
             dishesTapGestureRecognizer?.delegate = self
             self.tableView.addGestureRecognizer(dishesTapGestureRecognizer!)
             NetworkManager.shared.searchDish(query: query) { (json, error, _) in
+                GradientLoadingBar.shared.hide()
                 if let dishJSONs = json?.array {
+                    self.searchResults.removeAll()
                     for dishJSON in dishJSONs {
                         self.searchResults.append(SearchResult(dish: Dish(json: dishJSON)))
                     }

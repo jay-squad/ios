@@ -37,6 +37,8 @@
 		265264A120C272E300D97EE8 /* UUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265264A020C272E300D97EE8 /* UUIColor.swift */; };
 		266BEF3B2231726400244FFD /* AnswersKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BEF3A2231726400244FFD /* AnswersKeys.swift */; };
 		266BEF3E223583A500244FFD /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BEF3D223583A500244FFD /* SearchTextField.swift */; };
+		266BEF412238900B00244FFD /* UBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BEF402238900B00244FFD /* UBundle.swift */; };
+		266BEF432238B49400244FFD /* UUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BEF422238B49400244FFD /* UUIImage.swift */; };
 		267440FE21F01B980003E3FC /* UDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267440FD21F01B980003E3FC /* UDateFormatter.swift */; };
 		2674410021F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */; };
 		26AAFB8520E4AB6300DEE4E7 /* UUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */; };
@@ -138,6 +140,8 @@
 		265264A020C272E300D97EE8 /* UUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIColor.swift; sourceTree = "<group>"; };
 		266BEF3A2231726400244FFD /* AnswersKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersKeys.swift; sourceTree = "<group>"; };
 		266BEF3D223583A500244FFD /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		266BEF402238900B00244FFD /* UBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UBundle.swift; sourceTree = "<group>"; };
+		266BEF422238B49400244FFD /* UUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIImage.swift; sourceTree = "<group>"; };
 		267440FD21F01B980003E3FC /* UDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDateFormatter.swift; sourceTree = "<group>"; };
 		267440FF21F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailMenuExpandedView.swift; sourceTree = "<group>"; };
 		26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIViewController.swift; sourceTree = "<group>"; };
@@ -335,6 +339,8 @@
 				26CC94E620EE3C69006AB058 /* UUIString.swift */,
 				267440FD21F01B980003E3FC /* UDateFormatter.swift */,
 				26CBE3F02230D932000778C9 /* UUILayoutGuide.swift */,
+				266BEF402238900B00244FFD /* UBundle.swift */,
+				266BEF422238B49400244FFD /* UUIImage.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -671,8 +677,11 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/GradientLoadingBar/GradientLoadingBar.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Observable/Observable.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
@@ -703,8 +712,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GradientLoadingBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Observable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TOCropViewController.framework",
@@ -790,6 +802,7 @@
 				26C7170D20C0F8830026C4EF /* RestaurantMedal.swift in Sources */,
 				26D3686921E55E4F0093B223 /* MapViewController.swift in Sources */,
 				2674410021F03BE60003E3FC /* RestaurantDetailMenuExpandedView.swift in Sources */,
+				266BEF432238B49400244FFD /* UUIImage.swift in Sources */,
 				26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */,
 				26CBE3F82230E341000778C9 /* CommonMargins.swift in Sources */,
 				2636462E2203A173009BB22B /* UpdateRequestViewController.swift in Sources */,
@@ -801,6 +814,7 @@
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				262B744F20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift in Sources */,
 				26FE879021E79B75001AF76E /* ProfileRedeemPointsTableViewCell.swift in Sources */,
+				266BEF412238900B00244FFD /* UBundle.swift in Sources */,
 				26FE879321E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift in Sources */,
 				26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */,
 				262B744320E428030019B8BF /* RootTabBarViewController.swift in Sources */,

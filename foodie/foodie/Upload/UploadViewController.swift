@@ -102,16 +102,19 @@ class UploadViewController: UIViewController {
                     as? AdditionalInfoTableViewCell,
                     let desc = cell.additionalNotesTextField.text {
                     description = desc
+                } else if let prepopulatedSubmission = prepopulatedSubmission {
+                    description = prepopulatedSubmission.dish?.description
                 }
                 
                 GradientLoadingBar.shared.show()
                 sender?.isEnabled = false
+                let sectionText = cell.dishSectionTextField.text
                 if uploadImage != nil {
                     NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
                                                          itemName: cell.dishTextField.text,
                                                          itemImage: uploadImage,
                                                          description: description,
-                                                         sectionName: cell.dishSectionTextField.text,
+                                                         sectionName: sectionText == kNoSection ? "" : sectionText,
                                                          price: cell.priceFloat) { (_, error, _) in
                                                             GradientLoadingBar.shared.hide()
                                                             if error == nil {
@@ -122,11 +125,12 @@ class UploadViewController: UIViewController {
                                                             }
                     }
                 } else {
+                    // only on resubmission with same image
                     NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
                                                          itemName: cell.dishTextField.text,
                                                          itemImageUrl: prepopulatedSubmission?.dishImage?.image,
                                                          description: description,
-                                                         sectionName: cell.dishSectionTextField.text,
+                                                         sectionName: sectionText == kNoSection ? "" : sectionText,
                                                          price: cell.priceFloat) { (_, error, _) in
                                                             GradientLoadingBar.shared.hide()
                                                             if error == nil {
@@ -222,9 +226,9 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: kAdditionalInfoTableViewCellId,
                                                         for: indexPath) as? AdditionalInfoTableViewCell {
                 let prefilledDescription = prepopulatedSubmission?.dish?.description
-                cell.configureCell(title: "Additional Notes",
-                                   subtitle: "Let us know if you’ve changed anything about your dish from its original form.",
-                                   placeholder: "e.g. extra rice, salad instead of fries",
+                cell.configureCell(title: "Description",
+                                   subtitle: "Describe the dish and mention if you’ve changed anything about your dish from its original form.",
+                                   placeholder: "e.g. thin noodles, salad instead of fries",
                                    prefilledDescription: prefilledDescription)
                 return cell
             }

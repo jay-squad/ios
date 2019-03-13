@@ -397,8 +397,7 @@ class NetworkManager {
         
         guard image != nil else { return }
         guard let identityId = AWSMobileClient.sharedInstance().identityId else { return }
-//        let image = image?.imageResized(newSize: CGSize(width: 100, height: 100))
-        
+        let image = image?.resizeImage(targetSize: CGSize(width: 1080, height: 1080))
         let data: Data = image!.jpegData(compressionQuality: 0 )!
         let key = "\(ks3Prefix)\(identityId)/\(restaurantId)/\(UUID().uuidString).jpg"
         
@@ -427,31 +426,4 @@ class NetworkManager {
         }
     }
     
-}
-
-extension UIImage {
-    func imageResized( newSize: CGSize ) -> (UIImage) {
-        let newRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height).integral
-        let imageRef = self.cgImage
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-        let context = UIGraphicsGetCurrentContext()
-        
-        // Set the quality level to use when rescaling
-        context!.interpolationQuality = CGInterpolationQuality.high
-        let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: newSize.height)
-        
-        context?.concatenate(flipVertical)
-        
-        // Draw into the context; this scales the image
-        context?.draw(imageRef!, in: newRect)
-        
-        let newImageRef = (context?.makeImage()!)! as CGImage
-        let newImage = UIImage(cgImage: newImageRef)
-        
-        // Get the resized image from the context and a UIImage
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
 }

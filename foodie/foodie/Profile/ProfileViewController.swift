@@ -10,6 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Crashlytics
+import GradientLoadingBar
 
 class ProfileViewController: UIViewController {
 
@@ -24,6 +25,8 @@ class ProfileViewController: UIViewController {
     var viewModel: ProfileSubmissionsViewModel?
     var rightNavBtn: UIBarButtonItem?
     
+    var viewLoadAccessTokenDidChange = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,13 +36,16 @@ class ProfileViewController: UIViewController {
         setupNavigation()
 
         NotificationCenter.default.addObserver(forName: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil, queue: OperationQueue.main) { _ in
+            self.viewLoadAccessTokenDidChange = true
             self.updateAuthState()
             
             #if DEBUG
 //            NetworkManager.shared.grantAdminCookie()
             #endif
             
-            self.loadProfileIfNeeded()
+            self.loadProfileIfNeeded {
+                GradientLoadingBar.shared.hide()
+            }
             self.setupNavigation()
             
             if FBSDKAccessToken.currentAccessTokenIsActive() {
@@ -49,7 +55,12 @@ class ProfileViewController: UIViewController {
             }
         }
         
-        NetworkManager.shared.refreshAuthToken()
+        GradientLoadingBar.shared.show()
+        NetworkManager.shared.refreshAuthToken { (_) in
+            if !self.viewLoadAccessTokenDidChange {
+                GradientLoadingBar.shared.hide()
+            }
+        }
     }
 
     private func updateAuthState() {
@@ -60,22 +71,20 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    private func loadProfileIfNeeded() {
-        refreshControl.beginRefreshing()
+    private func loadProfileIfNeeded(completion: @escaping(() -> Void)) {
         if FBSDKAccessToken.currentAccessTokenIsActive() {
             NetworkManager.shared.getProfileSelf { (json, _, _) in
-                print(json)
                 if let json = json {
                     self.profileModel = Profile(json: json)
                     self.viewModel = ProfileSubmissionsViewModel(profile: self.profileModel)
                     self.tableView.reloadData()
                 }
-                self.refreshControl.endRefreshing()
+                completion()
             }
         } else {
             viewModel = nil
             self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
+            completion()
         }
     }
 
@@ -91,7 +100,10 @@ class ProfileViewController: UIViewController {
     }
 
     @objc func refresh(_ sender: AnyObject) {
-        loadProfileIfNeeded()
+        refreshControl.beginRefreshing()
+        loadProfileIfNeeded {
+            self.refreshControl.endRefreshing()
+        }
     }
     
     private func setupNavigation() {
@@ -216,12 +228,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         guard let submission = retrievedSubmission else { return; }
         
         if let restaurant = submission.restaurant {
-            RestaurantDetailViewController.push(self.navigationController, restaurant)
+            DishDetailViewController.push(self.navigationController, submission.dish, restaurant)
         } else {
             if let restaurantId = submission.getRestaurantId() {
                 NetworkManager.shared.getRestaurant(restaurantId: restaurantId) { (json, _, _) in
                     if let restaurantJSON = json {
-                        RestaurantDetailViewController.push(self.navigationController, Restaurant(json: restaurantJSON))
+                        DishDetailViewController.push(self.navigationController, submission.dish, Restaurant(json: restaurantJSON))
                     }
                 }
             }
