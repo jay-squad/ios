@@ -47,6 +47,7 @@ class ProfileViewController: UIViewController {
                 GradientLoadingBar.shared.hide()
             }
             self.setupNavigation()
+            self.enableRefreshControlIfAuthed()
             
             if FBSDKAccessToken.currentAccessTokenIsActive() {
                 Answers.logSignUp(withMethod: AnswersKeys.profile_signup_method_facebook, success: true, customAttributes: nil)
@@ -96,7 +97,15 @@ class ProfileViewController: UIViewController {
         
 //        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
-        tableView.refreshControl = refreshControl
+        enableRefreshControlIfAuthed()
+    }
+    
+    private func enableRefreshControlIfAuthed() {
+        if FBSDKAccessToken.currentAccessTokenIsActive() {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.refreshControl = nil
+        }
     }
 
     @objc func refresh(_ sender: AnyObject) {
@@ -126,9 +135,15 @@ class ProfileViewController: UIViewController {
         let change = UIAlertAction(title: "Logout", style: .destructive) { _ in
             FBSDKLoginManager().logOut()
         }
+        let attributions = UIAlertAction(title: "Attributions", style: .default) { _ in
+            let vc = AttributionsViewController()
+            let nc = UINavigationController(rootViewController: vc)
+            self.present(nc, animated: true, completion: nil)
+        }
         actionController.addAction(cancel)
+        actionController.addAction(attributions)
         actionController.addAction(change)
-        
+
         self.present(actionController, animated: true, completion: nil)
     }
 
@@ -144,7 +159,7 @@ class ProfileViewController: UIViewController {
     private func buildComponents() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
-        tableView.applyAutoLayoutInsetsForAllMargins(to: view.safeAreaLayoutGuide, with: .zero)
+        tableView.applyAutoLayoutInsetsForAllMargins(to: view, with: .zero)
     }
 
 }
@@ -166,6 +181,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileNeedsAuthTableViewCellId,
                                                             for: indexPath) as? ProfileNeedsAuthTableViewCell {
                     cell.configureCell(navigationBar: self.navigationController?.navigationBar, tabBar: self.tabBarController?.tabBar)
+                    cell.delegate = self
                     return cell
                 }
             }
@@ -264,5 +280,22 @@ extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
                 }
             }
         }
+    }
+}
+
+extension ProfileViewController: ProfileNeedsAuthTableViewCellDelegate {
+    func showAttributionsActionSheet() {
+        // TODO: put this action sheet stuff in a method
+        let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let attributions = UIAlertAction(title: "Attributions", style: .default) { _ in
+            let vc = AttributionsViewController()
+            let nc = UINavigationController(rootViewController: vc)
+            self.present(nc, animated: true, completion: nil)
+        }
+        actionController.addAction(cancel)
+        actionController.addAction(attributions)
+        
+        self.present(actionController, animated: true, completion: nil)
     }
 }

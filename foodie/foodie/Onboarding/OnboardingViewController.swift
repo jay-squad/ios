@@ -148,7 +148,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         case 1:
             imageView.image = UIImage(named: "onboarding_2")
             titleLabel.text = "Get points\nfrom meals"
-            subtitleLabel.text = "Simply take images of your restaurant orders to earn points"
+            subtitleLabel.text = "Simply take images of your\nrestaurant orders to earn points"
             signupButton.isHidden = true
             nextButton.setTitle("next", for: .normal)
             legalLabel.isHidden = true

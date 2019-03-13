@@ -197,9 +197,12 @@ class UpdateRequestViewController: UIViewController {
                     self.dismiss(animated: true, completion: nil)
                 }
             }
+        } else {
+            let banner = NotificationBanner(title: nil, subtitle: "You must select a reason", style: .warning)
+            banner.haptic = .none
+            banner.subtitleLabel?.textAlignment = .center
+            banner.show()
         }
-        
-        // TODO: ux feedback when no reason is selected
     }
     
     public static func presentActionSheet(_ source: UpdateSource, sender: UIViewController, id: String) {

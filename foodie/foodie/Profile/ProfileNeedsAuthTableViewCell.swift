@@ -9,9 +9,14 @@
 import UIKit
 import FBSDKLoginKit
 
+protocol ProfileNeedsAuthTableViewCellDelegate: class {
+    func showAttributionsActionSheet()
+}
+
 class ProfileNeedsAuthTableViewCell: UITableViewCell {
 
     let externalContainerView = UIView()
+    weak var delegate: ProfileNeedsAuthTableViewCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -76,8 +81,19 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         let legalLabel = FacebookButton.getLegalLabel()
         externalContainerView.addSubview(legalLabel)
         legalLabel.translatesAutoresizingMaskIntoConstraints = false
-        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -20).isActive = true
+        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -80).isActive = true
         legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
+        
+        let attributionsButton = UIButton(type: .infoLight)
+        externalContainerView.addSubview(attributionsButton)
+        attributionsButton.translatesAutoresizingMaskIntoConstraints = false
+        attributionsButton.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor, constant: -5).isActive = true
+        attributionsButton.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 5).isActive = true
+        attributionsButton.addTarget(self, action: #selector(onAttributionsButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func onAttributionsButtonTapped() {
+        delegate?.showAttributionsActionSheet()
     }
 }
