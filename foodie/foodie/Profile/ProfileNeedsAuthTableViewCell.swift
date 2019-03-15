@@ -81,7 +81,7 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         let legalLabel = FacebookButton.getLegalLabel()
         externalContainerView.addSubview(legalLabel)
         legalLabel.translatesAutoresizingMaskIntoConstraints = false
-        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -80).isActive = true
+        legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -50).isActive = true
         legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
         

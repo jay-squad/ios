@@ -307,17 +307,18 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row < searchResults.count else { return }
 //        if !isLastRow(indexPath: indexPath) {
             RestaurantDetailViewController.push(self.navigationController, searchResults[indexPath.row].restaurant)
 //        }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if isLastRow(indexPath: indexPath) {
-            // TODO: get next page and repopulate
-            
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if isLastRow(indexPath: indexPath) {
+//            // TODO: get next page and repopulate
+//
+//        }
+//    }
     
     private func isLastRow(indexPath: IndexPath) -> Bool {
         return indexPath.section == tableView.numberOfSections - 1

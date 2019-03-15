@@ -257,7 +257,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func getSubmissionFor(indexPath: IndexPath) -> Submission? {
-        return viewModel?.sectionedSubmissions[indexPath.section-1][indexPath.row]
+        guard let viewModel = viewModel else { return nil }
+        let sectionIndex = indexPath.section-1
+        guard sectionIndex >= 0 && sectionIndex < viewModel.sectionedSubmissions.count else { return nil }
+        guard indexPath.row < viewModel.sectionedSubmissions[sectionIndex].count else { return nil }
+        return viewModel.sectionedSubmissions[sectionIndex][indexPath.row]
     }
 }
 
