@@ -42,9 +42,13 @@ extension UIViewController {
     }
     
     @objc func shiftViewKeyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
+                var tabBarHeight: CGFloat = 0
+                if let tabBar = tabBarController?.tabBar {
+                    tabBarHeight = tabBar.frame.size.height
+                }
+                self.view.frame.origin.y -= keyboardSize.height - tabBarHeight
             }
         }
     }

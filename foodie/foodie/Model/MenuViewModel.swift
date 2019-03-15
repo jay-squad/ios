@@ -28,6 +28,9 @@ class MenuViewModel {
     
     func setDataSource(menu: Menu) {
         var sectionindex: Int = 0
+        orders[.grid]?.removeAll()
+        orders[.expanded]?.removeAll()
+        orders[.list]?.removeAll()
         for menusection in menu.sections {
             orders[.grid]?.append([])
             orders[.expanded]?.append([])

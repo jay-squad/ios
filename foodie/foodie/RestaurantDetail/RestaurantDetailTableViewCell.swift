@@ -35,15 +35,6 @@ class RestaurantDetailTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        externalContainerView.layer.shadowColor = UIColor(red: 200/255.0,
-                                                               green: 200/255.0,
-                                                               blue: 200/255.0,
-                                                               alpha: 1.0).cgColor
-        externalContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
-        externalContainerView.layer.shadowRadius = 8
-        externalContainerView.layer.shadowOpacity = 0.25
-
         selectionStyle = .none
     }
 
