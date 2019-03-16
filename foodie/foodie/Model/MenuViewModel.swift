@@ -19,6 +19,8 @@ class MenuViewModel {
     var activeMenuType: RestaurantDetailDisplayOption
     var orders: [RestaurantDetailDisplayOption: [[MenuCellType]]] = [:]
     
+    var isEmpty = true
+    
     init(type: RestaurantDetailDisplayOption) {
         activeMenuType = type
         orders[.grid] = []
@@ -38,6 +40,7 @@ class MenuViewModel {
             
             var count: Int = 0
             for _ in menusection.dishes {
+                isEmpty = false
                 if count == 0 {
                     orders[.grid]?[sectionindex].append(.column3)
                 }

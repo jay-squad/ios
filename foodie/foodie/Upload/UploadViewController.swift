@@ -11,6 +11,7 @@ import DKImagePickerController
 import Photos.PHImageManager
 import Validator
 import GradientLoadingBar
+import Crashlytics
 
 let kFormComponentTableViewCellId = "FormComponentTableViewCellId"
 let kUploadImageTableViewCellId = "UploadImageTableViewCellId"
@@ -109,6 +110,13 @@ class UploadViewController: UIViewController {
                 GradientLoadingBar.shared.show()
                 sender?.isEnabled = false
                 let sectionText = cell.dishSectionTextField.text
+                
+                Answers.logContentView(withName: "Upload-SubmissionRequest", contentType: "submission", contentId: nil,
+                                       customAttributes: ["restaurant": restaurantId,
+                                                          "itemName": cell.dishTextField.text,
+                                                          "itemSection": sectionText,
+                                                          "description": description])
+                
                 if uploadImage != nil {
                     NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
                                                          itemName: cell.dishTextField.text,
@@ -118,6 +126,11 @@ class UploadViewController: UIViewController {
                                                          price: cell.priceFloat) { (_, error, _) in
                                                             GradientLoadingBar.shared.hide()
                                                             if error == nil {
+                                                                Answers.logContentView(withName: "Upload-SubmissionSuccess", contentType: "submission", contentId: nil,
+                                                                                       customAttributes: ["restaurant": self.restaurantId,
+                                                                                                          "itemName": cell.dishTextField.text,
+                                                                                                          "itemSection": sectionText,
+                                                                                                          "description": description])
                                                                 self.delegate?.onSuccessfulUpload()
                                                                 self.navigationController?.popViewController(animated: true)
                                                             } else {
@@ -134,6 +147,11 @@ class UploadViewController: UIViewController {
                                                          price: cell.priceFloat) { (_, error, _) in
                                                             GradientLoadingBar.shared.hide()
                                                             if error == nil {
+                                                                Answers.logContentView(withName: "Upload-SubmissionSuccess", contentType: "submission", contentId: nil,
+                                                                                       customAttributes: ["restaurant": self.restaurantId,
+                                                                                                          "itemName": cell.dishTextField.text,
+                                                                                                          "itemSection": sectionText,
+                                                                                                          "description": description,])
                                                                 self.delegate?.onSuccessfulUpload()
                                                                 self.navigationController?.popViewController(animated: true)
                                                             } else {

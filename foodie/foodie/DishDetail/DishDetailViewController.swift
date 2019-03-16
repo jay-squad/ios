@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class DishDetailViewController: UIViewController {
 
@@ -115,6 +116,7 @@ extension DishDetailViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension DishDetailViewController: DishMetadataTableViewCellDelegate {
     func onRestaurantTapped(restaurant: Restaurant) {
+        Answers.logContentView(withName: "DishDetail-RestaurantDetail", contentType: "restaurant", contentId: "\(restaurant.id)", customAttributes: nil)
         RestaurantDetailViewController.push(self.navigationController, restaurant)
     }
 }

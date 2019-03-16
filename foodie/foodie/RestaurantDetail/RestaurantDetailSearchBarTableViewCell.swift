@@ -40,11 +40,26 @@ class RestaurantDetailSearchBarTableViewCell: UITableViewCell {
 
     private func buildComponents() {
         selectionStyle = .none
-        searchBar.placeholder = "Search Dishes in Restaurant"
+        searchBar.placeholder = "search dishes in restaurant"
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        contentView.addSubview(searchBar)
-        contentView.applyAutoLayoutInsetsForAllMargins(to: searchBar, with: .zero)
+        searchBar.barTintColor = .white
+        searchBar.tintColor = .white
+        searchBar.backgroundImage = UIImage()
+        searchBar.isTranslucent = false
+        let textFieldInsideUISearchBar = searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideUISearchBar?.textColor = UIColor.cc74MediumGrey
+        searchBar.subviews[0].subviews.compactMap { $0 as? UITextField }.first?.tintColor = UIColor.ccOchre
+        
+        let externalContainerView = UIView()
+        externalContainerView.translatesAutoresizingMaskIntoConstraints = false
+        externalContainerView.backgroundColor = UIColor.cc240SuperLightGrey
+        
+        externalContainerView.addSubview(searchBar)
+        externalContainerView.applyAutoLayoutInsetsForAllMargins(to: searchBar, with: UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0))
+        
+        contentView.addSubview(externalContainerView)
+        contentView.applyAutoLayoutInsetsForAllMargins(to: externalContainerView, with: .zero)
     }
 
 }

@@ -122,7 +122,7 @@ class SearchRestaurantTableViewCell: UITableViewCell {
                                             constant: -16.0).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
-        let imageSize = (UIScreen.main.bounds.width - 24.0) / 3.0
+        let imageSize = (UIScreen.main.bounds.width - 4) / 3.0
         for dishImageView in dishImageViews {
             dishImageView.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
         }
@@ -139,7 +139,7 @@ class SearchRestaurantTableViewCell: UITableViewCell {
         externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         externalContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         externalContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2.0).isActive = true
+        externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
     }
 
 }

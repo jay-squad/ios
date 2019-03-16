@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Crashlytics
 
 protocol RestaurantDetailTableViewCellDelegate: class {
     func onMoreButtonTapped()
@@ -115,6 +116,8 @@ class RestaurantDetailTableViewCell: UITableViewCell {
     
     @objc private func onMapViewTapped() {
         guard let restaurant = restaurant else { return }
+        Answers.logContentView(withName: "RestaurantDetail-MapTap", contentType: "restaurant", contentId: "\(restaurant.id)", customAttributes: nil)
+        
         let coordinate = restaurant.location
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
         mapItem.name = restaurant.name
@@ -122,13 +125,17 @@ class RestaurantDetailTableViewCell: UITableViewCell {
     }
     
     @objc private func onRestaurantWebsiteButtonTapped(_ sender: UIButton!) {
-        if let website = restaurant?.website, let url = URL(string: website) {
+        guard let restaurant = restaurant else { return }
+        Answers.logContentView(withName: "RestaurantDetail-WebsiteTap", contentType: "restaurant", contentId: "\(restaurant.id)", customAttributes: nil)
+        if let website = restaurant.website, let url = URL(string: website) {
             UIApplication.shared.open(url)
         }
     }
     
     @objc private func onRestaurantCallButtonTapped(_ sender: UIButton!) {
-        if let phoneNumber = restaurant?.phoneNum, let phoneCallURL = URL(string: "tel://\(phoneNumber.digits)") {
+        guard let restaurant = restaurant else { return }
+        Answers.logContentView(withName: "RestaurantDetail-PhoneTap", contentType: "restaurant", contentId: "\(restaurant.id)", customAttributes: nil)
+        if let phoneNumber = restaurant.phoneNum, let phoneCallURL = URL(string: "tel://\(phoneNumber.digits)") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
                 UIApplication.shared.open(phoneCallURL)
             }

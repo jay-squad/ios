@@ -48,35 +48,16 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Log in to upload dishes, earn points, and contribute to Foodie!"
-        label.font = UIFont(font: .helveticaNeueBold, size: 18.0)
+        label.font = UIFont(font: .avenirHeavy, size: 18.0)
         label.textColor = .cc45DarkGrey
         label.numberOfLines = 0
         label.textAlignment = .center
         
         externalContainerView.addSubview(label)
         
-        label.heightAnchor.constraint(equalToConstant: 50).isActive = true
         label.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 40).isActive = true
         label.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 50).isActive = true
         label.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor, constant: -40).isActive = true
-        
-        let imageView = UIImageView(image: UIImage(named: "login_img"))
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        externalContainerView.addSubview(imageView)
-        
-        label.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: -30).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 100).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
-        
-        let loginButton = FacebookButton()
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        externalContainerView.addSubview(loginButton)
-        loginButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 70).isActive = true
-        loginButton.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         
         let legalLabel = FacebookButton.getLegalLabel()
         externalContainerView.addSubview(legalLabel)
@@ -84,6 +65,33 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         legalLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -50).isActive = true
         legalLabel.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         legalLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 40).isActive = true
+        
+        let loginButton = FacebookButton()
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        externalContainerView.addSubview(loginButton)
+        loginButton.bottomAnchor.constraint(equalTo: legalLabel.topAnchor, constant: -30).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
+        
+        let spacer1 = UIView()
+        spacer1.translatesAutoresizingMaskIntoConstraints = false
+        let spacer2 = UIView()
+        spacer2.translatesAutoresizingMaskIntoConstraints = false
+        
+        let imageView = UIImageView(image: UIImage(named: "bao"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        let stackView = UIStackView(arrangedSubviews: [spacer1, imageView, spacer2])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        spacer1.heightAnchor.constraint(equalTo: spacer2.heightAnchor).isActive = true
+        
+        externalContainerView.addSubview(stackView)
+        label.bottomAnchor.constraint(equalTo: stackView.topAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: loginButton.topAnchor).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         
         let attributionsButton = UIButton(type: .infoLight)
         externalContainerView.addSubview(attributionsButton)

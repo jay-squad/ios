@@ -13,6 +13,7 @@ import DKImagePickerController
 import Photos.PHImageManager
 import FBSDKCoreKit
 import NotificationBannerSwift
+import Crashlytics
 
 let kRestaurantDetailTableViewCellId = "RestaurantDetailTableViewCellId"
 let kRestaurantDetailDisplayOptionsTableViewCellId = "RestaurantDetailDisplayOptionsTableViewCellId"
@@ -60,7 +61,10 @@ class RestaurantDetailViewController: UIViewController {
                            forCellReuseIdentifier: kRestaurantDetailMenuListTableViewCellId)
         tableView.register(RestaurantDetailMenuExpandedTableViewCell.self,
                            forCellReuseIdentifier: kRestaurantDetailMenuExpandedTableViewCellId)
-        tableView.register(RestaurantDetailSearchBarTableViewCell.self, forCellReuseIdentifier: kRestaurantDetailSearchBarTableViewCellId)
+        tableView.register(RestaurantDetailSearchBarTableViewCell.self,
+                           forCellReuseIdentifier: kRestaurantDetailSearchBarTableViewCellId)
+        tableView.register(FoodieEmptyStateTableViewCell.self,
+                           forCellReuseIdentifier: kFoodieEmptyStateTableViewCellId)
     }
 
     private func setupTableView() {
@@ -103,7 +107,6 @@ class RestaurantDetailViewController: UIViewController {
         setupLocationServices()
         setupNavigation()
         shiftViewWhenKeyboardAppears()
-        hideKeyboardWhenTapping(view: tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,6 +141,7 @@ class RestaurantDetailViewController: UIViewController {
         guard let restaurant = restaurant else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
+        Answers.logContentView(withName: "RestaurantDetail-SubmissionInitiate", contentType: "submission", contentId: nil, customAttributes: nil)
         if let uploadVC = storyboard.instantiateViewController(
             withIdentifier: CommonIdentifiers.UploadViewControllerId)
             as? UploadViewController {
@@ -167,12 +171,14 @@ class RestaurantDetailViewController: UIViewController {
     @objc private func handleGridTap(_ gestureRecognizer: UITapGestureRecognizer) {
         if let dish = getDish(gestureRecognizer), let restaurant = restaurant {
             let vc = DishDetailViewController(dish: dish, restaurant: restaurant)
+            Answers.logContentView(withName: "RestaurantDetail-DishDetail", contentType: "dish", contentId: "\(dish.dishId)", customAttributes: nil)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     @objc private func handleGridLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began, let dish = getDish(gestureRecognizer) {
+            Answers.logContentView(withName: "RestaurantDetail-DishPeek", contentType: "dish", contentId: "\(dish.dishId)", customAttributes: nil)
             peekExpandedForm(dish: dish)
         } else if gestureRecognizer.state == .ended {
             unpeekExpandedForm()
@@ -268,15 +274,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                 as? RestaurantDetailTableViewCell {
                 cell.delegate = self
                 cell.configureCell(restaurant: restaurant)
-                return cell
-            }
-        case 2:
-            if let cell = tableView.dequeueReusableCell(
-                withIdentifier: kRestaurantDetailDisplayOptionsTableViewCellId,
-                for: indexPath)
-                as? RestaurantDetailDisplayOptionsTableViewCell {
-                cell.delegate = self
-                cell.configureCell(type: menuView?.activeMenuType ?? .grid)
+                hideKeyboardWhenTapping(view: cell)
                 return cell
             }
         case 1:
@@ -286,10 +284,42 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                 as? RestaurantDetailSearchBarTableViewCell {
                 cell.delegate = self
                 cell.configureCell()
+                
+                if let menuView = menuView, menuView.isEmpty {
+                    cell.contentView.alpha = 0.25
+                    cell.isUserInteractionEnabled = false
+                }
+                
+                return cell
+            }
+        case 2:
+            if let cell = tableView.dequeueReusableCell(
+                withIdentifier: kRestaurantDetailDisplayOptionsTableViewCellId,
+                for: indexPath)
+                as? RestaurantDetailDisplayOptionsTableViewCell {
+                cell.delegate = self
+                cell.configureCell(type: menuView?.activeMenuType ?? .grid)
+                hideKeyboardWhenTapping(view: cell)
+                
+                if let menuView = menuView, menuView.isEmpty {
+                    cell.contentView.alpha = 0.25
+                    cell.isUserInteractionEnabled = false
+                }
+                
                 return cell
             }
         default:
             if let menuView = menuView {
+                if menuView.isEmpty {
+                    if let cell = tableView.dequeueReusableCell(
+                        withIdentifier: kFoodieEmptyStateTableViewCellId,
+                        for: indexPath)
+                        as? FoodieEmptyStateTableViewCell {
+                        cell.configureCell(text: "No dishes here yet.\nSubmit the first one today!",
+                                           imageString: "onigiri")
+                        return cell
+                    }
+                }
                 switch menuView.orders[menuView.activeMenuType]![indexPath.section-kNumSectionsBeforeMenu][indexPath.row] {
                 case .column3:
                     if let cell = tableView.dequeueReusableCell(
@@ -310,6 +340,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                                                dish2: menu.getDish(section: indexPath.section-kNumSectionsBeforeMenu,
                                                                    row: rowMultiplier * 3 + 2))
                         }
+                        hideKeyboardWhenTapping(view: cell)
                         return cell
                     }
                 case .column1:
@@ -323,6 +354,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                             cell.configureCell(dish: menu.getDish(section: indexPath.section-kNumSectionsBeforeMenu,
                                                                   row: currentExpandedGridCellIndex.row * 3 + offset))
                         }
+                        hideKeyboardWhenTapping(view: cell)
                         return cell
                     }
                 case .condensed:
@@ -333,6 +365,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                         if let menu = menu {
                             cell.configureCell(dish: menu.getDish(section: indexPath.section-kNumSectionsBeforeMenu, row: indexPath.row))
                         }
+                        hideKeyboardWhenTapping(view: cell)
                         return cell
                     }
                 case .expanded:
@@ -355,6 +388,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
                                 cell.configureCell(dish: menu.getDish(section: indexPath.section-kNumSectionsBeforeMenu, row: indexPath.row))
                             }
                         }
+                        hideKeyboardWhenTapping(view: cell)
                         return cell
                     }
                 }
@@ -365,14 +399,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
 
     func numberOfSections(in tableView: UITableView) -> Int {
         if let model = menuView {
-            switch model.activeMenuType {
-            case .grid:
-                return kNumSectionsBeforeMenu + model.orders[.grid]!.count
-            case .list:
-                return kNumSectionsBeforeMenu + model.orders[.list]!.count
-            case .expanded:
-                return kNumSectionsBeforeMenu + model.orders[.expanded]!.count
-            }
+            return kNumSectionsBeforeMenu + (model.isEmpty ? 1 : model.orders[model.activeMenuType]!.count)
         }
         return kNumSectionsBeforeMenu
     }
@@ -383,14 +410,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
             return 1
         default:
             if let model = menuView {
-                switch model.activeMenuType {
-                case .grid:
-                    return model.orders[.grid]![section-kNumSectionsBeforeMenu].count
-                case .list:
-                    return model.orders[.list]![section-kNumSectionsBeforeMenu].count
-                case .expanded:
-                    return model.orders[.expanded]![section-kNumSectionsBeforeMenu].count
-                }
+                return model.isEmpty ? 1 : model.orders[model.activeMenuType]![section-kNumSectionsBeforeMenu].count
             }
             return 0
         }
@@ -401,6 +421,9 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
         case 0, 1, 2:
             return 0
         default:
+            if let model = menuView, model.isEmpty {
+                return 0
+            }
             if let menu = menu {
                 if menu.sections[section-kNumSectionsBeforeMenu].dishes.count == 0 {
                     return 0
@@ -416,6 +439,9 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
         case 0, 1, 2:
             return nil
         default:
+            if let model = menuView, model.isEmpty {
+                return nil
+            }
             return menu?.sections[section-kNumSectionsBeforeMenu].name
         }
     }
@@ -447,6 +473,7 @@ extension RestaurantDetailViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section >= kNumSectionsBeforeMenu else { return }
         if let model = menuView {
+            if model.isEmpty { return }
             switch model.activeMenuType {
             case .grid:
                 // grid taps are handled by gridTapGestureRecognizer
@@ -522,6 +549,7 @@ extension RestaurantDetailViewController: RestaurantDetailSearchBarTableViewCell
 
 extension RestaurantDetailViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        Answers.logContentView(withName: "RestaurantDetail-DishSearch", contentType: "dish", contentId: nil, customAttributes: nil)
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -533,7 +561,7 @@ extension RestaurantDetailViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        menu?.searchActive = false
+        dismissKeyboard()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -544,7 +572,7 @@ extension RestaurantDetailViewController: UISearchBarDelegate {
         let numberOfSections = tableView.numberOfSections - kNumSectionsBeforeMenu
         var numberOfRowsInSectionPrev: [Int] = []
         for i in kNumSectionsBeforeMenu..<numberOfSections + kNumSectionsBeforeMenu {
-            numberOfRowsInSectionPrev.append(tableView.numberOfRows(inSection: i))//menu.sections[i].dishes.count)
+            numberOfRowsInSectionPrev.append(tableView.numberOfRows(inSection: i))
         }
         
         if searchText == "" {
@@ -572,8 +600,10 @@ extension RestaurantDetailViewController: UISearchBarDelegate {
             }
         }
         
-        
         tableView.endUpdates()
+        
+        // necessary for preventing header view positioning bug
+        tableView.reloadSections(IndexSet(kNumSectionsBeforeMenu..<numberOfSections+kNumSectionsBeforeMenu), with: .none)
     }
     
 }

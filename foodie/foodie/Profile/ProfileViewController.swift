@@ -154,6 +154,8 @@ class ProfileViewController: UIViewController {
                            forCellReuseIdentifier: kProfileSubmissionTableViewCellId)
         tableView.register(ProfileNeedsAuthTableViewCell.self,
                            forCellReuseIdentifier: kProfileNeedsAuthTableViewCellId)
+        tableView.register(FoodieEmptyStateTableViewCell.self,
+                           forCellReuseIdentifier: kFoodieEmptyStateTableViewCellId)
     }
 
     private func buildComponents() {
@@ -187,6 +189,18 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             }
         default:
             guard let viewModel = viewModel else { return UITableViewCell() }
+            
+            if viewModel.isEmpty {
+                if let cell = tableView.dequeueReusableCell(
+                    withIdentifier: kFoodieEmptyStateTableViewCellId,
+                    for: indexPath)
+                    as? FoodieEmptyStateTableViewCell {
+                    cell.configureCell(text: "No submissions yet - submit a dish today!\nAll of your submissions will appear here.",
+                                       imageString: "curry")
+                    cell.isUserInteractionEnabled = false
+                    return cell
+                }
+            }
 
             if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSubmissionTableViewCellId,
                                                         for: indexPath) as? ProfileSubmissionTableViewCell {
@@ -201,8 +215,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let viewModel = viewModel else { return 1 }
-
-        return 1 + viewModel.sectionedSubmissions.count
+        
+        return 1 + (viewModel.isEmpty ? 1 : viewModel.sectionedSubmissions.count)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -212,6 +226,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return 1
         default:
+            if viewModel.isEmpty { return 1 }
             return viewModel.sectionedSubmissions[section-1].count
         }
     }
@@ -223,6 +238,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return nil
         default:
+            if viewModel.isEmpty { return nil }
             if viewModel.sectionedSubmissions.count > section-1 && viewModel.sectionedSubmissions[section-1].count > 0 {
                 return DateFormatter.friendlyStringForDate(date: viewModel.dateOf(viewModel.sectionedSubmissions[section-1][0]))
             }
@@ -231,10 +247,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let viewModel = viewModel else { return 0 }
         switch section {
         case 0:
             return 0
         default:
+            if viewModel.isEmpty { return 0 }
             return 64
         }
     }
@@ -244,9 +262,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         guard let submission = retrievedSubmission else { return; }
         
         if let restaurant = submission.restaurant {
+            if let dishId = submission.dish?.dishId {
+                Answers.logContentView(withName: "Profile-DishTap", contentType: "dish", contentId: "\(dishId)", customAttributes: nil)
+            }
             DishDetailViewController.push(self.navigationController, submission.dish, restaurant)
         } else {
             if let restaurantId = submission.getRestaurantId() {
+                if let dishId = submission.dish?.dishId {
+                    Answers.logContentView(withName: "Profile-DishTap", contentType: "dish", contentId: "\(dishId)", customAttributes: nil)
+                }
                 NetworkManager.shared.getRestaurant(restaurantId: restaurantId) { (json, _, _) in
                     if let restaurantJSON = json {
                         DishDetailViewController.push(self.navigationController, submission.dish, Restaurant(json: restaurantJSON))
@@ -268,6 +292,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
     func onResubmitButtonTapped(submission: Submission?) {
         if let submission = submission {
+            if let dishId = submission.dish?.dishId {
+                Answers.logContentView(withName: "Profile-DishResubmit", contentType: "submission", contentId: "\(dishId)", customAttributes: nil)
+            }
             let vc = UploadViewController()
             if let restaurantId = submission.getRestaurantId() {
                 vc.restaurantId = restaurantId

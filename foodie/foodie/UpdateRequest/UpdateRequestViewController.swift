@@ -10,6 +10,7 @@ import UIKit
 import GradientLoadingBar
 import FBSDKLoginKit
 import NotificationBannerSwift
+import Crashlytics
 
 class UpdateRequestViewController: UIViewController {
 
@@ -21,7 +22,7 @@ class UpdateRequestViewController: UIViewController {
         case restaurant
     }
     
-    enum UpdateRequestType {
+    enum UpdateRequestType: String {
         case dishReport
         case sectionReport
         case restaurantReport
@@ -185,6 +186,10 @@ class UpdateRequestViewController: UIViewController {
                 isReport = false
             }
             
+            Answers.logContentView(withName: "ReportOrAmendRequest", contentType: "report-or-amend", contentId: self.id,
+                                   customAttributes: ["reason": reason,
+                                                      "description": description,
+                                                      "type": dataSource.rawValue])
             GradientLoadingBar.shared.show()
             sender?.isEnabled = false
             NetworkManager.shared.submitAmend(reason: reason,
@@ -206,6 +211,7 @@ class UpdateRequestViewController: UIViewController {
     }
     
     public static func presentActionSheet(_ source: UpdateSource, sender: UIViewController, id: String) {
+        Answers.logContentView(withName: "ReportOrAmendActionSheet", contentType: "report-or-amend", contentId: id, customAttributes: ["type": source.rawValue])
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let amend = UIAlertAction(title: "Amend this \(source.rawValue)", style: .default) { _ in
@@ -241,6 +247,7 @@ class UpdateRequestViewController: UIViewController {
         sender.present(actionController, animated: true, completion: nil)
         
         func presentUpdateRequest(_ vc: UpdateRequestViewController) {
+            Answers.logContentView(withName: "ReportOrAmendInitiate", contentType: "report-or-amend", contentId: id, customAttributes: ["type": source.rawValue])
             let nc = UINavigationController(rootViewController: vc)
             sender.present(nc, animated: true, completion: nil)
         }

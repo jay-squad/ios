@@ -36,6 +36,8 @@ class SearchViewController: UIViewController {
     var nextSearchResultType: SearchResult.ResultType = .restaurant
     var dishesTapGestureRecognizer: UITapGestureRecognizer?
     
+    var isFirstLoad = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,6 +87,8 @@ class SearchViewController: UIViewController {
                            forCellReuseIdentifier: kSearchRestaurantTableViewCellId)
         tableView.register(PaginationPendingTableViewCell.self,
                            forCellReuseIdentifier: kPaginationPendingTableViewCellId)
+        tableView.register(FoodieEmptyStateTableViewCell.self,
+                           forCellReuseIdentifier: kFoodieEmptyStateTableViewCellId)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -197,6 +201,7 @@ class SearchViewController: UIViewController {
                 self.tableView.removeGestureRecognizer(dishesTapGestureRecognizer!)
             }
             NetworkManager.shared.searchRestaurant(query: query) { (json, error, code) in
+                self.isFirstLoad = false
                 GradientLoadingBar.shared.hide()
                 if let restaurantJSONs = json?.array {
                     self.searchResults.removeAll()
@@ -225,6 +230,7 @@ class SearchViewController: UIViewController {
             dishesTapGestureRecognizer?.delegate = self
             self.tableView.addGestureRecognizer(dishesTapGestureRecognizer!)
             NetworkManager.shared.searchDish(query: query) { (json, error, _) in
+                self.isFirstLoad = false
                 GradientLoadingBar.shared.hide()
                 if let dishJSONs = json?.array {
                     self.searchResults.removeAll()
@@ -250,8 +256,14 @@ class SearchViewController: UIViewController {
                         let pointInCell = gestureRecognizer.location(in: cell)
 
                         if cell.searchResult1 != nil, cell.viewComponent1.frame.contains(pointInCell) {
+                            if let id = cell.searchResult1!.dish?.dishId {
+                                Answers.logContentView(withName: "Search-DishDetail", contentType: "dish", contentId: "\(id)", customAttributes: nil)
+                            }
                             DishDetailViewController.push(self.navigationController, cell.searchResult1!.dish, cell.searchResult1?.restaurant)
                         } else if cell.searchResult2 != nil, cell.viewComponent2.frame.contains(pointInCell) {
+                            if let id = cell.searchResult2!.dish?.dishId {
+                                Answers.logContentView(withName: "Search-DishDetail", contentType: "dish", contentId: "\(id)", customAttributes: nil)
+                            }
                             DishDetailViewController.push(self.navigationController, cell.searchResult2!.dish, cell.searchResult2?.restaurant)
                         }
                     }
@@ -273,6 +285,25 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 //                return cell
 //            }
 //        }
+        if searchResults.count == 0 && !isFirstLoad {
+            if let cell = tableView.dequeueReusableCell(
+                withIdentifier: kFoodieEmptyStateTableViewCellId,
+                for: indexPath)
+                as? FoodieEmptyStateTableViewCell {
+                var titleText = ""
+                var imageString = ""
+                if searchResultType == .restaurant {
+                    titleText = "No results availble from your restaurant search.\nRestaurant submissions are coming soon!"
+                    imageString = "dimsum"
+                } else {
+                    titleText = "No results availble from your dish search."
+                    imageString = "takoyaki"
+                }
+                cell.configureCell(text: titleText,
+                                   imageString: imageString)
+                return cell
+            }
+        }
         
         switch searchResultType {
         case .restaurant:
@@ -298,6 +329,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchResults.count == 0 && !isFirstLoad { return 1 }
         switch searchResultType {
         case .restaurant:
             return searchResults.count //+ 1
@@ -308,6 +340,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.row < searchResults.count else { return }
+        if let id = searchResults[indexPath.row].restaurant?.id {
+            Answers.logContentView(withName: "Search-RestaurantDetail", contentType: "restaurant", contentId: "\(id)", customAttributes: nil)
+        }
 //        if !isLastRow(indexPath: indexPath) {
             RestaurantDetailViewController.push(self.navigationController, searchResults[indexPath.row].restaurant)
 //        }
