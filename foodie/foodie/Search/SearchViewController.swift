@@ -75,9 +75,8 @@ class SearchViewController: UIViewController {
         if Defaults[.launchCount] == 0 {
             Defaults[.launchCount] += 1
             let onboardingVC = OnboardingViewController()
-            self.present(onboardingVC, animated: true, completion: {
-                self.announcementsIfNeeded()
-            })
+            onboardingVC.delegate = self
+            self.present(onboardingVC, animated: true, completion: nil)
             return true
         }
         return false
@@ -398,4 +397,10 @@ extension SearchViewController: UITextFieldDelegate {
         return true
     }
 
+}
+
+extension SearchViewController: OnboardingViewControllerDelegate {
+    func onOnboardingComplete() {
+        self.announcementsIfNeeded()
+    }
 }

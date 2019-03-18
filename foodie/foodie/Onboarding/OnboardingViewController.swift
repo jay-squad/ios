@@ -12,10 +12,16 @@ import FBSDKLoginKit
 import ActiveLabel
 import Crashlytics
 
+protocol OnboardingViewControllerDelegate: class {
+    func onOnboardingComplete()
+}
+
 class OnboardingViewController: UIViewController {
 
     var collectionView: UICollectionView! = nil
     var signupButtonTapped = false
+    
+    weak var delegate: OnboardingViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +49,9 @@ class OnboardingViewController: UIViewController {
         if FBSDKAccessToken.currentAccessTokenIsActive() {
             Answers.logSignUp(withMethod: AnswersKeys.onboarding_signup_method_facebook, success: true, customAttributes: nil)
             NetworkManager.shared.setAuthedState()
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: {
+                self.delegate?.onOnboardingComplete()
+            })
         } else if signupButtonTapped {
             Answers.logSignUp(withMethod: AnswersKeys.onboarding_signup_method_facebook, success: false, customAttributes: nil)
         }
@@ -97,7 +105,9 @@ extension OnboardingViewController: OnboardingCollectionViewCellDelegate {
     func onNextButtonTapped(index: Int) {
         if index + 1 == 3 {
             Answers.logSignUp(withMethod: AnswersKeys.onboarding_signup_method_skipped, success: false, customAttributes: nil)
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: {
+                self.delegate?.onOnboardingComplete()
+            })
         } else {
             collectionView.scrollToItem(at: IndexPath(item: 0, section: index+1), at: .left, animated: true)
         }
