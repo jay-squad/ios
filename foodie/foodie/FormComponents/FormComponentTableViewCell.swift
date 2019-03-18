@@ -19,8 +19,8 @@ enum UploadFormComponent: Int {
 class FormComponentTableViewCell: UITableViewCell {
 
     let kTextFieldHeight: CGFloat = 50.0
-    private var titleLabel = UILabel()
-    private var subtitleLabel = UILabel()
+    var titleLabel = UILabel()
+    var subtitleLabel = UILabel()
     
     var customViewContainer = UIView()
     

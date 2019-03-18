@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
     let kProfileSummaryTableViewCellId = "ProfileSummaryTableViewCellId"
     let kProfileSubmissionTableViewCellId = "ProfileSubmissionTableViewCellId"
     let kProfileNeedsAuthTableViewCellId = "ProfileNeedsAuthTableViewCellId"
+    let kProfileContestTableViewCellId = "ProfileContestTableViewCellId"
 
     var profileModel: Profile?
     var viewModel: ProfileSubmissionsViewModel?
@@ -79,6 +80,28 @@ class ProfileViewController: UIViewController {
                     self.profileModel = Profile(json: json)
                     self.viewModel = ProfileSubmissionsViewModel(profile: self.profileModel)
                     self.tableView.reloadData()
+                    
+                    if let profileModel = self.profileModel, profileModel.shouldShowConfetti {
+                        profileModel.shouldShowConfetti = false
+                        
+                        let confettiView = SAConfettiView(frame: self.view.bounds)
+                        confettiView.intensity = 0.75
+                        confettiView.isUserInteractionEnabled = false
+                        self.view.addSubview(confettiView)
+                        confettiView.alpha = 0
+                        confettiView.startConfetti()
+                        UIView.animate(withDuration: 1, animations: {
+                            confettiView.alpha = 1
+                        }, completion: nil)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+                            confettiView.stopConfetti()
+                            UIView.animate(withDuration: 5, animations: {
+                                confettiView.alpha = 0
+                            }, completion: { _ in
+                                confettiView.removeFromSuperview()
+                            })
+                        }
+                    }
                 }
                 completion()
             }
@@ -132,7 +155,7 @@ class ProfileViewController: UIViewController {
     @objc private func onMoreButtonTapped(_ sender: UIBarButtonItem?) {
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let change = UIAlertAction(title: "Logout", style: .destructive) { _ in
+        let logout = UIAlertAction(title: "Logout", style: .destructive) { _ in
             FBSDKLoginManager().logOut()
         }
         let attributions = UIAlertAction(title: "Attributions", style: .default) { _ in
@@ -140,9 +163,13 @@ class ProfileViewController: UIViewController {
             let nc = UINavigationController(rootViewController: vc)
             self.present(nc, animated: true, completion: nil)
         }
+        let announcements = UIAlertAction(title: "Annoucements", style: .default) { _ in
+            AnnouncementsViewController.push(self)
+        }
         actionController.addAction(cancel)
+        actionController.addAction(announcements)
         actionController.addAction(attributions)
-        actionController.addAction(change)
+        actionController.addAction(logout)
 
         self.present(actionController, animated: true, completion: nil)
     }
@@ -156,6 +183,8 @@ class ProfileViewController: UIViewController {
                            forCellReuseIdentifier: kProfileNeedsAuthTableViewCellId)
         tableView.register(FoodieEmptyStateTableViewCell.self,
                            forCellReuseIdentifier: kFoodieEmptyStateTableViewCellId)
+        tableView.register(ProfileContestTableViewCell.self,
+                           forCellReuseIdentifier: kProfileContestTableViewCellId)
     }
 
     private func buildComponents() {
@@ -172,12 +201,25 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             if FBSDKAccessToken.currentAccessTokenIsActive() {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSummaryTableViewCellId,
-                                                            for: indexPath) as? ProfileSummaryTableViewCell {
-                    if let profileModel = profileModel {
-                        cell.configureCell(profileModel: profileModel)
+                switch indexPath.row {
+                case 0:
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileSummaryTableViewCellId,
+                                                                for: indexPath) as? ProfileSummaryTableViewCell {
+                        if let profileModel = profileModel {
+                            cell.configureCell(profileModel: profileModel)
+                        }
+                        return cell
                     }
-                    return cell
+                case 1:
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileContestTableViewCellId,
+                                                                for: indexPath) as? ProfileContestTableViewCell {
+                        if let profileModel = profileModel {
+                            cell.configureCell(profile: profileModel)
+                        }
+                        return cell
+                    }
+                default:
+                    break
                 }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileNeedsAuthTableViewCellId,
@@ -224,7 +266,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
         switch section {
         case 0:
-            return 1
+            var contestRow = 0
+            if let profile = profileModel, profile.amazonCode != nil {
+                contestRow = 1
+            }
+            return 1 + contestRow
         default:
             if viewModel.isEmpty { return 1 }
             return viewModel.sectionedSubmissions[section-1].count
@@ -315,7 +361,7 @@ extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
 }
 
 extension ProfileViewController: ProfileNeedsAuthTableViewCellDelegate {
-    func showAttributionsActionSheet() {
+    func showMoreMenuActionSheet() {
         // TODO: put this action sheet stuff in a method
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -324,7 +370,11 @@ extension ProfileViewController: ProfileNeedsAuthTableViewCellDelegate {
             let nc = UINavigationController(rootViewController: vc)
             self.present(nc, animated: true, completion: nil)
         }
+        let announcements = UIAlertAction(title: "Annoucements", style: .default) { _ in
+            AnnouncementsViewController.push(self)
+        }
         actionController.addAction(cancel)
+        actionController.addAction(announcements)
         actionController.addAction(attributions)
         
         self.present(actionController, animated: true, completion: nil)

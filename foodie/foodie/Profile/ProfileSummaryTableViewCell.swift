@@ -24,7 +24,8 @@ class ProfileSummaryTableViewCell: UITableViewCell {
     lazy var numberOfAcceptedDishesLabel = UILabel()
     lazy var numberOfPendingDishesLabel = UILabel()
     lazy var numberOfRejectedDishesLabel = UILabel()
-    lazy var numberOfPointsLabel = UILabel()
+    lazy var numberOfPointsThisRoundLabel = UILabel()
+    lazy var numberOfPointsTotalLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -61,7 +62,8 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         setNumberOfAcceptedDishesLabel(numberOfDishes: acceptedDishes)
         setNumberOfPendingDishesLabel(numberOfDishes: pendingDishes)
         setNumberOfRejectedDishesLabel(numberOfDishes: rejectedDishes)
-        setNumberOfPointsLabel(numberOfPoints: profileModel.points)
+        setNumberOfPointsTotalLabel(numberOfPoints: profileModel.points)
+        setNumberOfPointsThisRoundLabel(numberOfPoints: profileModel.points - profileModel.lastRewardsPoints)
         
         if let fbid = FBSDKAccessToken.current()?.userID, let url = URL(string: "https://graph.facebook.com/v3.2/\(fbid)/picture") {
             profilePicImageView.sd_setImage(with: url)
@@ -110,9 +112,12 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         numberOfRejectedDishesLabel.translatesAutoresizingMaskIntoConstraints = false
         setNumberOfRejectedDishesLabel(numberOfDishes: -1)
 
-        numberOfPointsLabel.translatesAutoresizingMaskIntoConstraints = false
-        setNumberOfPointsLabel(numberOfPoints: -1)
-
+        numberOfPointsTotalLabel.translatesAutoresizingMaskIntoConstraints = false
+        setNumberOfPointsTotalLabel(numberOfPoints: -1)
+        
+        numberOfPointsThisRoundLabel.translatesAutoresizingMaskIntoConstraints = false
+        setNumberOfPointsThisRoundLabel(numberOfPoints: -1)
+        
         let spacer = UIView()
         spacer.translatesAutoresizingMaskIntoConstraints = false
         spacer.heightAnchor.constraint(equalToConstant: 16).isActive = true
@@ -136,7 +141,8 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(numberOfAcceptedDishesLabel)
         stackView.addArrangedSubview(numberOfPendingDishesLabel)
         stackView.addArrangedSubview(numberOfRejectedDishesLabel)
-        stackView.addArrangedSubview(numberOfPointsLabel)
+        stackView.addArrangedSubview(numberOfPointsTotalLabel)
+        stackView.addArrangedSubview(numberOfPointsThisRoundLabel)
     }
 
     private func setNumberOfAcceptedDishesLabel(numberOfDishes: Int) {
@@ -169,10 +175,17 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         numberOfRejectedDishesLabel.textColor = .ccErrorRed
     }
 
-    private func setNumberOfPointsLabel(numberOfPoints: Int) {
+    private func setNumberOfPointsTotalLabel(numberOfPoints: Int) {
         let counterString = "\(numberOfPoints >= 0 ? "\(numberOfPoints)" : "-")"
-        let numberOfPointsAttributedString = NSMutableAttributedString(string: "\(counterString) points", attributes: defaultLabelAttributes)
+        let numberOfPointsAttributedString = NSMutableAttributedString(string: "\(counterString) points in total", attributes: defaultLabelAttributes)
+        numberOfPointsAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 20)!, range: NSRange(location: 0, length: counterString.count))
+        numberOfPointsTotalLabel.attributedText = numberOfPointsAttributedString
+    }
+    
+    private func setNumberOfPointsThisRoundLabel(numberOfPoints: Int) {
+        let counterString = "\(numberOfPoints >= 0 ? "\(numberOfPoints)" : "-")"
+        let numberOfPointsAttributedString = NSMutableAttributedString(string: "\(counterString) points this round", attributes: defaultLabelAttributes)
         numberOfPointsAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 28)!, range: NSRange(location: 0, length: counterString.count))
-        numberOfPointsLabel.attributedText = numberOfPointsAttributedString
+        numberOfPointsThisRoundLabel.attributedText = numberOfPointsAttributedString
     }
 }

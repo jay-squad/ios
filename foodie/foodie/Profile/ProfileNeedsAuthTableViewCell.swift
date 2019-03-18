@@ -10,7 +10,7 @@ import UIKit
 import FBSDKLoginKit
 
 protocol ProfileNeedsAuthTableViewCellDelegate: class {
-    func showAttributionsActionSheet()
+    func showMoreMenuActionSheet()
 }
 
 class ProfileNeedsAuthTableViewCell: UITableViewCell {
@@ -93,15 +93,15 @@ class ProfileNeedsAuthTableViewCell: UITableViewCell {
         stackView.bottomAnchor.constraint(equalTo: loginButton.topAnchor).isActive = true
         stackView.centerXAnchor.constraint(equalTo: externalContainerView.centerXAnchor).isActive = true
         
-        let attributionsButton = UIButton(type: .infoLight)
-        externalContainerView.addSubview(attributionsButton)
-        attributionsButton.translatesAutoresizingMaskIntoConstraints = false
-        attributionsButton.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor, constant: -5).isActive = true
-        attributionsButton.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 5).isActive = true
-        attributionsButton.addTarget(self, action: #selector(onAttributionsButtonTapped), for: .touchUpInside)
+        let moreMenuButton = UIButton(type: .infoLight)
+        externalContainerView.addSubview(moreMenuButton)
+        moreMenuButton.translatesAutoresizingMaskIntoConstraints = false
+        moreMenuButton.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor, constant: -5).isActive = true
+        moreMenuButton.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 5).isActive = true
+        moreMenuButton.addTarget(self, action: #selector(onMoreMenuButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func onAttributionsButtonTapped() {
-        delegate?.showAttributionsActionSheet()
+    @objc private func onMoreMenuButtonTapped() {
+        delegate?.showMoreMenuActionSheet()
     }
 }

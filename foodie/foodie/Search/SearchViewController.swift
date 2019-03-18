@@ -41,7 +41,10 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        onboardingIfNeeded()
+        var didOnboard = onboardingIfNeeded()
+        if !didOnboard {
+            announcementsIfNeeded()
+        }
         
         setupNibs()
         setupTableView()
@@ -68,11 +71,24 @@ class SearchViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    private func onboardingIfNeeded() {
+    private func onboardingIfNeeded() -> Bool {
         if Defaults[.launchCount] == 0 {
             Defaults[.launchCount] += 1
             let onboardingVC = OnboardingViewController()
-            self.present(onboardingVC, animated: true, completion: nil)
+            self.present(onboardingVC, animated: true, completion: {
+                self.announcementsIfNeeded()
+            })
+            return true
+        }
+        return false
+    }
+    
+    private func announcementsIfNeeded() {
+        let savedAnnoucement = Defaults[.savedAnnoucement]
+        // TODO: network call
+        let currentAnnouncement: String? = "asfasdf"
+        if currentAnnouncement != nil && currentAnnouncement != savedAnnoucement {
+            AnnouncementsViewController.push(self)
         }
     }
     

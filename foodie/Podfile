@@ -17,7 +17,7 @@ target 'foodie' do
   pod 'GradientLoadingBar'
   pod 'ImageSlideshow/SDWebImage'
   pod 'NotificationBannerSwift'
-
+  
   pod 'AWSFacebookSignIn', '~> 2.8.0'     # Add this new dependency
   pod 'AWSAuthUI', '~> 2.8.0'             # Add this dependency if you have not already added
   pod 'AWSMobileClient', '~> 2.8.0'
