@@ -14,6 +14,7 @@ import AWSS3
 import AWSMobileClient
 import AWSAuthCore
 import FBSDKCoreKit
+import MapKit
 
 class NetworkManager {
     
@@ -43,6 +44,7 @@ class NetworkManager {
         case getProfile(userId: Int)
         case getProfileSelf()
         case submitAmend(params: [String: AnyObject])
+        case submitRestaurant(params: [String: AnyObject])
         
         static let baseURLString = "https://foodie-server-prod.herokuapp.com/"
         
@@ -65,6 +67,8 @@ class NetworkManager {
             case .getProfileSelf:
                 return .get
             case .submitAmend:
+                return .post
+            case .submitRestaurant:
                 return .post
             }
         }
@@ -89,6 +93,8 @@ class NetworkManager {
                 return "fbuser"
             case .submitAmend(_):
                 return "suggest_amendment"
+            case .submitRestaurant(_):
+                return "restaurant"
             }
         }
         
@@ -99,6 +105,8 @@ class NetworkManager {
             case .insertMenuItem(_, let params):
                 return params
             case .submitAmend(let params):
+                return params
+            case .submitRestaurant(let params):
                 return params
             default:
                 return [:]
@@ -423,6 +431,44 @@ class NetworkManager {
                                         print("Successfully uploaded image to: \(newImageUrl?.absoluteString)")
                                         completion(newImageUrl, nil)
                                     }
+        }
+    }
+    
+    func submitRestaurant(name: String,
+                          location: CLLocationCoordinate2D,
+                          description: String?,
+                          cuisineType: String?,
+                          phoneNumber: Int?,
+                          website: String?,
+                          completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        var json: JSON = JSON([:])
+        
+        json["name"].string = name
+        json["latitude"].string = "\(location.latitude)"
+        json["longitude"].string = "\(location.longitude)"
+        
+        if let description = description {
+            json["description"].string = description
+        }
+        if let cuisineType = cuisineType {
+            json["cuisine_type"].string = cuisineType
+        }
+        if let phoneNumber = phoneNumber {
+            json["phone_number"].string = "\(phoneNumber)"
+        }
+        if let website = website {
+            json["website"].string = website
+        }
+        
+        Alamofire.request(Router.submitRestaurant(params: json.dictionaryObject! as [String: AnyObject]))
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
         }
     }
     

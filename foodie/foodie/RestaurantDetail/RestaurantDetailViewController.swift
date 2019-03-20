@@ -154,8 +154,8 @@ class RestaurantDetailViewController: UIViewController {
                     options.isSynchronous = true
                     asset.fetchOriginalImage(options: options, completeBlock: { image, _ in
                         if let img = image {
-                            uploadVC.restaurantId = restaurant.id
-                            uploadVC.restaurantMenu = self.menu
+                            uploadVC.restaurant = restaurant
+                            uploadVC.restaurant?.menu = self.menu
                             uploadVC.uploadImage = img
                             uploadVC.delegate = self
                             self.navigationController?.pushViewController(uploadVC, animated: true)

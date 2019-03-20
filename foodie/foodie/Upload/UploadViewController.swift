@@ -18,6 +18,8 @@ let kUploadImageTableViewCellId = "UploadImageTableViewCellId"
 let kUploadBasicInfoTableViewCellId = "UploadBasicInfoTableViewCellId"
 let kAdditionalInfoTableViewCellId = "AdditionalInfoTableViewCellId"
 let kUploadEarningsTableViewCellId = "UploadEarningsTableViewCellId"
+let kUploadRestaurantTableViewCellId = "UploadRestaurantTableViewCellId"
+let kUploadRestaurantIfNewTableViewCellId = "UploadRestaurantIfNewTableViewCellId"
 
 enum UploadFormError: Error {
     case required
@@ -32,8 +34,8 @@ class UploadViewController: UIViewController {
 
     var tableView = UITableView()
     
-    var restaurantId: Int = -1
-    var restaurantMenu: Menu?
+    var restaurant: Restaurant?
+    var newRestaurantName: String?
     var uploadImage: UIImage? {
         didSet {
             tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
@@ -61,6 +63,10 @@ class UploadViewController: UIViewController {
                            forCellReuseIdentifier: kAdditionalInfoTableViewCellId)
         tableView.register(UploadEarningsTableViewCell.self,
                            forCellReuseIdentifier: kUploadEarningsTableViewCellId)
+        tableView.register(UploadRestaurantTableViewCell.self,
+                           forCellReuseIdentifier: kUploadRestaurantTableViewCellId)
+        tableView.register(UploadRestaurantIfNewTableViewCell.self,
+                           forCellReuseIdentifier: kUploadRestaurantIfNewTableViewCellId)
     }
     
     private func setupTableView() {
@@ -112,13 +118,13 @@ class UploadViewController: UIViewController {
                 let sectionText = cell.dishSectionTextField.text
                 
                 Answers.logContentView(withName: "Upload-SubmissionRequest", contentType: "submission", contentId: nil,
-                                       customAttributes: ["restaurant": restaurantId,
+                                       customAttributes: ["restaurant": restaurant?.id ?? -1,
                                                           "itemName": cell.dishTextField.text,
                                                           "itemSection": sectionText,
                                                           "description": description])
                 
                 if uploadImage != nil {
-                    NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
+                    NetworkManager.shared.insertMenuItem(restaurantId: restaurant?.id ?? -1,
                                                          itemName: cell.dishTextField.text,
                                                          itemImage: uploadImage,
                                                          description: description,
@@ -127,7 +133,7 @@ class UploadViewController: UIViewController {
                                                             GradientLoadingBar.shared.hide()
                                                             if error == nil {
                                                                 Answers.logContentView(withName: "Upload-SubmissionSuccess", contentType: "submission", contentId: nil,
-                                                                                       customAttributes: ["restaurant": self.restaurantId,
+                                                                                       customAttributes: ["restaurant": self.restaurant?.id ?? -1,
                                                                                                           "itemName": cell.dishTextField.text,
                                                                                                           "itemSection": sectionText,
                                                                                                           "description": description])
@@ -139,7 +145,7 @@ class UploadViewController: UIViewController {
                     }
                 } else {
                     // only on resubmission with same image
-                    NetworkManager.shared.insertMenuItem(restaurantId: restaurantId,
+                    NetworkManager.shared.insertMenuItem(restaurantId: restaurant?.id ?? -1,
                                                          itemName: cell.dishTextField.text,
                                                          itemImageUrl: prepopulatedSubmission?.dishImage?.image,
                                                          description: description,
@@ -148,7 +154,7 @@ class UploadViewController: UIViewController {
                                                             GradientLoadingBar.shared.hide()
                                                             if error == nil {
                                                                 Answers.logContentView(withName: "Upload-SubmissionSuccess", contentType: "submission", contentId: nil,
-                                                                                       customAttributes: ["restaurant": self.restaurantId,
+                                                                                       customAttributes: ["restaurant": self.restaurant?.id ?? -1,
                                                                                                           "itemName": cell.dishTextField.text,
                                                                                                           "itemSection": sectionText,
                                                                                                           "description": description,])
@@ -219,6 +225,15 @@ class UploadViewController: UIViewController {
 
 extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let offset = restaurant == nil ? 1 : 0
+        
+        if restaurant == nil, indexPath.row == 2 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadRestaurantIfNewTableViewCellId, for: indexPath) as? UploadRestaurantIfNewTableViewCell {
+                cell.configureCell(restaurantName: newRestaurantName)
+                return cell
+            }
+        }
+        
         switch indexPath.row {
         case 0:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadImageTableViewCellId,
@@ -231,16 +246,23 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             }
         case 1:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadRestaurantTableViewCellId,
+                                                        for: indexPath) as? UploadRestaurantTableViewCell {
+                cell.configureCell(restaurant: restaurant)
+                cell.delegate = self
+                return cell
+            }
+        case 2 + offset:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadBasicInfoTableViewCellId,
                                                         for: indexPath) as? UploadBasicInfoTableViewCell {
                 if let prepopulatedSubmission = prepopulatedSubmission {
-                    cell.configureCell(menu: restaurantMenu, prefilledSubmission: prepopulatedSubmission)
+                    cell.configureCell(menu: restaurant?.menu, prefilledSubmission: prepopulatedSubmission)
                 } else {
-                    cell.configureCell(menu: restaurantMenu)
+                    cell.configureCell(menu: restaurant?.menu)
                 }
                 return cell
             }
-        case 2:
+        case 3 + offset:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kAdditionalInfoTableViewCellId,
                                                         for: indexPath) as? AdditionalInfoTableViewCell {
                 let prefilledDescription = prepopulatedSubmission?.dish?.description
@@ -250,7 +272,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
                                    prefilledDescription: prefilledDescription)
                 return cell
             }
-        case 3:
+        case 4 + offset:
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadEarningsTableViewCellId,
                                                         for: indexPath) as? UploadEarningsTableViewCell {
                 cell.configureCell(points: 50)
@@ -259,7 +281,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
-        assert(false)
+
         return UITableViewCell()
     }
     
@@ -268,7 +290,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5 + (restaurant == nil ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -304,4 +326,24 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
         estimatedHeightDict[indexPath] = cell.frame.size.height
     }
     
+}
+
+extension UploadViewController: UploadRestaurantTableViewCellDelegate {
+    func restaurantExistenceDidChange(restaurant: Restaurant?, orName: String?) {
+        self.restaurant = restaurant
+        self.newRestaurantName = orName
+        if restaurant != nil {
+            tableView.deleteRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+        } else {
+            tableView.insertRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+        }
+    }
+    
+    func newNonExistentNameTyped(name: String?) {
+        self.newRestaurantName = name
+        if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? UploadRestaurantIfNewTableViewCell {
+            cell.restaurantName = name
+            cell.setMapRegion()
+        }
+    }
 }

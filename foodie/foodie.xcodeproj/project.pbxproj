@@ -46,6 +46,9 @@
 		267F3ADB223C8C30005D70F8 /* FoodieEmptyStateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267F3ADA223C8C30005D70F8 /* FoodieEmptyStateTableViewCell.swift */; };
 		267F3ADE223EFFAA005D70F8 /* SAConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267F3ADD223EFFA9005D70F8 /* SAConfettiView.swift */; };
 		267F3AE0223F2465005D70F8 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267F3ADF223F2465005D70F8 /* AnnouncementsViewController.swift */; };
+		267F3AE32240B3C5005D70F8 /* UploadRestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267F3AE22240B3C5005D70F8 /* UploadRestaurantTableViewCell.swift */; };
+		267F3AE52240B51E005D70F8 /* CachedRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267F3AE42240B51E005D70F8 /* CachedRestaurants.swift */; };
+		267F3AE822417E11005D70F8 /* UploadRestaurantIfNewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267F3AE722417E11005D70F8 /* UploadRestaurantIfNewTableViewCell.swift */; };
 		26AAFB8520E4AB6300DEE4E7 /* UUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */; };
 		26AAFB8720E4C37F00DEE4E7 /* UDKImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8620E4C37F00DEE4E7 /* UDKImagePickerController.swift */; };
 		26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8920E581E000DEE4E7 /* UHoshiTextField.swift */; };
@@ -154,6 +157,9 @@
 		267F3ADA223C8C30005D70F8 /* FoodieEmptyStateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodieEmptyStateTableViewCell.swift; sourceTree = "<group>"; };
 		267F3ADD223EFFA9005D70F8 /* SAConfettiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAConfettiView.swift; sourceTree = "<group>"; };
 		267F3ADF223F2465005D70F8 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
+		267F3AE22240B3C5005D70F8 /* UploadRestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRestaurantTableViewCell.swift; sourceTree = "<group>"; };
+		267F3AE42240B51E005D70F8 /* CachedRestaurants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedRestaurants.swift; sourceTree = "<group>"; };
+		267F3AE722417E11005D70F8 /* UploadRestaurantIfNewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRestaurantIfNewTableViewCell.swift; sourceTree = "<group>"; };
 		26AAFB8420E4AB6300DEE4E7 /* UUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIViewController.swift; sourceTree = "<group>"; };
 		26AAFB8620E4C37F00DEE4E7 /* UDKImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDKImagePickerController.swift; sourceTree = "<group>"; };
 		26AAFB8920E581E000DEE4E7 /* UHoshiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UHoshiTextField.swift; sourceTree = "<group>"; };
@@ -271,6 +277,7 @@
 				26D3686D21E59FA30093B223 /* Profile */,
 				26D3686A21E55E5D0093B223 /* Map */,
 				26CC94EA20EE459F006AB058 /* Onboarding */,
+				267F3AE62240B632005D70F8 /* Cache */,
 				26CC94DF20ED95BB006AB058 /* Network */,
 				26AAFB9120ED4CA900DEE4E7 /* Search */,
 				26CBE3EC22309672000778C9 /* FormComponents */,
@@ -320,6 +327,8 @@
 		262B744920E428EF0019B8BF /* Upload */ = {
 			isa = PBXGroup;
 			children = (
+				267F3AE22240B3C5005D70F8 /* UploadRestaurantTableViewCell.swift */,
+				267F3AE722417E11005D70F8 /* UploadRestaurantIfNewTableViewCell.swift */,
 				262B744520E428EB0019B8BF /* UploadViewController.swift */,
 				26AAFB8D20E5973C00DEE4E7 /* UploadNavigationController.swift */,
 				262B744A20E43C370019B8BF /* UploadImageTableViewCell.swift */,
@@ -401,6 +410,14 @@
 				267F3ADF223F2465005D70F8 /* AnnouncementsViewController.swift */,
 			);
 			path = Contest;
+			sourceTree = "<group>";
+		};
+		267F3AE62240B632005D70F8 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				267F3AE42240B51E005D70F8 /* CachedRestaurants.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		26AAFB9120ED4CA900DEE4E7 /* Search */ = {
@@ -805,6 +822,7 @@
 				2651C80C20D775B700E4D9EC /* RestaurantDetailMenuExpandedTableViewCell.swift in Sources */,
 				2651C80820D7759F00E4D9EC /* RestaurantDetailMenu1ColumnGridTableViewCell.swift in Sources */,
 				26AAFB8520E4AB6300DEE4E7 /* UUIViewController.swift in Sources */,
+				267F3AE52240B51E005D70F8 /* CachedRestaurants.swift in Sources */,
 				26CBE3EF2230D0CF000778C9 /* DishDetailViewController.swift in Sources */,
 				26AAFB9020ED4CA400DEE4E7 /* SearchViewController.swift in Sources */,
 				262B744B20E43C370019B8BF /* UploadImageTableViewCell.swift in Sources */,
@@ -827,6 +845,7 @@
 				26BECED02202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift in Sources */,
 				26CC94E120EDB0B5006AB058 /* RequestBodyFactory.swift in Sources */,
 				26C7170420C0F7A00026C4EF /* Dish.swift in Sources */,
+				267F3AE32240B3C5005D70F8 /* UploadRestaurantTableViewCell.swift in Sources */,
 				267F3AE0223F2465005D70F8 /* AnnouncementsViewController.swift in Sources */,
 				2651C80020D769CC00E4D9EC /* UUISegmentedControl.swift in Sources */,
 				26D8CD1D221D09C600794F10 /* Submission.swift in Sources */,
@@ -837,6 +856,7 @@
 				26FE879521E79D8D001AF76E /* Profile.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
 				267F3ADE223EFFAA005D70F8 /* SAConfettiView.swift in Sources */,
+				267F3AE822417E11005D70F8 /* UploadRestaurantIfNewTableViewCell.swift in Sources */,
 				26CBE3F62230E1E5000778C9 /* DishMetadataTableViewCell.swift in Sources */,
 				267F3AD7223AEECE005D70F8 /* RestaurantDetailSearchBarTableViewCell.swift in Sources */,
 				26CBE3FC2230F2A5000778C9 /* SpacerTableViewCell.swift in Sources */,

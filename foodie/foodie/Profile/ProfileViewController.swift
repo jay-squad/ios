@@ -343,12 +343,12 @@ extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
             }
             let vc = UploadViewController()
             if let restaurantId = submission.getRestaurantId() {
-                vc.restaurantId = restaurantId
+                vc.restaurant = submission.restaurant
                 
                 NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
                     if let menuJSONs = json {
                         vc.prepopulate(submission)
-                        vc.restaurantMenu = Menu(json: menuJSONs)
+                        vc.restaurant?.menu = Menu(json: menuJSONs)
                         let nc = UINavigationController(rootViewController: vc)
                         vc.addDismissButton()
                         

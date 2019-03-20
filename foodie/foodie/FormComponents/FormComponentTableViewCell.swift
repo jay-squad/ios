@@ -18,6 +18,7 @@ enum UploadFormComponent: Int {
 
 class FormComponentTableViewCell: UITableViewCell {
 
+    let kStackViewPadding: CGFloat = 30.0
     let kTextFieldHeight: CGFloat = 50.0
     var titleLabel = UILabel()
     var subtitleLabel = UILabel()
@@ -84,9 +85,9 @@ class FormComponentTableViewCell: UITableViewCell {
         externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7.0).isActive = true
         
         stackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 20.0).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 30.0).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: kStackViewPadding).isActive = true
         stackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
-                                            constant: -30.0).isActive = true
+                                            constant: -kStackViewPadding).isActive = true
         stackView.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -45.0).isActive = true
     }
 }

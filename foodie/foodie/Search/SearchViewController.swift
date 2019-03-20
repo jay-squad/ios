@@ -232,6 +232,11 @@ class SearchViewController: UIViewController {
                         self.searchResults.append(SearchResult(restaurant:
                             Restaurant(json: restaurantJSON["restaurant"]), restaurantImages: images))
                     }
+                    if query == "" {
+                        CachedRestaurants.shared.all = self.searchResults
+                            .filter({ return $0.restaurant != nil })
+                            .map({ return $0.restaurant! })
+                    }
                     self.searchResultType = self.nextSearchResultType
                     self.tableView.reloadData()
                 } else if let error = error {
