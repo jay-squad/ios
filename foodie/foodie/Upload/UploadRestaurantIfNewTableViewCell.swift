@@ -11,21 +11,48 @@ import TextFieldEffects
 import Validator
 import MapKit
 
+protocol UploadRestaurantIfNewTableViewCellDelegate: class {
+    func onMapUnlockGiveTableViewHeight() -> CGFloat
+    func onMapLock()
+}
+
 class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
 
     let kWaterlooPlaza = CLLocationCoordinate2D(latitude: 43.4721862, longitude: -80.5376677)
+    let kMapViewContainerSmallHeight: CGFloat = 300
+    let kMapViewContainerLargeHeight: CGFloat = 500
+    let kMapViewLabelToMapViewSpacing: CGFloat = 10
+    let kFormStackViewSpacing: CGFloat = 24
     
+    let stackView = UIStackView()
+    let descriptionView = UIView()
+    let cuisineTypeView = UIView()
+    let phoneNumberView = UIView()
+    let websiteView = UIView()
+    let dummyView = UIView()
+
     let descriptionTextfield = HoshiTextField()
     let phoneNumberTextfield = HoshiTextField()
     let websiteTextfield = HoshiTextField()
     let cuisineTypeTextfield = HoshiTextField()
+    
+    let mapViewContainerContainer = UIView()
     let mapView = MKMapView()
+    let mapViewLabel = UILabel()
+    let mapViewButtonPositive = UIButton()
+    let mapViewButtonNegative = UIButton()
+    let mapViewActivityIndicator = UIActivityIndicatorView()
     
     var restaurantName: String?
     
     var locationManager = CLLocationManager()
-    
     var didMapInitiallyRender: Bool = false
+    var mapCenterIfCancelTapped: CLLocationCoordinate2D?
+    var mapViewContainerContainerTopConstraint: NSLayoutConstraint?
+    var mapViewContainerContainerBottomConstraint: NSLayoutConstraint?
+    var mapViewContainerHeightConstraint: NSLayoutConstraint?
+    
+    weak var delegate: UploadRestaurantIfNewTableViewCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,6 +65,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
         mapView.showsUserLocation = true
+        mapView.isUserInteractionEnabled = false
         addMapTrackingButton()
     }
     
@@ -48,39 +76,66 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
     
     override func buildComponents() {
         super.buildComponents()
-        
+        clipsToBounds = false
+        layer.zPosition = 99
         setCellHeader(title: "Add a New Restaurant", subtitle: "Optionally fill out additional details about the restaurant.")
         
-        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 24.0
+        stackView.spacing = kFormStackViewSpacing
        
         let mapViewContainer = UIView()
-        let descriptionView = UIView()
-        let cuisineTypeView = UIView()
-        let phoneNumberView = UIView()
-        let websiteView = UIView()
-        
+
+        mapViewContainerContainer.translatesAutoresizingMaskIntoConstraints = false
+        mapViewContainer.translatesAutoresizingMaskIntoConstraints = false
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
         cuisineTypeView.translatesAutoresizingMaskIntoConstraints = false
         phoneNumberView.translatesAutoresizingMaskIntoConstraints = false
         websiteView.translatesAutoresizingMaskIntoConstraints = false
         
-        stackView.addArrangedSubview(mapViewContainer)
+        stackView.addArrangedSubview(mapViewContainerContainer)
         stackView.addArrangedSubview(descriptionView)
         stackView.addArrangedSubview(cuisineTypeView)
         stackView.addArrangedSubview(websiteView)
         stackView.addArrangedSubview(phoneNumberView)
         customViewContainer.addSubview(stackView)
         
-        let mapViewLabel = UILabel()
+        stackView.bringSubviewToFront(mapViewContainerContainer)
         mapViewLabel.translatesAutoresizingMaskIntoConstraints = false
-        mapViewLabel.text = "Is this restaurant's location correct?"
-        mapViewLabel.font = UIFont(font: .helveticaNeue, size: 14)
+        mapViewLabel.font = UIFont(font: .helveticaNeueBold, size: 14)
+        
+        mapViewButtonPositive.translatesAutoresizingMaskIntoConstraints = false
+        mapViewButtonPositive.titleLabel?.font = UIFont(font: .helveticaNeueBold, size: 16)
+        mapViewButtonPositive.addTarget(self, action: #selector(onMapViewButtonPositiveTapped), for: .touchUpInside)
+        mapViewButtonPositive.layer.cornerRadius = 5.0
+        mapViewButtonPositive.backgroundColor = UIColor.cc253UltraLightGrey
+        mapViewButtonPositive.applyDefaultShadow()
+        
+        mapViewButtonNegative.translatesAutoresizingMaskIntoConstraints = false
+        mapViewButtonNegative.titleLabel?.font = UIFont(font: .helveticaNeueBold, size: 16)
+        mapViewButtonNegative.addTarget(self, action: #selector(onMapViewButtonNegativeTapped), for: .touchUpInside)
+        mapViewButtonNegative.layer.cornerRadius = 5.0
+        mapViewButtonNegative.backgroundColor = UIColor.cc253UltraLightGrey
+        mapViewButtonNegative.applyDefaultShadow()
+        
+        setMapViewToQuestions()
+        
+        mapViewActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        mapViewActivityIndicator.style = .gray
+        mapViewActivityIndicator.isUserInteractionEnabled = false
+        mapViewActivityIndicator.hidesWhenStopped = true
         
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.delegate = self
+        
+        mapViewContainerContainer.addSubview(mapViewContainer)
+        mapViewContainerContainer.leadingAnchor.constraint(equalTo: mapViewContainer.leadingAnchor).isActive = true
+        mapViewContainerContainer.trailingAnchor.constraint(equalTo: mapViewContainer.trailingAnchor).isActive = true
+        mapViewContainerContainerTopConstraint = mapViewContainerContainer.topAnchor.constraint(equalTo: mapViewContainer.topAnchor)
+        mapViewContainerContainerTopConstraint?.isActive = true
+        mapViewContainerContainerBottomConstraint = mapViewContainerContainer.bottomAnchor.constraint(equalTo: mapViewContainer.bottomAnchor)
+        mapViewContainerContainerBottomConstraint?.isActive = true
+        mapViewContainerContainerTopConstraint?.isActive = true
         
         let kMapViewCenterMarkerHeight: CGFloat = 50
         let mapViewCenterMarker = UIImageView()
@@ -93,16 +148,30 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         mapViewContainer.addSubview(mapView)
         mapViewContainer.addSubview(mapViewLabel)
         mapViewContainer.addSubview(mapViewCenterMarker)
+        mapViewContainer.addSubview(mapViewButtonPositive)
+        mapViewContainer.addSubview(mapViewButtonNegative)
+        mapViewContainer.addSubview(mapViewActivityIndicator)
         mapViewContainer.leadingAnchor.constraint(equalTo: mapViewLabel.leadingAnchor).isActive = true
         mapViewContainer.trailingAnchor.constraint(equalTo: mapViewLabel.trailingAnchor).isActive = true
         mapViewContainer.topAnchor.constraint(equalTo: mapViewLabel.topAnchor).isActive = true
-        mapViewLabel.bottomAnchor.constraint(equalTo: mapView.topAnchor, constant: -10).isActive = true
+        mapViewLabel.bottomAnchor.constraint(equalTo: mapView.topAnchor, constant: -kMapViewLabelToMapViewSpacing).isActive = true
         mapViewCenterMarker.centerXAnchor.constraint(equalTo: mapView.centerXAnchor).isActive = true
         mapViewCenterMarker.centerYAnchor.constraint(equalTo: mapView.centerYAnchor, constant: -kMapViewCenterMarkerHeight/2).isActive = true
+        mapViewActivityIndicator.centerXAnchor.constraint(equalTo: mapView.centerXAnchor).isActive = true
+        mapViewActivityIndicator.centerYAnchor.constraint(equalTo: mapView.centerYAnchor, constant: 30).isActive = true
         
         mapViewContainer.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: kStackViewPadding).isActive = true
         mapViewContainer.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -kStackViewPadding).isActive = true
         mapViewContainer.bottomAnchor.constraint(equalTo: mapView.bottomAnchor).isActive = true
+        
+        mapViewButtonPositive.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 10).isActive = true
+        mapViewButtonNegative.topAnchor.constraint(equalTo: mapViewButtonPositive.topAnchor).isActive = true
+        mapViewButtonPositive.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 10).isActive = true
+        mapViewButtonPositive.trailingAnchor.constraint(equalTo: mapViewButtonNegative.leadingAnchor, constant: -10).isActive = true
+        mapViewButtonNegative.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -10).isActive = true
+        mapViewButtonNegative.widthAnchor.constraint(equalTo: mapViewButtonPositive.widthAnchor).isActive = true
+        mapViewButtonNegative.heightAnchor.constraint(equalTo: mapViewButtonPositive.heightAnchor).isActive = true
+        mapViewButtonPositive.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         descriptionTextfield.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextfield.defaultStyle()
@@ -134,7 +203,8 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         websiteView.addSubview(websiteTextfield)
         websiteView.applyAutoLayoutInsetsForAllMargins(to: websiteTextfield, with: .zero)
         
-        mapViewContainer.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        mapViewContainerHeightConstraint = mapViewContainer.heightAnchor.constraint(equalToConstant: kMapViewContainerSmallHeight)
+        mapViewContainerHeightConstraint?.isActive = true
         descriptionTextfield.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         cuisineTypeTextfield.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         phoneNumberTextfield.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
@@ -196,11 +266,13 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
                                                          span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)),
                                       animated: false)
                 }
+                self.setMapViewToQuestions()
             }
         } else {
             mapView.setRegion(MKCoordinateRegion(center: backup,
                                                  span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)),
                               animated: false)
+            setMapViewToQuestions()
         }
     }
     
@@ -212,8 +284,10 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
         restaurantRequest.region = MKCoordinateRegion(center: center,
                                                       span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta))
 
+        mapViewActivityIndicator.startAnimating()
         let restaurantSearch = MKLocalSearch(request: restaurantRequest)
         restaurantSearch.start { (response, _) in
+            self.mapViewActivityIndicator.stopAnimating()
             if let response = response {
                 if response.mapItems.count > 0 {
                     completion(response.mapItems[0].placemark.coordinate)
@@ -221,6 +295,116 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
                 }
             }
             completion(nil)
+        }
+    }
+    
+    @objc private func onMapViewButtonPositiveTapped() {
+        switch mapViewButtonPositive.titleLabel?.text {
+        case "Yes", "Done":
+            setMapViewToLockedMode()
+        case "Change":
+            setMapViewToUnlockedMode()
+        default:
+            break
+        }
+        
+    }
+    
+    @objc private func onMapViewButtonNegativeTapped() {
+        switch mapViewButtonNegative.titleLabel?.text {
+        case "No":
+            setMapViewToUnlockedMode()
+        case "Cancel":
+            if let center = mapCenterIfCancelTapped {
+                var curRegion = mapView.region
+                curRegion.center = center
+                mapView.setRegion(curRegion, animated: true)
+            }
+            setMapViewToLockedMode()
+        default:
+            break
+        }
+    }
+    
+    private func setMapViewToUnlockedMode() {
+        mapCenterIfCancelTapped = mapView.centerCoordinate
+        mapViewLabel.text = "Set the restaurant location"
+        mapViewButtonPositive.setTitleColor(UIColor.ccMoneyGreen, for: .normal)
+        mapViewButtonPositive.setTitle("Done", for: .normal)
+        mapViewButtonNegative.setTitleColor(UIColor.cc74MediumGrey, for: .normal)
+        mapViewButtonNegative.setTitle("Cancel", for: .normal)
+        mapViewButtonNegative.isHidden = false
+        mapView.isUserInteractionEnabled = true
+        
+        if let tableViewHeight = delegate?.onMapUnlockGiveTableViewHeight() {
+            hideTextFields()
+            let otherHeights = titleStackView.frame.height + mapViewLabel.frame.height + kContainerStackViewSpacing*2 + kMapViewLabelToMapViewSpacing - kFormStackViewSpacing
+            mapViewContainerHeightConstraint?.constant = tableViewHeight - otherHeights
+            UIView.animate(withDuration: 0.2) {
+                self.contentView.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private func setMapViewToLockedMode() {
+        mapViewLabel.text = "Change restaurant location if needed"
+        mapViewButtonPositive.setTitleColor(UIColor.cc74MediumGrey, for: .normal)
+        mapViewButtonPositive.setTitle("Change", for: .normal)
+        mapViewButtonNegative.isHidden = true
+        mapView.isUserInteractionEnabled = false
+        delegate?.onMapLock()
+        showTextFields()
+        mapViewContainerHeightConstraint?.constant = kMapViewContainerSmallHeight
+        UIView.animate(withDuration: 0.2) {
+            self.contentView.layoutIfNeeded()
+        }
+    }
+    
+    private func setMapViewToQuestions() {
+        mapViewLabel.text = "Is this restaurant's location correct?"
+        mapViewButtonPositive.setTitle("Yes", for: .normal)
+        mapViewButtonPositive.setTitleColor(UIColor.ccMoneyGreen, for: .normal)
+        mapViewButtonNegative.setTitle("No", for: .normal)
+        mapViewButtonNegative.setTitleColor(UIColor.ccErrorRed, for: .normal)
+        mapViewButtonNegative.isHidden = false
+        mapView.isUserInteractionEnabled = false
+        delegate?.onMapLock()
+        showTextFields()
+        mapViewContainerHeightConstraint?.constant = kMapViewContainerSmallHeight
+        UIView.animate(withDuration: 0.2) {
+            self.contentView.layoutIfNeeded()
+        }
+    }
+    
+    private func hideTextFields() {
+        if descriptionView.superview != nil {
+            self.descriptionView.removeFromSuperview()
+            self.phoneNumberView.removeFromSuperview()
+            self.websiteView.removeFromSuperview()
+            self.cuisineTypeView.removeFromSuperview()
+            self.stackView.addArrangedSubview(dummyView)
+            UIView.animate(withDuration: 0.2) {
+                self.descriptionView.alpha = 0
+                self.phoneNumberView.alpha = 0
+                self.websiteView.alpha = 0
+                self.cuisineTypeView.alpha = 0
+            }
+        }
+    }
+    
+    private func showTextFields() {
+        if descriptionView.superview == nil {
+            self.stackView.addArrangedSubview(self.descriptionView)
+            self.stackView.addArrangedSubview(self.cuisineTypeView)
+            self.stackView.addArrangedSubview(self.websiteView)
+            self.stackView.addArrangedSubview(self.phoneNumberView)
+            dummyView.removeFromSuperview()
+            UIView.animate(withDuration: 0.2) {
+                self.descriptionView.alpha = 1
+                self.phoneNumberView.alpha = 1
+                self.websiteView.alpha = 1
+                self.cuisineTypeView.alpha = 1
+            }
         }
     }
 }

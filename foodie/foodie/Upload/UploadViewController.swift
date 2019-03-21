@@ -229,6 +229,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
         
         if restaurant == nil, indexPath.row == 2 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadRestaurantIfNewTableViewCellId, for: indexPath) as? UploadRestaurantIfNewTableViewCell {
+                cell.delegate = self
                 cell.configureCell(restaurantName: newRestaurantName)
                 return cell
             }
@@ -345,5 +346,17 @@ extension UploadViewController: UploadRestaurantTableViewCellDelegate {
             cell.restaurantName = name
             cell.setMapRegion()
         }
+    }
+}
+
+extension UploadViewController: UploadRestaurantIfNewTableViewCellDelegate {
+    func onMapUnlockGiveTableViewHeight() -> CGFloat {
+        tableView.scrollToRow(at: IndexPath(row: 2, section: 0), at: .top, animated: true)
+        tableView.isScrollEnabled = false
+        return tableView.frame.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom
+    }
+    
+    func onMapLock() {
+        tableView.isScrollEnabled = true
     }
 }

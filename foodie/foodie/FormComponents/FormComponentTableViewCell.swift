@@ -20,9 +20,11 @@ class FormComponentTableViewCell: UITableViewCell {
 
     let kStackViewPadding: CGFloat = 30.0
     let kTextFieldHeight: CGFloat = 50.0
+    let kContainerStackViewSpacing: CGFloat = 20.0
     var titleLabel = UILabel()
     var subtitleLabel = UILabel()
-    
+    let titleStackView = UIStackView()
+
     var customViewContainer = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -57,18 +59,22 @@ class FormComponentTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 20.0
+        stackView.spacing = kContainerStackViewSpacing
         
-        let titleStackView = UIStackView()
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
         titleStackView.axis = .vertical
         titleStackView.spacing = 3.0
+        titleStackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        titleStackView.setContentHuggingPriority(.required, for: .vertical)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(font: .helveticaNeueBold, size: 18)
+        titleLabel.setContentHuggingPriority(.required, for: .vertical)
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = UIFont(font: .helveticaNeue, size: 14)
         subtitleLabel.numberOfLines = 0
+        subtitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        subtitleLabel.setContentHuggingPriority(.required, for: .vertical)
         customViewContainer.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(externalContainerView)
@@ -84,7 +90,7 @@ class FormComponentTableViewCell: UITableViewCell {
         externalContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7.0).isActive = true
         
-        stackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 20.0).isActive = true
+        stackView.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: kContainerStackViewSpacing).isActive = true
         stackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: kStackViewPadding).isActive = true
         stackView.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
                                             constant: -kStackViewPadding).isActive = true

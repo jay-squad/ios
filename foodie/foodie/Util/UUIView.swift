@@ -30,4 +30,12 @@ extension UIView {
         trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: margins.right).isActive = true
         bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: margins.bottom).isActive = true
     }
+    
+    var globalPoint: CGPoint? {
+        return self.superview?.convert(self.frame.origin, to: nil)
+    }
+    
+    var globalFrame: CGRect? {
+        return self.superview?.convert(self.frame, to: nil)
+    }
 }

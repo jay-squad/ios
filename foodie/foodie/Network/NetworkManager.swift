@@ -24,7 +24,11 @@ class NetworkManager {
     let kS3bucketName = "foodie-prod-dish-images"
     
     let authCookieName = "fb_access_token"
-    let authCookieDomain = "foodie-server-prod.herokuapp.com"
+    #if DEBUG
+    let authCookieDomain = "foodie-server-dev.herokuapp.com"
+    #else
+    let authCookieDomain = "foodie-server-dev.herokuapp.com"
+    #endif
     let authCookieSecure = "TRUE"
     let authCookiePath = "/"
     
@@ -46,7 +50,11 @@ class NetworkManager {
         case submitAmend(params: [String: AnyObject])
         case submitRestaurant(params: [String: AnyObject])
         
+        #if DEBUG
+        static let baseURLString = "https://foodie-server-dev.herokuapp.com/"
+        #else
         static let baseURLString = "https://foodie-server-prod.herokuapp.com/"
+        #endif
         
         var method: HTTPMethod {
             switch self {
