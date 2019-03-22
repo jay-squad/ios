@@ -34,23 +34,20 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     
     func configureCell(menu: Menu?) {
         if let menu = menu {
-            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
-            dishSectionDropDown.dataSource.append("+ Add a Menu Section")
-            
+            dishSectionDropDown.dataSource = menu.sections.map({ $0.name })
             dishTextField.filterStrings(menu.flatDishList)
+        } else {
+            dishSectionDropDown.dataSource = []
+            dishTextField.filterStrings([])
         }
+        dishSectionDropDown.dataSource.append("+ Add a Menu Section")
     }
     
     func configureCell(menu: Menu?, prefilledSubmission: Submission) {
-        if let menu = menu {
-            dishSectionDropDown.dataSource = menu.sections.map({ $0.name ?? "" })
-            dishSectionDropDown.dataSource.append("+ Add a Menu Section")
-            
-            dishTextField.filterStrings(menu.flatDishList)
-        }
+        configureCell(menu: menu)
         
         dishTextField.text = prefilledSubmission.dish?.name
-        dishSectionTextField.text = prefilledSubmission.menuSection?.name
+        dishSectionTextField.text = prefilledSubmission.dish?.section
         if let price = prefilledSubmission.dish?.price {
             priceFloat = price
             priceTextField.text = "$ \(price)"
@@ -98,9 +95,10 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         dishSectionTextField.translatesAutoresizingMaskIntoConstraints = false
         dishSectionTextField.defaultStyle()
         dishSectionTextField.placeholder = "Dish Section in Menu"
-        dishSectionTextField.tag = UploadFormComponent.restaurant.rawValue
+        dishSectionTextField.tag = UploadFormComponent.dishSection.rawValue
         dishSectionTextField.autocorrectionType = .no
         dishSectionTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onDishSectionTextFieldTapped(_:))))
+        dishSectionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         dishSectionSelectView.addSubview(dishSectionTextField)
         
         DropDown.appearance().backgroundColor = UIColor.white
@@ -122,9 +120,10 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         dishTextField.translatesAutoresizingMaskIntoConstraints = false
         dishTextField.defaultStyle()
         dishTextField.placeholder = "Dish Name"
-        dishTextField.tag = UploadFormComponent.dish.rawValue
+        dishTextField.tag = UploadFormComponent.dishName.rawValue
         dishTextField.autocorrectionType = .no
         dishTextField.theme.font = dishTextField.theme.font.withSize(14)
+        dishTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         dishSelectView.addSubview(dishTextField)
         
         priceTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -132,8 +131,9 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         priceTextField.placeholder = "Price"
         priceTextField.delegate = self
         priceTextField.keyboardType = .numberPad
-        priceTextField.tag = UploadFormComponent.price.rawValue
+        priceTextField.tag = UploadFormComponent.dishPrice.rawValue
         priceTextField.autocorrectionType = .no
+        priceTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         priceView.addSubview(priceTextField)
         
         dishSectionSelectView.topAnchor.constraint(equalTo: dishSectionTextField.topAnchor).isActive = true
@@ -204,6 +204,10 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     @objc private func onDishSectionTextFieldTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         dishSectionDropDown.show()
     }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        formComponentDelegate?.onTextFieldUpdated(textField)
+    }
 }
 
 extension UploadBasicInfoTableViewCell: UITextFieldDelegate {
@@ -232,6 +236,7 @@ extension UploadBasicInfoTableViewCell: UITextFieldDelegate {
             }
             
         }
+        textField.validate()
         return false
         
     }

@@ -46,14 +46,16 @@ class AdditionalInfoTableViewCell: FormComponentTableViewCell {
         
         additionalNotesTextField.translatesAutoresizingMaskIntoConstraints = false
         additionalNotesTextField.defaultStyle()
-        additionalNotesTextField.tag = UploadFormComponent.notes.rawValue
+        additionalNotesTextField.tag = UploadFormComponent.dishDescription.rawValue
+        additionalNotesTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
         additionalNotesView.addSubview(additionalNotesTextField)
 
         additionalNotesView.topAnchor.constraint(equalTo: additionalNotesTextField.topAnchor).isActive = true
         additionalNotesView.leadingAnchor.constraint(equalTo: additionalNotesTextField.leadingAnchor).isActive = true
         additionalNotesView.trailingAnchor.constraint(equalTo: additionalNotesTextField.trailingAnchor).isActive = true
         additionalNotesView.bottomAnchor.constraint(equalTo: additionalNotesTextField.bottomAnchor).isActive = true
-        
+
         additionalNotesTextField.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         
         // boilerplate
@@ -63,4 +65,8 @@ class AdditionalInfoTableViewCell: FormComponentTableViewCell {
         stackView.bottomAnchor.constraint(equalTo: customViewContainer.bottomAnchor).isActive = true
     }
 
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        formComponentDelegate?.onTextFieldUpdated(textField)
+    }
 }

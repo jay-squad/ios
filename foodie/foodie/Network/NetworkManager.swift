@@ -27,7 +27,7 @@ class NetworkManager {
     #if DEBUG
     let authCookieDomain = "foodie-server-dev.herokuapp.com"
     #else
-    let authCookieDomain = "foodie-server-dev.herokuapp.com"
+    let authCookieDomain = "foodie-server-prod.herokuapp.com"
     #endif
     let authCookieSecure = "TRUE"
     let authCookiePath = "/"
@@ -344,6 +344,7 @@ class NetworkManager {
                 let code = self.getStatusCode( response: response )
                 switch response.result {
                 case .success(let value):
+                    // TODO: add menu to CachedRestaurants
                     completion(JSON(value), nil, code)
                 case .failure(let error):
                     completion(nil, error, code)
@@ -446,7 +447,7 @@ class NetworkManager {
                           location: CLLocationCoordinate2D,
                           description: String?,
                           cuisineType: String?,
-                          phoneNumber: Int?,
+                          phoneNumber: String?,
                           website: String?,
                           completion: @escaping (JSON?, Error?, Int) -> Void ) {
         var json: JSON = JSON([:])
@@ -462,7 +463,7 @@ class NetworkManager {
             json["cuisine_type"].string = cuisineType
         }
         if let phoneNumber = phoneNumber {
-            json["phone_number"].string = "\(phoneNumber)"
+            json["phone_number"].string = phoneNumber
         }
         if let website = website {
             json["website"].string = website

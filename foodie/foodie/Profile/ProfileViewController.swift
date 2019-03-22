@@ -335,16 +335,18 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
+extension ProfileViewController: ProfileSubmissionTableViewCellDelegate, UploadViewControllerDelegate {
+    func onChangePhotoRequested(_ sender: UploadViewController) {}
+    
     func onResubmitButtonTapped(submission: Submission?) {
         if let submission = submission {
             if let dishId = submission.dish?.dishId {
                 Answers.logContentView(withName: "Profile-DishResubmit", contentType: "submission", contentId: "\(dishId)", customAttributes: nil)
             }
-            let vc = UploadViewController()
             if let restaurantId = submission.getRestaurantId() {
+                let vc = UploadViewController()
                 vc.restaurant = submission.restaurant
-                
+                vc.delegate = self
                 NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
                     if let menuJSONs = json {
                         vc.prepopulate(submission)
@@ -357,6 +359,10 @@ extension ProfileViewController: ProfileSubmissionTableViewCellDelegate {
                 }
             }
         }
+    }
+    
+    func onSuccessfulUpload(_ sender: UploadViewController) {
+        sender.dismiss(animated: true, completion: nil)
     }
 }
 

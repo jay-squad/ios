@@ -8,12 +8,11 @@
 
 import UIKit
 import TextFieldEffects
+import MapKit
 
-enum UploadFormComponent: Int {
-    case restaurant
-    case dish
-    case price
-    case notes
+protocol FormComponentTableViewCellDelegate: class {
+    func onTextFieldUpdated(_ sender: UITextField)
+    func onMapUpdated(_ sender: MKMapView)
 }
 
 class FormComponentTableViewCell: UITableViewCell {
@@ -26,6 +25,8 @@ class FormComponentTableViewCell: UITableViewCell {
     let titleStackView = UIStackView()
 
     var customViewContainer = UIView()
+    
+    weak var formComponentDelegate: FormComponentTableViewCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -60,6 +61,7 @@ class FormComponentTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = kContainerStackViewSpacing
+        stackView.distribution = .fill
         
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
         titleStackView.axis = .vertical
@@ -70,12 +72,14 @@ class FormComponentTableViewCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(font: .helveticaNeueBold, size: 18)
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = UIFont(font: .helveticaNeue, size: 14)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         subtitleLabel.setContentHuggingPriority(.required, for: .vertical)
         customViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        customViewContainer.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         
         contentView.addSubview(externalContainerView)
         externalContainerView.addSubview(stackView)

@@ -13,6 +13,7 @@ import SwiftyJSON
 class Dish {
     var dishId: Int
     var name: String = ""
+    var section: String = ""
     var price: Float = 0
     var description: String = ""
     var restaurantId: Int
@@ -33,6 +34,8 @@ class Dish {
             dishImages.append(DishImage(json: json["image"]))
         }
         itemMetadata = Metadata(json: json["item"])
+        // only used for resubmissions
+        section = json["item"]["section"].string ?? ""
     }
     
     convenience init(dishJSON: JSON, dishImageJSON: JSON) {

@@ -165,7 +165,6 @@ class RestaurantDetailViewController: UIViewController {
             }
             self.present(pickerController, animated: true) {}
         }
-        
     }
 
     @objc private func handleGridTap(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -528,7 +527,10 @@ extension RestaurantDetailViewController: UIGestureRecognizerDelegate {
 }
 
 extension RestaurantDetailViewController: UploadViewControllerDelegate {
-    func onSuccessfulUpload() {
+    func onChangePhotoRequested(_ sender: UploadViewController) {}
+    
+    func onSuccessfulUpload(_ sender: UploadViewController) {
+        sender.navigationController?.popViewController(animated: true)
         setupDataSource()
     }
 }

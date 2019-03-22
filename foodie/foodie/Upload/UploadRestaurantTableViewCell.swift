@@ -13,6 +13,7 @@ import Validator
 protocol UploadRestaurantTableViewCellDelegate: class {
     func restaurantExistenceDidChange(restaurant: Restaurant?, orName: String?)
     func newNonExistentNameTyped(name: String?)
+    func newExistingRestaurantSelected(restaurant: Restaurant)
 }
 
 class UploadRestaurantTableViewCell: FormComponentTableViewCell {
@@ -44,7 +45,7 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
     override func buildComponents() {
         super.buildComponents()
         
-        setCellHeader(title: "Restaurant", subtitle: "Select your restaurant.")
+        setCellHeader(title: "Restaurant", subtitle: "Select or create your restaurant.")
         
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,12 +68,13 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         }
         restaurantTextfield.defaultStyle()
         restaurantTextfield.placeholder = "Restaurant Name"
-        restaurantTextfield.tag = UploadFormComponent.dish.rawValue
+        restaurantTextfield.tag = UploadFormComponent.restaurantName.rawValue
         restaurantTextfield.autocorrectionType = .no
         restaurantTextfield.theme.font = restaurantTextfield.theme.font.withSize(14)
         restaurantView.addSubview(restaurantTextfield)
         restaurantView.applyAutoLayoutInsetsForAllMargins(to: restaurantTextfield, with: .zero)
         restaurantTextfield.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
+        restaurantTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
         stackView.applyAutoLayoutInsetsForAllMargins(to: customViewContainer, with: .zero)
     }
@@ -94,6 +96,9 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         restaurantTextfield.validateOnInputChange(enabled: true)
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        formComponentDelegate?.onTextFieldUpdated(textField)
+    }
 }
 
 extension UploadRestaurantTableViewCell: UITextFieldDelegate {
@@ -109,9 +114,7 @@ extension UploadRestaurantTableViewCell: UITextFieldDelegate {
             return restaurant.name == textField.text
         })
         if (prevRestaurant != nil && restaurant == nil)
-            || (prevRestaurant == nil && restaurant != nil)
-            || (prevRestaurant?.id != restaurant?.id) {
-            
+            || (prevRestaurant == nil && restaurant != nil) {
             if restaurant != nil {
                 delegate?.restaurantExistenceDidChange(restaurant: restaurant, orName: nil)
             } else {
@@ -119,6 +122,8 @@ extension UploadRestaurantTableViewCell: UITextFieldDelegate {
             }
         } else if restaurant == nil {
             delegate?.newNonExistentNameTyped(name: textField.text)
+        } else if restaurant != nil {
+            delegate?.newExistingRestaurantSelected(restaurant: restaurant!)
         }
     }
 }

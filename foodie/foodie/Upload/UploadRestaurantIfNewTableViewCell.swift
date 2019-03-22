@@ -18,39 +18,39 @@ protocol UploadRestaurantIfNewTableViewCellDelegate: class {
 
 class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
 
-    let kWaterlooPlaza = CLLocationCoordinate2D(latitude: 43.4721862, longitude: -80.5376677)
-    let kMapViewContainerSmallHeight: CGFloat = 300
-    let kMapViewContainerLargeHeight: CGFloat = 500
-    let kMapViewLabelToMapViewSpacing: CGFloat = 10
-    let kFormStackViewSpacing: CGFloat = 24
+    private let kWaterlooPlaza = CLLocationCoordinate2D(latitude: 43.4721862, longitude: -80.5376677)
+    private let kMapViewContainerSmallHeight: CGFloat = 300
+    private let kMapViewContainerLargeHeight: CGFloat = 500
+    private let kMapViewLabelToMapViewSpacing: CGFloat = 10
+    private let kFormStackViewSpacing: CGFloat = 24
     
-    let stackView = UIStackView()
-    let descriptionView = UIView()
-    let cuisineTypeView = UIView()
-    let phoneNumberView = UIView()
-    let websiteView = UIView()
-    let dummyView = UIView()
+    private let stackView = UIStackView()
+    private let descriptionView = UIView()
+    private let cuisineTypeView = UIView()
+    private let phoneNumberView = UIView()
+    private let websiteView = UIView()
+    private let dummyView = UIView()
 
     let descriptionTextfield = HoshiTextField()
     let phoneNumberTextfield = HoshiTextField()
     let websiteTextfield = HoshiTextField()
     let cuisineTypeTextfield = HoshiTextField()
     
-    let mapViewContainerContainer = UIView()
+    private let mapViewContainerContainer = UIView()
     let mapView = MKMapView()
-    let mapViewLabel = UILabel()
-    let mapViewButtonPositive = UIButton()
-    let mapViewButtonNegative = UIButton()
-    let mapViewActivityIndicator = UIActivityIndicatorView()
+    private let mapViewLabel = UILabel()
+    private let mapViewButtonPositive = UIButton()
+    private let mapViewButtonNegative = UIButton()
+    private let mapViewActivityIndicator = UIActivityIndicatorView()
     
     var restaurantName: String?
     
-    var locationManager = CLLocationManager()
-    var didMapInitiallyRender: Bool = false
-    var mapCenterIfCancelTapped: CLLocationCoordinate2D?
-    var mapViewContainerContainerTopConstraint: NSLayoutConstraint?
-    var mapViewContainerContainerBottomConstraint: NSLayoutConstraint?
-    var mapViewContainerHeightConstraint: NSLayoutConstraint?
+    private var locationManager = CLLocationManager()
+    private var didMapInitiallyRender: Bool = false
+    private var mapCenterIfCancelTapped: CLLocationCoordinate2D?
+    private var mapViewContainerContainerTopConstraint: NSLayoutConstraint?
+    private var mapViewContainerContainerBottomConstraint: NSLayoutConstraint?
+    private var mapViewContainerHeightConstraint: NSLayoutConstraint?
     
     weak var delegate: UploadRestaurantIfNewTableViewCellDelegate?
     
@@ -78,7 +78,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         super.buildComponents()
         clipsToBounds = false
         layer.zPosition = 99
-        setCellHeader(title: "Add a New Restaurant", subtitle: "Optionally fill out additional details about the restaurant.")
+        setCellHeader(title: "Create a New Restaurant", subtitle: "Optionally fill out additional details about the restaurant.")
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -176,34 +176,43 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         descriptionTextfield.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextfield.defaultStyle()
         descriptionTextfield.placeholder = "Restaurant Description"
+        descriptionTextfield.tag = UploadFormComponent.restaurantDescription.rawValue
         descriptionTextfield.delegate = self
+        descriptionTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         descriptionView.addSubview(descriptionTextfield)
         descriptionView.applyAutoLayoutInsetsForAllMargins(to: descriptionTextfield, with: .zero)
         
         cuisineTypeTextfield.translatesAutoresizingMaskIntoConstraints = false
         cuisineTypeTextfield.defaultStyle()
         cuisineTypeTextfield.placeholder = "Cuisine Type"
+        cuisineTypeTextfield.tag = UploadFormComponent.restaurantCuisineType.rawValue
         cuisineTypeTextfield.delegate = self
+        cuisineTypeTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cuisineTypeView.addSubview(cuisineTypeTextfield)
         cuisineTypeView.applyAutoLayoutInsetsForAllMargins(to: cuisineTypeTextfield, with: .zero)
         
         phoneNumberTextfield.translatesAutoresizingMaskIntoConstraints = false
         phoneNumberTextfield.defaultStyle()
         phoneNumberTextfield.placeholder = "Phone Number"
+        phoneNumberTextfield.tag = UploadFormComponent.restaurantPhoneNumber.rawValue
         phoneNumberTextfield.keyboardType = .numberPad
         phoneNumberTextfield.delegate = self
+        phoneNumberTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         phoneNumberView.addSubview(phoneNumberTextfield)
         phoneNumberView.applyAutoLayoutInsetsForAllMargins(to: phoneNumberTextfield, with: .zero)
         
         websiteTextfield.translatesAutoresizingMaskIntoConstraints = false
         websiteTextfield.defaultStyle()
         websiteTextfield.placeholder = "Website"
+        websiteTextfield.tag = UploadFormComponent.restaurantWebsite.rawValue
         websiteTextfield.keyboardType = .URL
         websiteTextfield.delegate = self
+        websiteTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         websiteView.addSubview(websiteTextfield)
         websiteView.applyAutoLayoutInsetsForAllMargins(to: websiteTextfield, with: .zero)
         
         mapViewContainerHeightConstraint = mapViewContainer.heightAnchor.constraint(equalToConstant: kMapViewContainerSmallHeight)
+        mapViewContainerHeightConstraint?.priority = .defaultLow
         mapViewContainerHeightConstraint?.isActive = true
         descriptionTextfield.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
         cuisineTypeTextfield.heightAnchor.constraint(equalToConstant: kTextFieldHeight).isActive = true
@@ -215,6 +224,10 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
 
     private func addValidationRules() {
         // none, for now
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        formComponentDelegate?.onTextFieldUpdated(textField)
     }
 }
 
@@ -354,6 +367,7 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
         mapView.isUserInteractionEnabled = false
         delegate?.onMapLock()
         showTextFields()
+        formComponentDelegate?.onMapUpdated(mapView)
         mapViewContainerHeightConstraint?.constant = kMapViewContainerSmallHeight
         UIView.animate(withDuration: 0.2) {
             self.contentView.layoutIfNeeded()
