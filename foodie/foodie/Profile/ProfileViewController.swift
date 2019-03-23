@@ -415,6 +415,7 @@ extension ProfileViewController: ProfileSubmissionTableViewCellDelegate, UploadV
     
     func onSuccessfulUpload(_ sender: UploadViewController) {
         sender.dismiss(animated: true, completion: nil)
+        loadProfileIfNeeded(completion: {})
     }
 }
 

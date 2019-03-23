@@ -14,6 +14,7 @@ protocol UploadRestaurantTableViewCellDelegate: class {
     func restaurantExistenceDidChange(restaurant: Restaurant?, orName: String?)
     func newNonExistentNameTyped(name: String?)
     func newExistingRestaurantSelected(restaurant: Restaurant)
+    func restaurantNameTextFieldShouldBeginEditing()
 }
 
 class UploadRestaurantTableViewCell: FormComponentTableViewCell {
@@ -104,6 +105,11 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
 }
 
 extension UploadRestaurantTableViewCell: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        delegate?.restaurantNameTextFieldShouldBeginEditing()
+        return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         shouldSetTextField = false

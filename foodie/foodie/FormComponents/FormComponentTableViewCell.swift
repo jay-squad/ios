@@ -26,6 +26,7 @@ class FormComponentTableViewCell: UITableViewCell {
     let titleStackView = UIStackView()
 
     var customViewContainer = UIView()
+    var didAlreadyPrefill = false
     
     weak var formComponentDelegate: FormComponentTableViewCellDelegate?
     

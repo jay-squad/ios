@@ -26,8 +26,9 @@ class AdditionalInfoTableViewCell: FormComponentTableViewCell {
         setCellHeader(title: title,
                       subtitle: subtitle)
         additionalNotesTextField.placeholder = placeholder
-        if let prefilledDescription = prefilledDescription, prefilledDescription != "" {
+        if let prefilledDescription = prefilledDescription, prefilledDescription != "", !didAlreadyPrefill {
             additionalNotesTextField.text = prefilledDescription
+            didAlreadyPrefill = true
             formComponentDelegate?.onTextFieldUpdated(additionalNotesTextField)
         }
     }
@@ -48,6 +49,7 @@ class AdditionalInfoTableViewCell: FormComponentTableViewCell {
         additionalNotesTextField.translatesAutoresizingMaskIntoConstraints = false
         additionalNotesTextField.defaultStyle()
         additionalNotesTextField.tag = UploadFormStringComponent.dishDescription.rawValue
+        additionalNotesTextField.autocorrectionType = .no
         additionalNotesTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
         additionalNotesView.addSubview(additionalNotesTextField)

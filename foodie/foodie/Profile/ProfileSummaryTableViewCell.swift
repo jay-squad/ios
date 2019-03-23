@@ -147,7 +147,7 @@ class ProfileSummaryTableViewCell: UITableViewCell {
 
     private func setNumberOfAcceptedDishesLabel(numberOfDishes: Int) {
         let counterString = "\(numberOfDishes >= 0 ? "\(numberOfDishes)" : "-")"
-        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "dish" : "dishes") approved", attributes: defaultLabelAttributes)
+        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "submission" : "submissions") approved", attributes: defaultLabelAttributes)
         let range = NSRange(location: 0, length: counterString.count)
         numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: range)
         
@@ -157,7 +157,7 @@ class ProfileSummaryTableViewCell: UITableViewCell {
     
     private func setNumberOfPendingDishesLabel(numberOfDishes: Int) {
         let counterString = "\(numberOfDishes >= 0 ? "\(numberOfDishes)" : "-")"
-        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "dish" : "dishes") pending", attributes: defaultLabelAttributes)
+        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "submission" : "submissions") pending", attributes: defaultLabelAttributes)
         let range = NSRange(location: 0, length: counterString.count)
         numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: range)
 
@@ -167,7 +167,7 @@ class ProfileSummaryTableViewCell: UITableViewCell {
     
     private func setNumberOfRejectedDishesLabel(numberOfDishes: Int) {
         let counterString = "\(numberOfDishes >= 0 ? "\(numberOfDishes)" : "-")"
-        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "dish" : "dishes") not approved", attributes: defaultLabelAttributes)
+        let numberOfDishesAttributedString = NSMutableAttributedString(string: "\(counterString) \(numberOfDishes == 1 ? "submission" : "submissions") not approved", attributes: defaultLabelAttributes)
         let range = NSRange(location: 0, length: counterString.count)
         numberOfDishesAttributedString.addAttribute(.font, value: UIFont(font: .helveticaNeueBold, size: 18)!, range: range)
 

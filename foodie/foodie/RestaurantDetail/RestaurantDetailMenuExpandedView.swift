@@ -42,16 +42,14 @@ class RestaurantDetailMenuExpandedView: UIView {
     
     func configureView(dish: Dish?) {
         guard let dish = dish else { return }
+        self.dish = dish
         let nameLabelAttributedString = NSMutableAttributedString(string: dish.name,
                                                                          attributes: [.paragraphStyle: dishNameParagraphStyle,
                                                                                       .kern: 0])
         nameLabel.attributedText = nameLabelAttributedString
         priceLabel.text = String(format: "$ %.2f", dish.price)
         
-        let descriptionLabelAttributedString = NSMutableAttributedString(string: dish.description,
-                                                                         attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
-                                                                                      .kern: -0.5])
-        descriptionLabel.attributedText = descriptionLabelAttributedString
+        setDescriptionForImage(index: 0)
         
         var inputSources: [InputSource] = []
         for dishImage in dish.dishImages {
@@ -60,6 +58,16 @@ class RestaurantDetailMenuExpandedView: UIView {
             }
         }
         dishImageSlideshow.setImageInputs(inputSources)
+    }
+    
+    private func setDescriptionForImage(index: Int) {
+        if let dish = self.dish, dish.dishImages.count > index {
+            var imageDescription = dish.dishImages[index].description
+            let descriptionLabelAttributedString = NSMutableAttributedString(string: imageDescription ?? "",
+                                                                             attributes: [.paragraphStyle: self.dishDescriptionParagraphStyle,
+                                                                                          .kern: -0.5])
+            self.descriptionLabel.attributedText = descriptionLabelAttributedString
+        }
     }
     
     func addShadow() {
@@ -83,6 +91,9 @@ class RestaurantDetailMenuExpandedView: UIView {
         
         dishImageSlideshow.translatesAutoresizingMaskIntoConstraints = false
         dishImageSlideshow.contentScaleMode = .scaleAspectFill
+        dishImageSlideshow.currentPageChanged = { page in
+            self.setDescriptionForImage(index: page)
+        }
         
         let metadataStackView = UIStackView()
         metadataStackView.translatesAutoresizingMaskIntoConstraints = false

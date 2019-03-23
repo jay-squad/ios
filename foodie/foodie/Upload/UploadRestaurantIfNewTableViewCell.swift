@@ -202,6 +202,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         descriptionTextfield.defaultStyle()
         descriptionTextfield.placeholder = "Restaurant Description"
         descriptionTextfield.tag = UploadFormStringComponent.restaurantDescription.rawValue
+        descriptionTextfield.autocorrectionType = .no
         descriptionTextfield.delegate = self
         descriptionTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         descriptionView.addSubview(descriptionTextfield)
@@ -211,6 +212,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         cuisineTypeTextfield.defaultStyle()
         cuisineTypeTextfield.placeholder = "Cuisine Type"
         cuisineTypeTextfield.tag = UploadFormStringComponent.restaurantCuisineType.rawValue
+        cuisineTypeTextfield.autocorrectionType = .no
         cuisineTypeTextfield.delegate = self
         cuisineTypeTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cuisineTypeView.addSubview(cuisineTypeTextfield)
@@ -220,6 +222,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         phoneNumberTextfield.defaultStyle()
         phoneNumberTextfield.placeholder = "Phone Number"
         phoneNumberTextfield.tag = UploadFormStringComponent.restaurantPhoneNumber.rawValue
+        phoneNumberTextfield.autocorrectionType = .no
         phoneNumberTextfield.keyboardType = .numberPad
         phoneNumberTextfield.delegate = self
         phoneNumberTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -230,6 +233,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         websiteTextfield.defaultStyle()
         websiteTextfield.placeholder = "Website"
         websiteTextfield.tag = UploadFormStringComponent.restaurantWebsite.rawValue
+        websiteTextfield.autocorrectionType = .no
         websiteTextfield.keyboardType = .URL
         websiteTextfield.delegate = self
         websiteTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)

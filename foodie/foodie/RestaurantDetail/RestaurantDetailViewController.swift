@@ -106,11 +106,16 @@ class RestaurantDetailViewController: UIViewController {
         setupDataSource()
         setupLocationServices()
         setupNavigation()
-        shiftViewWhenKeyboardAppears()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        disableShiftViewWhenKeyboardAppears()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        shiftViewWhenKeyboardAppears()
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     

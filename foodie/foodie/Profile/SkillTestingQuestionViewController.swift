@@ -94,7 +94,7 @@ class SkillTestingQuestionViewController: UIViewController {
         
         answerTextfield.translatesAutoresizingMaskIntoConstraints = false
         answerTextfield.keyboardType = .numbersAndPunctuation
-        answerTextfield.returnKeyType = .done
+        answerTextfield.autocorrectionType = .no
         answerTextfield.textAlignment = .center
         answerTextfield.heightAnchor.constraint(equalToConstant: 50).isActive = true
         answerTextfield.borderInactiveColor = UIColor.cc45DarkGrey

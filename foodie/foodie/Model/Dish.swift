@@ -15,7 +15,7 @@ class Dish {
     var name: String = ""
     var section: String = ""
     var price: Float = 0
-    var description: String = ""
+//    var description: String = ""
     var restaurantId: Int
     var dishImages: [DishImage] = []
     var itemMetadata: Metadata
@@ -23,7 +23,7 @@ class Dish {
     init(json: JSON) {
         name = json["item"]["normalized_name"].string ?? ""
         price = json["item"]["price"].float ?? 0
-        description = json["item"]["description"].string ?? ""
+//        description = json["item"]["description"].string ?? ""
         restaurantId = json["item"]["restaurant_id"].int ?? -1
         dishId = json["item"]["id"].int ?? -1
         if let images = json["item_images"].array {

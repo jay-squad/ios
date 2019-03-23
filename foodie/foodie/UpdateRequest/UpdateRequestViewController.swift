@@ -125,7 +125,16 @@ class UpdateRequestViewController: UIViewController {
         setupNibs()
         buildComponents()
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         shiftViewWhenKeyboardAppears()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        disableShiftViewWhenKeyboardAppears()
     }
     
     private func setupTableView() {

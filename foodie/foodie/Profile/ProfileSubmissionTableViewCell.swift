@@ -110,6 +110,12 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
                 dishDescriptionLabel.numberOfLines = 2
                 
                 if let dishImage = submission.dishImage {
+                    
+                    let descriptionLabelAttributedString = NSMutableAttributedString(string: dishImage.description ?? "",
+                                                                                     attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
+                                                                                                  .kern: -0.5])
+                    dishDescriptionLabel.attributedText = descriptionLabelAttributedString
+                    
                     if submission.dish == nil {
                         if let restaurantId = dishImage.restaurantId {
                             NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
@@ -153,11 +159,6 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         }
         
         dishPriceLabel.text = String(format: "$ %.2f", dish.price)
-        
-        let descriptionLabelAttributedString = NSMutableAttributedString(string: dish.description,
-                                                                         attributes: [.paragraphStyle: dishDescriptionParagraphStyle,
-                                                                                      .kern: -0.5])
-        dishDescriptionLabel.attributedText = descriptionLabelAttributedString
         
         setDishApprovalStatusLabel(status: getApprovalStatus(submission: submission))
     }
