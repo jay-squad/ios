@@ -34,17 +34,17 @@ class RestaurantDetailMenu3ColumnGridTableViewCell: UITableViewCell {
         self.dish2 = dish2
         dish0ImageView.image = nil
         if let imageUrl = dish0?.dishImages.first?.image {
-            dish0ImageView.sd_setImage(with: URL(string: imageUrl))
+            dish0ImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
         }
         
         dish1ImageView.image = nil
         if let imageUrl = dish1?.dishImages.first?.image {
-            dish1ImageView.sd_setImage(with: URL(string: imageUrl))
+            dish1ImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
         }
         
         dish2ImageView.image = nil
         if let imageUrl = dish2?.dishImages.first?.image {
-            dish2ImageView.sd_setImage(with: URL(string: imageUrl))
+            dish2ImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
         }
     }
     

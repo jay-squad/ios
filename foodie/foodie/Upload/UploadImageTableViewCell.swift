@@ -29,7 +29,7 @@ class UploadImageTableViewCell: UITableViewCell {
     
     func configureCell(imageUrl: String?) {
         if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
-            uploadImageView.sd_setImage(with: url, completed: nil)
+            uploadImageView.sd_setImage(with: url, placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
         }
     }
     

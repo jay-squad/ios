@@ -13,6 +13,7 @@ import MapKit
 protocol FormComponentTableViewCellDelegate: class {
     func onTextFieldUpdated(_ sender: UITextField)
     func onMapUpdated(_ sender: MKMapView)
+    func onPriceFloatUpdated(_ price: Float)
 }
 
 class FormComponentTableViewCell: UITableViewCell {

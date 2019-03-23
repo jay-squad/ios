@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 protocol ProfileSubmissionTableViewCellDelegate: class {
     func onResubmitButtonTapped(submission: Submission?)
@@ -22,18 +23,20 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     let kImageWidth: CGFloat = 120
     let dishDescriptionParagraphStyle = NSMutableParagraphStyle()
     
+    lazy var horizontalStackView = UIStackView()
     lazy var dishImageView = UIImageView()
+    lazy var restaurantMapView = MKMapView()
     lazy var dishNameLabel = UILabel()
     lazy var dishRestaurantLabel = UILabel()
     lazy var dishPriceLabel = UILabel()
     lazy var dishDescriptionLabel = UILabel()
     lazy var dishApprovalStatusLabel = UILabel()
     lazy var dishResubmitButton = UIButton(type: .custom)
-
-    var submission: Submission?
     
     weak var delegate: ProfileSubmissionTableViewCellDelegate?
 
+    var submission: Submission?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         buildComponents()
@@ -47,38 +50,85 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
     func configureCell(submission: Submission?) {
         if let submission = submission {
             self.submission = submission
-            
             dishNameLabel.text = nil
             dishRestaurantLabel.text = nil
             dishPriceLabel.text = nil
             dishDescriptionLabel.text = nil
             setDishApprovalStatusLabel(status: .error)
             
-            if let dish = submission.dish {
-                updateCellWithDish(dish: dish, submission: submission)
+            if submission.dish == nil && submission.dishImage == nil,
+                let restaurant = submission.restaurant {
+                // A restaurant submission
+                dishImageView.image = nil
                 
-            }
-            
-            dishImageView.image = nil
-            if let dishImage = submission.dishImage {
-                if submission.dish == nil {
-                    if let restaurantId = dishImage.restaurantId {
-                        NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
-                            if let menuJSONs = json {
-                                let menu = Menu(json: menuJSONs)
-                                if let dish = menu.getDish(id: dishImage.dishId) {
-                                    self.submission?.dish = dish
-                                    self.submission?.dish?.dishImages = [dishImage]
-                                    self.updateCellWithDish(dish: dish, submission: submission)
+                let annotation = MKPointAnnotation()
+                let centerCoordinate = restaurant.location
+                annotation.coordinate = centerCoordinate
+                restaurantMapView.addAnnotation(annotation)
+                restaurantMapView.setRegion(MKCoordinateRegion(center: restaurant.location,
+                                                     span: MKCoordinateSpan(latitudeDelta: 0.0075, longitudeDelta: 0.0075)),
+                                  animated: false)
+                restaurantMapView.setCenter(restaurant.location, animated: false)
+                
+                dishNameLabel.text = restaurant.name
+                
+                var restaurantDetails: [String] = []
+                if restaurant.cuisine.count > 0, restaurant.cuisine[0] != "" {
+                    restaurantDetails.append(restaurant.cuisine[0])
+                }
+                if let website = restaurant.website, website != "" {
+                    restaurantDetails.append(website)
+                }
+                if let phone = restaurant.phoneNum, phone != ""{
+                    restaurantDetails.append(phone)
+                }
+                
+                dishRestaurantLabel.text = restaurantDetails.joined(separator: ", ")
+                dishDescriptionLabel.text = restaurant.description
+
+                // TODO: hacky modification of dish submission cell UI
+                dishPriceLabel.isHidden = true
+                dishImageView.isHidden = true
+                restaurantMapView.isHidden = false
+                dishRestaurantLabel.numberOfLines = 0
+                dishDescriptionLabel.numberOfLines = 3
+                
+                setDishApprovalStatusLabel(status: getApprovalStatus(submission: submission))
+            } else {
+                // Otherwise it's a dish submission
+                if let dish = submission.dish {
+                    updateCellWithDish(dish: dish, submission: submission)
+                    
+                }
+                
+                dishImageView.image = nil
+                
+                dishPriceLabel.isHidden = false
+                dishImageView.isHidden = false
+                restaurantMapView.isHidden = true
+                dishRestaurantLabel.numberOfLines = 1
+                dishDescriptionLabel.numberOfLines = 2
+                
+                if let dishImage = submission.dishImage {
+                    if submission.dish == nil {
+                        if let restaurantId = dishImage.restaurantId {
+                            NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
+                                if let menuJSONs = json {
+                                    let menu = Menu(json: menuJSONs)
+                                    if let dish = menu.getDish(id: dishImage.dishId) {
+                                        submission.dish = dish
+                                        submission.dish?.dishImages = [dishImage]
+                                        self.updateCellWithDish(dish: dish, submission: submission)
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        submission.dish?.dishImages = [dishImage]
                     }
-                } else {
-                    self.submission?.dish?.dishImages = [dishImage]
-                }
-                if let imageUrl = dishImage.image {
-                    dishImageView.sd_setImage(with: URL(string: imageUrl))
+                    if let imageUrl = dishImage.image {
+                        dishImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
+                    }
                 }
             }
         }
@@ -89,17 +139,17 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         
         dishRestaurantLabel.text = " "
         // grab restaurant data if needed
-        if self.submission?.restaurant == nil {
+        if submission.restaurant == nil {
             NetworkManager.shared.getRestaurant(restaurantId: dish.restaurantId) { (json, _, _) in
                 if let restaurantJSON = json {
-                    self.submission?.restaurant = Restaurant(json: restaurantJSON)
+                    submission.restaurant = Restaurant(json: restaurantJSON)
                     DispatchQueue.main.async {
-                        self.dishRestaurantLabel.text = self.submission?.restaurant?.name
+                        self.dishRestaurantLabel.text = submission.restaurant?.name
                     }
                 }
             }
         } else {
-            self.dishRestaurantLabel.text = self.submission?.restaurant?.name
+            self.dishRestaurantLabel.text = submission.restaurant?.name
         }
         
         dishPriceLabel.text = String(format: "$ %.2f", dish.price)
@@ -173,7 +223,6 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
-        let horizontalStackView = UIStackView()
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         externalContainerView.addSubview(horizontalStackView)
         horizontalStackView.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor).isActive = true
@@ -186,7 +235,11 @@ class ProfileSubmissionTableViewCell: UITableViewCell {
         dishImageView.contentMode = .scaleAspectFill
         dishImageView.widthAnchor.constraint(equalToConstant: kImageWidth).isActive = true
         dishImageView.clipsToBounds = true
-
+        
+        horizontalStackView.addArrangedSubview(restaurantMapView)
+        restaurantMapView.widthAnchor.constraint(equalToConstant: kImageWidth).isActive = true
+        restaurantMapView.isUserInteractionEnabled = false
+        
         let verticalStackView = UIStackView()
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.axis = .vertical

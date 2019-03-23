@@ -11,4 +11,6 @@ import Foundation
 class CommonIdentifiers {
     static let RestaurantDetailViewControllerId = "RestaurantDetailViewControllerId"
     static let UploadViewControllerId = "UploadViewControllerId"
+    
+    static let placeholderImage = "icn_placeholder"
 }

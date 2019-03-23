@@ -8,11 +8,18 @@
 
 import UIKit
 
+protocol ProfileContestWinnerTableViewCellDelegate: class {
+    func onRequestAmazonCodeTapped()
+}
+
 class ProfileContestWinnerTableViewCell: FormComponentTableViewCell {
     
     let kShowCodeString = "claim Amazon gift code"
     
+    private let amazonButton = UIButton()
+    
     var profile: Profile?
+    weak var delegate: ProfileContestWinnerTableViewCellDelegate?
     
     func configureCell(profile: Profile) {
         self.profile = profile
@@ -35,7 +42,6 @@ class ProfileContestWinnerTableViewCell: FormComponentTableViewCell {
         noticeLabel.text = "*Your reward will be available to claim for one week."
         noticeLabel.font = UIFont(font: .avenirMedium, size: 12)
         
-        let amazonButton = UIButton()
         amazonButton.translatesAutoresizingMaskIntoConstraints = false
         amazonButton.layer.borderColor = UIColor.cc45DarkGrey.cgColor
         amazonButton.layer.borderWidth = 1.0
@@ -60,9 +66,14 @@ class ProfileContestWinnerTableViewCell: FormComponentTableViewCell {
         guard let profile = profile else { return }
         
         if sender.titleLabel?.text == kShowCodeString {
-            sender.setTitle(profile.amazonCode, for: .normal)
+            delegate?.onRequestAmazonCodeTapped()
         } else {
             sender.setTitle(kShowCodeString, for: .normal)
         }
+    }
+    
+    func showAmazonCode() {
+        guard let profile = profile else { return }
+        amazonButton.setTitle(profile.amazonCode, for: .normal)
     }
 }

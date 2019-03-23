@@ -42,6 +42,7 @@ class Profile {
                 existingAmazonCodes.append(amazonCode)
                 Defaults[.existingAmazonCodes] = existingAmazonCodes
                 shouldShowConfetti = true
+                Defaults[.answeredSkillTestingQuestion] = false
             }
             
             if let submissions = profileJson["submissions"].array {

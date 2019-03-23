@@ -57,6 +57,10 @@
 		26AAFB9020ED4CA400DEE4E7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB8F20ED4CA400DEE4E7 /* SearchViewController.swift */; };
 		26AAFB9320ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB9220ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift */; };
 		26AAFB9520ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAFB9420ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift */; };
+		26ABDD1722458D6600D2C821 /* Contest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABDD1622458D6600D2C821 /* Contest.swift */; };
+		26ABDD19224595FA00D2C821 /* ProfileContestInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABDD18224595FA00D2C821 /* ProfileContestInfoTableViewCell.swift */; };
+		26ABDD1B2245B7EF00D2C821 /* SkillTestingQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABDD1A2245B7EF00D2C821 /* SkillTestingQuestion.swift */; };
+		26ABDD1D2245C00E00D2C821 /* SkillTestingQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABDD1C2245C00E00D2C821 /* SkillTestingQuestionViewController.swift */; };
 		26BECED02202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */; };
 		26C716F020C0E7300026C4EF /* RestaurantDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */; };
 		26C716F320C0E7300026C4EF /* RestaurantDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */; };
@@ -88,7 +92,7 @@
 		26F5DF362222671C00C134AB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F5DF352222671C00C134AB /* MapKit.framework */; };
 		26F5DF3A2223CF3F00C134AB /* MapRestaurantModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */; };
 		26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */; };
-		26FE879021E79B75001AF76E /* ProfileContestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileContestTableViewCell.swift */; };
+		26FE879021E79B75001AF76E /* ProfileContestWinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE878E21E79B75001AF76E /* ProfileContestWinnerTableViewCell.swift */; };
 		26FE879321E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879221E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift */; };
 		26FE879521E79D8D001AF76E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE879421E79D8D001AF76E /* Profile.swift */; };
 		26FFA76421EEA0A500180CFA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */; };
@@ -168,6 +172,10 @@
 		26AAFB8F20ED4CA400DEE4E7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		26AAFB9220ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		26AAFB9420ED4EAC00DEE4E7 /* SearchDishTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDishTableViewCell.swift; sourceTree = "<group>"; };
+		26ABDD1622458D6600D2C821 /* Contest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contest.swift; sourceTree = "<group>"; };
+		26ABDD18224595FA00D2C821 /* ProfileContestInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContestInfoTableViewCell.swift; sourceTree = "<group>"; };
+		26ABDD1A2245B7EF00D2C821 /* SkillTestingQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTestingQuestion.swift; sourceTree = "<group>"; };
+		26ABDD1C2245C00E00D2C821 /* SkillTestingQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTestingQuestionViewController.swift; sourceTree = "<group>"; };
 		26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNeedsAuthTableViewCell.swift; sourceTree = "<group>"; };
 		26C716EE20C0E7300026C4EF /* RestaurantDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailTableViewCell.swift; sourceTree = "<group>"; };
 		26C716EF20C0E7300026C4EF /* RestaurantDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -199,7 +207,7 @@
 		26F5DF352222671C00C134AB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		26F5DF392223CF3F00C134AB /* MapRestaurantModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestaurantModalView.swift; sourceTree = "<group>"; };
 		26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummaryTableViewCell.swift; sourceTree = "<group>"; };
-		26FE878E21E79B75001AF76E /* ProfileContestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContestTableViewCell.swift; sourceTree = "<group>"; };
+		26FE878E21E79B75001AF76E /* ProfileContestWinnerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContestWinnerTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879221E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSubmissionTableViewCell.swift; sourceTree = "<group>"; };
 		26FE879421E79D8D001AF76E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -462,6 +470,7 @@
 				26CC94D920ED544A006AB058 /* SearchResult.swift */,
 				26FE879421E79D8D001AF76E /* Profile.swift */,
 				26D8CD1C221D09C600794F10 /* Submission.swift */,
+				26ABDD1622458D6600D2C821 /* Contest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -517,9 +526,12 @@
 				26D3686E21E59FEF0093B223 /* ProfileViewController.swift */,
 				26FFA76321EEA0A400180CFA /* ProfileViewModel.swift */,
 				26FE878C21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift */,
-				26FE878E21E79B75001AF76E /* ProfileContestTableViewCell.swift */,
+				26FE878E21E79B75001AF76E /* ProfileContestWinnerTableViewCell.swift */,
+				26ABDD18224595FA00D2C821 /* ProfileContestInfoTableViewCell.swift */,
 				26FE879221E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift */,
 				26BECECF2202A6D400CF5917 /* ProfileNeedsAuthTableViewCell.swift */,
+				26ABDD1A2245B7EF00D2C821 /* SkillTestingQuestion.swift */,
+				26ABDD1C2245C00E00D2C821 /* SkillTestingQuestionViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -813,6 +825,7 @@
 				26CC94DE20ED95B6006AB058 /* NetworkManager.swift in Sources */,
 				26AAFB9320ED4E3C00DEE4E7 /* SearchRestaurantTableViewCell.swift in Sources */,
 				26C7170020C0F7890026C4EF /* Restaurant.swift in Sources */,
+				26ABDD19224595FA00D2C821 /* ProfileContestInfoTableViewCell.swift in Sources */,
 				267F3ADB223C8C30005D70F8 /* FoodieEmptyStateTableViewCell.swift in Sources */,
 				262B745320E43C6E0019B8BF /* AdditionalInfoTableViewCell.swift in Sources */,
 				26CBE3EB2230607D000778C9 /* UpdateRequestTableViewCell.swift in Sources */,
@@ -830,6 +843,7 @@
 				262B745B20E446B00019B8BF /* FormComponentTableViewCell.swift in Sources */,
 				26AAFB8720E4C37F00DEE4E7 /* UDKImagePickerController.swift in Sources */,
 				26C7171120C0FA190026C4EF /* Menu.swift in Sources */,
+				26ABDD1722458D6600D2C821 /* Contest.swift in Sources */,
 				267440FE21F01B980003E3FC /* UDateFormatter.swift in Sources */,
 				2651C81020D775C800E4D9EC /* RestaurantDetailMenuListTableViewCell.swift in Sources */,
 				265264A120C272E300D97EE8 /* UUIColor.swift in Sources */,
@@ -851,9 +865,11 @@
 				26D8CD1D221D09C600794F10 /* Submission.swift in Sources */,
 				26AAFB8C20E58BF000DEE4E7 /* UValidator.swift in Sources */,
 				26CC94E920EE4594006AB058 /* OnboardingViewController.swift in Sources */,
+				26ABDD1D2245C00E00D2C821 /* SkillTestingQuestionViewController.swift in Sources */,
 				26F5DF3A2223CF3F00C134AB /* MapRestaurantModalView.swift in Sources */,
 				26AAFB8E20E5973C00DEE4E7 /* UploadNavigationController.swift in Sources */,
 				26FE879521E79D8D001AF76E /* Profile.swift in Sources */,
+				26ABDD1B2245B7EF00D2C821 /* SkillTestingQuestion.swift in Sources */,
 				26AAFB8A20E581E000DEE4E7 /* UHoshiTextField.swift in Sources */,
 				267F3ADE223EFFAA005D70F8 /* SAConfettiView.swift in Sources */,
 				267F3AE822417E11005D70F8 /* UploadRestaurantIfNewTableViewCell.swift in Sources */,
@@ -877,7 +893,7 @@
 				26FE878D21E79B4B001AF76E /* ProfileSummaryTableViewCell.swift in Sources */,
 				26C716FB20C0E9770026C4EF /* RestaurantDetailViewController.swift in Sources */,
 				262B744F20E43C5F0019B8BF /* UploadBasicInfoTableViewCell.swift in Sources */,
-				26FE879021E79B75001AF76E /* ProfileContestTableViewCell.swift in Sources */,
+				26FE879021E79B75001AF76E /* ProfileContestWinnerTableViewCell.swift in Sources */,
 				266BEF412238900B00244FFD /* UBundle.swift in Sources */,
 				26FE879321E79BC3001AF76E /* ProfileSubmissionTableViewCell.swift in Sources */,
 				26D3686F21E59FEF0093B223 /* ProfileViewController.swift in Sources */,

@@ -107,7 +107,7 @@ class SearchDishTableViewCellComponent: UIView {
         self.dish = dish
         if let dish = dish {
             if let imageUrl = dish.dishImages.first?.image {
-                dishImageView.sd_setImage(with: URL(string: imageUrl))
+                dishImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
             }
             dishNameLabel.text = dish.name
             dishPriceLabel.text = String(format: "%.2f", dish.price)

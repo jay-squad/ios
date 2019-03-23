@@ -49,7 +49,7 @@ class SearchRestaurantTableViewCell: UITableViewCell {
             for i in 0..<searchResult.restaurantImages.count {
                 dishImageViews[i].image = nil
                 if let urlString = searchResult.restaurantImages[i] {
-                    dishImageViews[i].sd_setImage(with: URL(string: urlString))
+                    dishImageViews[i].sd_setImage(with: URL(string: urlString), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))
                 }
             }
         }

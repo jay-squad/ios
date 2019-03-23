@@ -23,6 +23,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
     private let kMapViewContainerLargeHeight: CGFloat = 500
     private let kMapViewLabelToMapViewSpacing: CGFloat = 10
     private let kFormStackViewSpacing: CGFloat = 24
+    private let kDefaultDelta = 0.0025
     
     private let stackView = UIStackView()
     private let descriptionView = UIView()
@@ -54,6 +55,8 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
     
     weak var delegate: UploadRestaurantIfNewTableViewCellDelegate?
     
+    private var prefilledSubmission: Submission?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addValidationRules()
@@ -67,6 +70,28 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = false
         addMapTrackingButton()
+    }
+    
+    func configureCell(prefilledSubmission: Submission) {
+        if let restaurant = prefilledSubmission.restaurant {
+            configureCell(restaurantName: restaurant.name)
+            
+            self.prefilledSubmission = prefilledSubmission
+            
+            descriptionTextfield.text = restaurant.description
+            formComponentDelegate?.onTextFieldUpdated(descriptionTextfield)
+            
+            phoneNumberTextfield.text = restaurant.phoneNum
+            formComponentDelegate?.onTextFieldUpdated(phoneNumberTextfield)
+            
+            websiteTextfield.text = restaurant.website
+            formComponentDelegate?.onTextFieldUpdated(websiteTextfield)
+            
+            if restaurant.cuisine.count > 0 {
+                cuisineTypeTextfield.text = restaurant.cuisine[0]
+                formComponentDelegate?.onTextFieldUpdated(cuisineTypeTextfield)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -176,7 +201,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         descriptionTextfield.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextfield.defaultStyle()
         descriptionTextfield.placeholder = "Restaurant Description"
-        descriptionTextfield.tag = UploadFormComponent.restaurantDescription.rawValue
+        descriptionTextfield.tag = UploadFormStringComponent.restaurantDescription.rawValue
         descriptionTextfield.delegate = self
         descriptionTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         descriptionView.addSubview(descriptionTextfield)
@@ -185,7 +210,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         cuisineTypeTextfield.translatesAutoresizingMaskIntoConstraints = false
         cuisineTypeTextfield.defaultStyle()
         cuisineTypeTextfield.placeholder = "Cuisine Type"
-        cuisineTypeTextfield.tag = UploadFormComponent.restaurantCuisineType.rawValue
+        cuisineTypeTextfield.tag = UploadFormStringComponent.restaurantCuisineType.rawValue
         cuisineTypeTextfield.delegate = self
         cuisineTypeTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cuisineTypeView.addSubview(cuisineTypeTextfield)
@@ -194,7 +219,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         phoneNumberTextfield.translatesAutoresizingMaskIntoConstraints = false
         phoneNumberTextfield.defaultStyle()
         phoneNumberTextfield.placeholder = "Phone Number"
-        phoneNumberTextfield.tag = UploadFormComponent.restaurantPhoneNumber.rawValue
+        phoneNumberTextfield.tag = UploadFormStringComponent.restaurantPhoneNumber.rawValue
         phoneNumberTextfield.keyboardType = .numberPad
         phoneNumberTextfield.delegate = self
         phoneNumberTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -204,7 +229,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         websiteTextfield.translatesAutoresizingMaskIntoConstraints = false
         websiteTextfield.defaultStyle()
         websiteTextfield.placeholder = "Website"
-        websiteTextfield.tag = UploadFormComponent.restaurantWebsite.rawValue
+        websiteTextfield.tag = UploadFormStringComponent.restaurantWebsite.rawValue
         websiteTextfield.keyboardType = .URL
         websiteTextfield.delegate = self
         websiteTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -242,7 +267,15 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         if !didMapInitiallyRender {
             didMapInitiallyRender = true
-            setMapRegion()
+            if prefilledSubmission != nil, let restaurant = prefilledSubmission?.restaurant {
+                mapView.setRegion(MKCoordinateRegion(center: restaurant.location,
+                                                     span: MKCoordinateSpan(latitudeDelta: kDefaultDelta, longitudeDelta: kDefaultDelta)),
+                                  animated: false)
+                setMapViewToLockedMode()
+                formComponentDelegate?.onMapUpdated(mapView)
+            } else {
+                setMapRegion()
+            }
         }
     }
     
@@ -267,23 +300,22 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
     }
     
     private func setMapCenter(backup: CLLocationCoordinate2D) {
-        let delta = 0.0025
         if let restaurantName = restaurantName {
             queryForRestaurant(restaurantName, around: backup) { (restaurantLoc) in
                 if let restaurantLoc = restaurantLoc {
                     self.mapView.setRegion(MKCoordinateRegion(center: restaurantLoc,
-                                                         span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)),
+                                                              span: MKCoordinateSpan(latitudeDelta: self.kDefaultDelta, longitudeDelta: self.kDefaultDelta)),
                                       animated: false)
                 } else {
                     self.mapView.setRegion(MKCoordinateRegion(center: backup,
-                                                         span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)),
+                                                         span: MKCoordinateSpan(latitudeDelta: self.kDefaultDelta, longitudeDelta: self.kDefaultDelta)),
                                       animated: false)
                 }
                 self.setMapViewToQuestions()
             }
         } else {
             mapView.setRegion(MKCoordinateRegion(center: backup,
-                                                 span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)),
+                                                 span: MKCoordinateSpan(latitudeDelta: kDefaultDelta, longitudeDelta: kDefaultDelta)),
                               animated: false)
             setMapViewToQuestions()
         }

@@ -14,7 +14,7 @@ import NotificationBannerSwift
 import Crashlytics
 
 class RootTabBarViewController: UITabBarController {
-    let pickerController = DKImagePickerController()
+    lazy var pickerController = DKImagePickerController()
     lazy var uploadVC = UploadViewController()
     
     static var uploadFormHasDraft = false
@@ -125,6 +125,7 @@ extension RootTabBarViewController: UploadViewControllerDelegate {
     func onSuccessfulUpload(_ sender: UploadViewController) {
         sender.dismiss(animated: true, completion: nil)
         uploadVC = UploadViewController()
+        pickerController = DKImagePickerController()
         RootTabBarViewController.uploadFormHasDraft = false
         hideDraftBadge()
     }

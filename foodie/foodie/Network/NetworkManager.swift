@@ -49,6 +49,7 @@ class NetworkManager {
         case getProfileSelf()
         case submitAmend(params: [String: AnyObject])
         case submitRestaurant(params: [String: AnyObject])
+        case getContestRules()
         
         #if DEBUG
         static let baseURLString = "https://foodie-server-dev.herokuapp.com/"
@@ -78,6 +79,8 @@ class NetworkManager {
                 return .post
             case .submitRestaurant:
                 return .post
+            case .getContestRules:
+                return .get
             }
         }
         
@@ -103,6 +106,8 @@ class NetworkManager {
                 return "suggest_amendment"
             case .submitRestaurant(_):
                 return "restaurant"
+            case .getContestRules:
+                return "blob/contest_rules"
             }
         }
         
@@ -481,4 +486,16 @@ class NetworkManager {
         }
     }
     
+    func getContestRules(completion: @escaping (JSON?, Error?, Int) -> Void) {
+        Alamofire.request(Router.getContestRules())
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
+        }
+    }
 }

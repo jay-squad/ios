@@ -11,6 +11,11 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import Crashlytics
 import GradientLoadingBar
+import SwiftyUserDefaults
+
+extension DefaultsKeys {
+    static let answeredSkillTestingQuestion = DefaultsKey<Bool>("answered_skill_testing_question")
+}
 
 class ProfileViewController: UIViewController {
 
@@ -21,12 +26,15 @@ class ProfileViewController: UIViewController {
     let kProfileSubmissionTableViewCellId = "ProfileSubmissionTableViewCellId"
     let kProfileNeedsAuthTableViewCellId = "ProfileNeedsAuthTableViewCellId"
     let kProfileContestTableViewCellId = "ProfileContestTableViewCellId"
+    let kProfileContestInfoTableViewCellId = "ProfileContestInfoTableViewCellId"
 
     var profileModel: Profile?
     var viewModel: ProfileSubmissionsViewModel?
     var rightNavBtn: UIBarButtonItem?
     
     var viewLoadAccessTokenDidChange = false
+    
+    var transparentBlackOverlay = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +111,13 @@ class ProfileViewController: UIViewController {
                         }
                     }
                 }
-                completion()
+                if Contest.shared != nil {
+                    completion()
+                } else {
+                    Contest.fetchContest(completion: {
+                        completion()
+                    })
+                }
             }
         } else {
             viewModel = nil
@@ -183,14 +197,19 @@ class ProfileViewController: UIViewController {
                            forCellReuseIdentifier: kProfileNeedsAuthTableViewCellId)
         tableView.register(FoodieEmptyStateTableViewCell.self,
                            forCellReuseIdentifier: kFoodieEmptyStateTableViewCellId)
-        tableView.register(ProfileContestTableViewCell.self,
+        tableView.register(ProfileContestWinnerTableViewCell.self,
                            forCellReuseIdentifier: kProfileContestTableViewCellId)
+        tableView.register(ProfileContestInfoTableViewCell.self,
+                           forCellReuseIdentifier: kProfileContestInfoTableViewCellId)
     }
 
     private func buildComponents() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         tableView.applyAutoLayoutInsetsForAllMargins(to: view, with: .zero)
+        
+        transparentBlackOverlay.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        transparentBlackOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.25)
     }
 
 }
@@ -211,11 +230,26 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                         return cell
                     }
                 case 1:
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileContestTableViewCellId,
-                                                                for: indexPath) as? ProfileContestTableViewCell {
-                        if let profileModel = profileModel {
-                            cell.configureCell(profile: profileModel)
+                    if let profile = profileModel, profile.amazonCode != nil {
+                        if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileContestTableViewCellId,
+                                                                    for: indexPath) as? ProfileContestWinnerTableViewCell {
+                            if let profileModel = profileModel {
+                                cell.delegate = self
+                                cell.configureCell(profile: profileModel)
+                            }
+                            return cell
                         }
+                    } else {
+                        if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileContestInfoTableViewCellId,
+                                                                    for: indexPath) as? ProfileContestInfoTableViewCell {
+                            cell.configureCell()
+                            return cell
+                        }
+                    }
+                case 2:
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: kProfileContestInfoTableViewCellId,
+                                                                for: indexPath) as? ProfileContestInfoTableViewCell {
+                        cell.configureCell()
                         return cell
                     }
                 default:
@@ -266,11 +300,14 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
         switch section {
         case 0:
-            var contestRow = 0
+            var contestRows = 0
             if let profile = profileModel, profile.amazonCode != nil {
-                contestRow = 1
+                contestRows += 1
             }
-            return 1 + contestRow
+            if let contest = Contest.shared, contest.isActive {
+                contestRows += 1
+            }
+            return 1 + contestRows
         default:
             if viewModel.isEmpty { return 1 }
             return viewModel.sectionedSubmissions[section-1].count
@@ -340,23 +377,38 @@ extension ProfileViewController: ProfileSubmissionTableViewCellDelegate, UploadV
     
     func onResubmitButtonTapped(submission: Submission?) {
         if let submission = submission {
-            if let dishId = submission.dish?.dishId {
-                Answers.logContentView(withName: "Profile-DishResubmit", contentType: "submission", contentId: "\(dishId)", customAttributes: nil)
-            }
-            if let restaurantId = submission.getRestaurantId() {
-                let vc = UploadViewController()
-                vc.restaurant = submission.restaurant
-                vc.delegate = self
-                NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
-                    if let menuJSONs = json {
-                        vc.prepopulate(submission)
-                        vc.restaurant?.menu = Menu(json: menuJSONs)
-                        let nc = UINavigationController(rootViewController: vc)
-                        vc.addDismissButton()
-                        
-                        self.present(nc, animated: true, completion: nil)
+            if submission.dish != nil {
+                // dish resubmission
+                if let dishId = submission.dish?.dishId {
+                    Answers.logContentView(withName: "Profile-DishResubmit", contentType: "submission", contentId: "\(dishId)", customAttributes: nil)
+                }
+                if let restaurantId = submission.getRestaurantId() {
+                    let vc = UploadViewController()
+                    vc.restaurant = submission.restaurant
+                    vc.delegate = self
+                    NetworkManager.shared.getRestaurantMenu(restaurantId: restaurantId) { (json, _, _) in
+                        if let menuJSONs = json {
+                            vc.prepopulate(submission)
+                            vc.restaurant?.menu = Menu(json: menuJSONs)
+                            let nc = UINavigationController(rootViewController: vc)
+                            vc.addDismissButton()
+                            
+                            self.present(nc, animated: true, completion: nil)
+                        }
                     }
                 }
+            } else if let restaurant = submission.restaurant {
+                // restaurant resubmission
+                
+                Answers.logContentView(withName: "Profile-RestaurantResubmit", contentType: "submission", contentId: "\(restaurant.id)", customAttributes: nil)
+                
+                let vc = UploadViewController()
+                vc.delegate = self
+                vc.prepopulate(submission)
+                let nc = UINavigationController(rootViewController: vc)
+                vc.addDismissButton()
+                
+                self.present(nc, animated: true, completion: nil)
             }
         }
     }
@@ -384,5 +436,55 @@ extension ProfileViewController: ProfileNeedsAuthTableViewCellDelegate {
         actionController.addAction(attributions)
         
         self.present(actionController, animated: true, completion: nil)
+    }
+}
+
+extension ProfileViewController: ProfileContestWinnerTableViewCellDelegate {
+    func onRequestAmazonCodeTapped() {
+        if !Defaults[.answeredSkillTestingQuestion] {
+            let vc = SkillTestingQuestionViewController()
+            vc.delegate = self
+            fadeInTransparentBlackOverlay()
+            present(vc, animated: true, completion: nil)
+        } else {
+            showAmazonCode()
+        }
+    }
+    
+    private func fadeInTransparentBlackOverlay() {
+        transparentBlackOverlay.alpha = 0
+        view.addSubview(transparentBlackOverlay)
+        UIView.animate(withDuration: 0.2) {
+            self.transparentBlackOverlay.alpha = 1
+        }
+    }
+    
+    private func fadeOutTransparentBlackOverlay() {
+        transparentBlackOverlay.alpha = 1
+        UIView.animate(withDuration: 0.2, animations: {
+            self.transparentBlackOverlay.alpha = 0
+        }) { (_) in
+            self.transparentBlackOverlay.removeFromSuperview()
+        }
+    }
+}
+
+extension ProfileViewController: SkillTestingQuestionViewControllerDelegate {
+    func onCancel() {
+        fadeOutTransparentBlackOverlay()
+    }
+    
+    func onSuccessfulAnswer() {
+        showAmazonCode()
+        Defaults[.answeredSkillTestingQuestion] = true
+        fadeOutTransparentBlackOverlay()
+    }
+    
+    private func showAmazonCode() {
+        if let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileContestWinnerTableViewCell {
+            cell.showAmazonCode()
+        } else if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? ProfileContestWinnerTableViewCell {
+            cell.showAmazonCode()
+        }
     }
 }

@@ -40,6 +40,7 @@ class RestaurantDetailMenuListTableViewCell: UITableViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = UIFont(font: .helveticaNeue, size: 18)
         nameLabel.textColor = UIColor.cc45DarkGrey
+        nameLabel.numberOfLines = 0
         
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.textAlignment = .right
@@ -54,10 +55,11 @@ class RestaurantDetailMenuListTableViewCell: UITableViewCell {
         externalContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         externalContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        externalContainerView.heightAnchor.constraint(equalToConstant: 46.0).isActive = true
         
         nameLabel.leadingAnchor.constraint(equalTo: externalContainerView.leadingAnchor, constant: 24.0).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: externalContainerView.centerYAnchor).isActive = true
+        nameLabel.trailingAnchor.constraint(equalTo: priceLabel.leadingAnchor, constant: -10).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: externalContainerView.topAnchor, constant: 12).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: externalContainerView.bottomAnchor, constant: -12).isActive = true
         
         priceLabel.trailingAnchor.constraint(equalTo: externalContainerView.trailingAnchor,
                                              constant: -24.0).isActive = true

@@ -16,28 +16,28 @@ extension DefaultsKeys {
 
 class AnnouncementsViewController: UIViewController {
     
-    let titleString = "Foodie is holding a contest!"
-    let descString = """
-    For the next X weeks, the 3 top scorers on the app will be rewarded with a prize at the end of every round.
-    
-    Note: this contest is only available if you are a student at the University of Waterloo and reside in the Region of Waterloo.
-    
-    You are automatically entered into the contest once you create an account! You can earn points by submitting dishes and getting them approved.
-    
-    The date & time of the end of the current round can be seen in your profile.
-    
-    The rewards are:
-    1st place: $30 Amazon gift card
-    2nd place: $15 Amazon gift card
-    3rd place: $5 Amazon gift card
-    
-    If you’re a winner,
-    the rewards will be available in your profile until the end of the following round.
-    
-    You can view this infomation again in the more section of your profile.
-    
-    More contest details here.
-    """
+    let titleString = "Foodie's Giveaway"
+//    let descString = """
+//    For the next X weeks, the 3 top scorers on the app will be rewarded with a prize at the end of every round.
+//
+//    Note: this contest is only available if you are a student at the University of Waterloo and reside in the Region of Waterloo.
+//
+//    You are automatically entered into the contest once you create an account! You can earn points by submitting dishes and getting them approved.
+//
+//    The date & time of the end of the current round can be seen in your profile.
+//
+//    The rewards are:
+//    1st place: $30 Amazon gift card
+//    2nd place: $15 Amazon gift card
+//    3rd place: $5 Amazon gift card
+//
+//    If you’re a winner,
+//    the rewards will be available in your profile until the end of the following round.
+//
+//    You can view this infomation again in the more section of your profile.
+//
+//    More contest details here.
+//    """
     
     let tableView = UITableView()
     let descLabel = ActiveLabel()
@@ -49,16 +49,29 @@ class AnnouncementsViewController: UIViewController {
         setupNavigation()
         setupTableView()
         
-        // TODO: Network call
-        
-        Defaults[.savedAnnoucement] = descString
+        if let contest = Contest.shared {
+            handleAnnouncement(contest)
+        } else {
+            Contest.fetchContest {
+                self.handleAnnouncement(Contest.shared!)
+            }
+        }
+    }
+    
+    private func handleAnnouncement(_ contest: Contest) {
+        if !contest.isActive {
+            descLabel.text = "No announcements"
+        } else {
+            Defaults[.savedAnnoucement] = contest.text
+            descLabel.text = contest.text
+            titleLabel.text = titleString
+        }
     }
     
     private func buildComponents() {
         descLabel.translatesAutoresizingMaskIntoConstraints = false
         let detailsType = ActiveType.custom(pattern: "\\sMore contest details here\\b")
         descLabel.enabledTypes = [detailsType]
-        descLabel.text = descString
         descLabel.customColor[detailsType] = UIColor.ccOchre
         descLabel.customSelectedColor[detailsType] = UIColor.ccOchre
         descLabel.numberOfLines = 0
@@ -72,7 +85,6 @@ class AnnouncementsViewController: UIViewController {
         }
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = titleString
         titleLabel.font = UIFont(font: .avenirHeavy, size: 18)
         titleLabel.textAlignment = .center
         

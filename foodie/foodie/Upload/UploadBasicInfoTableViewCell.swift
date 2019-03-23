@@ -20,7 +20,11 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     
     var isPreviousSelectedDishSectionCustom: Bool = false
     var amountTypedString: String = ""
-    var priceFloat: Float = 0
+    var priceFloat: Float = 0 {
+        didSet {
+            formComponentDelegate?.onPriceFloatUpdated(priceFloat)
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,7 +51,9 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         configureCell(menu: menu)
         
         dishTextField.text = prefilledSubmission.dish?.name
+        formComponentDelegate?.onTextFieldUpdated(dishTextField)
         dishSectionTextField.text = prefilledSubmission.dish?.section
+        formComponentDelegate?.onTextFieldUpdated(dishSectionTextField)
         if let price = prefilledSubmission.dish?.price {
             priceFloat = price
             priceTextField.text = "$ \(price)"
@@ -95,7 +101,7 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         dishSectionTextField.translatesAutoresizingMaskIntoConstraints = false
         dishSectionTextField.defaultStyle()
         dishSectionTextField.placeholder = "Dish Section in Menu"
-        dishSectionTextField.tag = UploadFormComponent.dishSection.rawValue
+        dishSectionTextField.tag = UploadFormStringComponent.dishSection.rawValue
         dishSectionTextField.autocorrectionType = .no
         dishSectionTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onDishSectionTextFieldTapped(_:))))
         dishSectionTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -108,19 +114,26 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
                 self.dishSectionDropDown.hide()
                 if !self.isPreviousSelectedDishSectionCustom {
                     self.dishSectionTextField.text = ""
+                    self.formComponentDelegate?.onTextFieldUpdated(self.dishSectionTextField)
                 }
                 self.dishSectionTextField.becomeFirstResponder()
                 self.isPreviousSelectedDishSectionCustom = true
             } else {
                 self.dishSectionTextField.text = item
+                self.formComponentDelegate?.onTextFieldUpdated(self.dishSectionTextField)
                 self.isPreviousSelectedDishSectionCustom = false
             }
         }
         
         dishTextField.translatesAutoresizingMaskIntoConstraints = false
+        dishTextField.itemSelectionHandler = { searchItems, itemPosition in
+            self.dishTextField.text = searchItems[itemPosition].title
+            self.formComponentDelegate?.onTextFieldUpdated(self.dishTextField)
+            self.dishTextField.resignFirstResponder()
+        }
         dishTextField.defaultStyle()
         dishTextField.placeholder = "Dish Name"
-        dishTextField.tag = UploadFormComponent.dishName.rawValue
+        dishTextField.tag = UploadFormStringComponent.dishName.rawValue
         dishTextField.autocorrectionType = .no
         dishTextField.theme.font = dishTextField.theme.font.withSize(14)
         dishTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -131,9 +144,7 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         priceTextField.placeholder = "Price"
         priceTextField.delegate = self
         priceTextField.keyboardType = .numberPad
-        priceTextField.tag = UploadFormComponent.dishPrice.rawValue
         priceTextField.autocorrectionType = .no
-        priceTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         priceView.addSubview(priceTextField)
         
         dishSectionSelectView.topAnchor.constraint(equalTo: dishSectionTextField.topAnchor).isActive = true

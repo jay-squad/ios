@@ -37,6 +37,7 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         if let restaurant = restaurant {
             self.restaurant = restaurant
             restaurantTextfield.text = restaurant.name
+            formComponentDelegate?.onTextFieldUpdated(restaurantTextfield)
         }
         restaurantTextfield.filterStrings(CachedRestaurants.shared.all.map({ $0.name }))
         restaurantTextfield.delegate = self
@@ -61,6 +62,7 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         restaurantTextfield.itemSelectionHandler = { searchItems, itemPosition in
             if self.shouldSetTextField {
                 self.restaurantTextfield.text = searchItems[itemPosition].title
+                self.formComponentDelegate?.onTextFieldUpdated(self.restaurantTextfield)
             } else {
                 self.shouldSetTextField = true
             }
@@ -68,7 +70,7 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         }
         restaurantTextfield.defaultStyle()
         restaurantTextfield.placeholder = "Restaurant Name"
-        restaurantTextfield.tag = UploadFormComponent.restaurantName.rawValue
+        restaurantTextfield.tag = UploadFormStringComponent.restaurantName.rawValue
         restaurantTextfield.autocorrectionType = .no
         restaurantTextfield.theme.font = restaurantTextfield.theme.font.withSize(14)
         restaurantView.addSubview(restaurantTextfield)

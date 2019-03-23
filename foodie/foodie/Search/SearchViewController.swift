@@ -84,10 +84,13 @@ class SearchViewController: UIViewController {
     
     private func announcementsIfNeeded() {
         let savedAnnoucement = Defaults[.savedAnnoucement]
-        // TODO: network call
-        let currentAnnouncement: String? = "asfasdf"
-        if currentAnnouncement != nil && currentAnnouncement != savedAnnoucement {
-            AnnouncementsViewController.push(self)
+        Contest.fetchContest {
+            if let contest = Contest.shared, contest.isActive, Date() < contest.endTime {
+                let currentAnnouncement: String? = contest.text
+                if currentAnnouncement != nil && currentAnnouncement != savedAnnoucement {
+                    AnnouncementsViewController.push(self)
+                }
+            }
         }
     }
     
@@ -233,7 +236,7 @@ class SearchViewController: UIViewController {
                             Restaurant(json: restaurantJSON["restaurant"]), restaurantImages: images))
                     }
                     if query == "" {
-                        CachedRestaurants.shared.all = self.searchResults
+                        CachedRestaurants.shared.internalAll = self.searchResults
                             .filter({ return $0.restaurant != nil })
                             .map({ return $0.restaurant! })
                     }
