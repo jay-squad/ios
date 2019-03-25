@@ -141,6 +141,9 @@ class SearchViewController: UIViewController {
     
     @objc func onSearchActionButtonTapped(_ sender: UIButton!) {
         if searchActionButton.currentImage == UIImage(named: "btn_close") {
+            sender.setTitle(searchByRestaurantText, for: .normal)
+            nextSearchResultType = .restaurant
+            query(with: "")
             searchTextField.text = nil
             searchActionButton.setImage(UIImage(named: "btn_search"), for: .normal)
         } else {
