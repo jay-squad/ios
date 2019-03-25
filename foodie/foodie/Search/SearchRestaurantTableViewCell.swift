@@ -46,7 +46,7 @@ class SearchRestaurantTableViewCell: UITableViewCell {
             } else if searchResult.restaurantImages.count < 4 {
                 verticalStackView.removeArrangedSubview(rowStackView2)
             }
-            for i in 0..<searchResult.restaurantImages.count {
+            for i in 0..<searchResult.restaurantImages.count where i < dishImageViews.count {
                 dishImageViews[i].image = nil
                 if let urlString = searchResult.restaurantImages[i] {
                     dishImageViews[i].sd_setImage(with: URL(string: urlString), placeholderImage: UIImage(named: CommonIdentifiers.placeholderImage))

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-let kNoSection = "(no section)"
+let kNoSection = "Other"
 
 class Menu {
     var sections: [MenuSection] = []

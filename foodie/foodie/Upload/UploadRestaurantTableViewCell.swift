@@ -34,7 +34,7 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         addValidationRules()
     }
     
-    func configureCell(restaurant: Restaurant? = nil) {
+    func configureCell(restaurant: Restaurant? = nil, isResubmission: Bool = false) {
         if let restaurant = restaurant {
             self.restaurant = restaurant
             restaurantTextfield.text = restaurant.name
@@ -42,6 +42,9 @@ class UploadRestaurantTableViewCell: FormComponentTableViewCell {
         }
         restaurantTextfield.filterStrings(CachedRestaurants.shared.all.map({ $0.name }))
         restaurantTextfield.delegate = self
+        if isResubmission {
+            restaurantTextfield.minCharactersNumberToStartFiltering = 999
+        }
     }
     
     override func buildComponents() {

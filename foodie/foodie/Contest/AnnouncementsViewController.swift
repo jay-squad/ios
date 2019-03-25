@@ -59,7 +59,7 @@ class AnnouncementsViewController: UIViewController {
     }
     
     private func handleAnnouncement(_ contest: Contest) {
-        if !contest.isActive {
+        if contest.text == "" {
             descLabel.text = "No announcements"
         } else {
             Defaults[.savedAnnoucement] = contest.text

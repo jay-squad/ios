@@ -27,7 +27,7 @@ class ProfileContestInfoTableViewCell: UITableViewCell {
     
     func configureCell() {
         if let contest = Contest.shared {
-            endDateLabel.text = "at " + FoodieDateFormatter.friendlyStringForDate(date: contest.endTime) + ", 11:59pm EST"
+            endDateLabel.text = "on " + FoodieDateFormatter.friendlyStringForDate(date: contest.endTime) + ", 11:59pm EST"
             
             let daysLeft = Calendar.current.dateComponents([.day], from: Date(), to: contest.endTime).day!
             if daysLeft > 0 {

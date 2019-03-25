@@ -50,6 +50,7 @@ class NetworkManager {
         case submitAmend(params: [String: AnyObject])
         case submitRestaurant(params: [String: AnyObject])
         case getContestRules()
+        case resubmitRestaurant(restaurantId: Int, params: [String: AnyObject])
         
         #if DEBUG
         static let baseURLString = "https://foodie-server-dev.herokuapp.com/"
@@ -81,6 +82,8 @@ class NetworkManager {
                 return .post
             case .getContestRules:
                 return .get
+            case .resubmitRestaurant:
+                return .put
             }
         }
         
@@ -108,6 +111,8 @@ class NetworkManager {
                 return "restaurant"
             case .getContestRules:
                 return "blob/contest_rules"
+            case .resubmitRestaurant(let restaurantId, _):
+                return "restaurant/\(restaurantId)"
             }
         }
         
@@ -120,6 +125,8 @@ class NetworkManager {
             case .submitAmend(let params):
                 return params
             case .submitRestaurant(let params):
+                return params
+            case .resubmitRestaurant(_, let params):
                 return params
             default:
                 return [:]
@@ -475,6 +482,45 @@ class NetworkManager {
         }
         
         Alamofire.request(Router.submitRestaurant(params: json.dictionaryObject! as [String: AnyObject]))
+            .responseJSON { response in
+                let code = self.getStatusCode( response: response )
+                switch response.result {
+                case .success(let value):
+                    completion(JSON(value), nil, code)
+                case .failure(let error):
+                    completion(nil, error, code)
+                }
+        }
+    }
+    
+    func resubmitRestaurant(restaurantId: Int,
+                            name: String,
+                            location: CLLocationCoordinate2D,
+                            description: String?,
+                            cuisineType: String?,
+                            phoneNumber: String?,
+                            website: String?,
+                            completion: @escaping (JSON?, Error?, Int) -> Void ) {
+        var json: JSON = JSON([:])
+        
+        json["name"].string = name
+        json["latitude"].string = "\(location.latitude)"
+        json["longitude"].string = "\(location.longitude)"
+        
+        if let description = description {
+            json["description"].string = description
+        }
+        if let cuisineType = cuisineType {
+            json["cuisine_type"].string = cuisineType
+        }
+        if let phoneNumber = phoneNumber {
+            json["phone_number"].string = phoneNumber
+        }
+        if let website = website {
+            json["website"].string = website
+        }
+        
+        Alamofire.request(Router.resubmitRestaurant(restaurantId: restaurantId, params: json.dictionaryObject! as [String: AnyObject]))
             .responseJSON { response in
                 let code = self.getStatusCode( response: response )
                 switch response.result {

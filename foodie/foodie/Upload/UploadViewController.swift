@@ -194,30 +194,48 @@ class UploadViewController: UIViewController {
             }
             
             if let formLocationComponent = formLocationComponent {
-                NetworkManager.shared.submitRestaurant(name: formStringComponents[.restaurantName] ?? "",
-                                                       location: formLocationComponent,
-                                                       description: formStringComponents[.restaurantDescription],
-                                                       cuisineType: formStringComponents[.restaurantCuisineType],
-                                                       phoneNumber: formStringComponents[.restaurantPhoneNumber],
-                                                       website: formStringComponents[.restaurantWebsite]) { (json, error, _) in
-                                                        if error == nil, let id = json?["id"].int {
-                                                            if !self.isRestaurantResubmission {
+                if isRestaurantResubmission, let prepopulatedSubmissionRestaurantId = prepopulatedSubmission?.restaurant?.id {
+                    NetworkManager.shared.resubmitRestaurant(restaurantId: prepopulatedSubmissionRestaurantId,
+                                                             name: formStringComponents[.restaurantName] ?? "",
+                                                             location: formLocationComponent,
+                                                             description: formStringComponents[.restaurantDescription],
+                                                             cuisineType: formStringComponents[.restaurantCuisineType],
+                                                             phoneNumber: formStringComponents[.restaurantPhoneNumber],
+                                                             website: formStringComponents[.restaurantWebsite]) { (json, error, code) in
+                                                                if error == nil {
+                                                                    GradientLoadingBar.shared.hide()
+                                                                    Answers.logContentView(withName: "Upload-SubmissionSuccess", contentType: "submission", contentId: nil,
+                                                                                           customAttributes: nil)
+                                                                    self.delegate?.onSuccessfulUpload(self)
+                                                                } else {
+                                                                    GradientLoadingBar.shared.hide()
+                                                                    sender?.isEnabled = true
+                                                                    
+                                                                    let banner = NotificationBanner(title: nil, subtitle: "Something went wrong while submitting the restaurant", style: .danger)
+                                                                    banner.haptic = .none
+                                                                    banner.subtitleLabel?.textAlignment = .center
+                                                                    banner.show()
+                                                                }
+                    }
+                } else {
+                    NetworkManager.shared.submitRestaurant(name: formStringComponents[.restaurantName] ?? "",
+                                                           location: formLocationComponent,
+                                                           description: formStringComponents[.restaurantDescription],
+                                                           cuisineType: formStringComponents[.restaurantCuisineType],
+                                                           phoneNumber: formStringComponents[.restaurantPhoneNumber],
+                                                           website: formStringComponents[.restaurantWebsite]) { (json, error, _) in
+                                                            if error == nil, let id = json?["id"].int {
                                                                 insertDish(id: id)
                                                             } else {
                                                                 GradientLoadingBar.shared.hide()
-                                                                Answers.logContentView(withName: "Upload-SubmissionSuccess", contentType: "submission", contentId: nil,
-                                                                                       customAttributes: nil)
-                                                                self.delegate?.onSuccessfulUpload(self)
+                                                                sender?.isEnabled = true
+                                                                
+                                                                let banner = NotificationBanner(title: nil, subtitle: "Something went wrong while submitting the restaurant", style: .danger)
+                                                                banner.haptic = .none
+                                                                banner.subtitleLabel?.textAlignment = .center
+                                                                banner.show()
                                                             }
-                                                        } else {
-                                                            GradientLoadingBar.shared.hide()
-                                                            sender?.isEnabled = true
-                                                            
-                                                            let banner = NotificationBanner(title: nil, subtitle: "Something went wrong while submitting the restaurant", style: .danger)
-                                                            banner.haptic = .none
-                                                            banner.subtitleLabel?.textAlignment = .center
-                                                            banner.show()
-                                                        }
+                    }
                 }
             } else if let id = restaurant?.id {
                 insertDish(id: id)
@@ -344,7 +362,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.formComponentDelegate = self
                 cell.delegate = self
                 if isRestaurantResubmission, let prepopulatedSubmission = prepopulatedSubmission, !cell.didAlreadyPrefill {
-                    cell.configureCell(restaurant: prepopulatedSubmission.restaurant)
+                    cell.configureCell(restaurant: prepopulatedSubmission.restaurant, isResubmission: true)
                     cell.didAlreadyPrefill = true
                 } else {
                     cell.configureCell(restaurant: restaurant)
@@ -360,6 +378,7 @@ extension UploadViewController: UITableViewDelegate, UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: kUploadBasicInfoTableViewCellId,
                                                         for: indexPath) as? UploadBasicInfoTableViewCell {
                 cell.formComponentDelegate = self
+                cell.delegate = self
                 if let prepopulatedSubmission = prepopulatedSubmission, !cell.didAlreadyPrefill {
                     cell.configureCell(menu: restaurant?.menu, prefilledSubmission: prepopulatedSubmission)
                     cell.didAlreadyPrefill = true
@@ -557,5 +576,15 @@ extension UploadViewController: FormComponentTableViewCellDelegate {
     
     func onPriceFloatUpdated(_ price: Float) {
         formPriceFloat = price
+    }
+}
+
+extension UploadViewController: UploadBasicInfoTableViewCellDelegate {
+    func onDishSectionDropDownShouldShow() -> Bool {
+        if viewIsShiftedFromKeyboard() {
+            UIApplication.shared.sendAction(#selector(UIApplication.resignFirstResponder), to: nil, from: nil, for: nil)
+            return false
+        }
+        return true
     }
 }

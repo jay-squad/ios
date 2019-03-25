@@ -19,12 +19,11 @@ class Contest {
     
     init(json: JSON) {
         isActive = json["is_active"].bool ?? false
-        
         if isActive {
             numContestants = json["num_contestants"].int ?? 0
             endTime = Date(timeIntervalSince1970: json["end_time"].double ?? 0)
-            text = json["text"].string ?? ""
         }
+        text = json["text"].string ?? ""
     }
     
     static func fetchContest(completion: (() -> Void)?) {

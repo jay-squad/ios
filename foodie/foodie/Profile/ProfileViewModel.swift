@@ -37,6 +37,6 @@ class ProfileSubmissionsViewModel {
     }
     
     func dateOf(_ submission: Submission) -> Date {
-        return submission.metadata?.createdAt ?? Date(timeIntervalSince1970: 0)
+        return submission.metadata?.updatedAt ?? Date(timeIntervalSince1970: 0)
     }
 }

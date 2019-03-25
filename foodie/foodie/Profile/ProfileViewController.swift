@@ -345,10 +345,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         guard let submission = retrievedSubmission else { return; }
         
         if let restaurant = submission.restaurant {
-            if let dishId = submission.dish?.dishId {
-                Answers.logContentView(withName: "Profile-DishTap", contentType: "dish", contentId: "\(dishId)", customAttributes: nil)
+            if let dish = submission.dish {
+                Answers.logContentView(withName: "Profile-DishTap", contentType: "dish", contentId: "\(dish.dishId)", customAttributes: nil)
+                DishDetailViewController.push(self.navigationController, dish, restaurant)
+            } else {
+                Answers.logContentView(withName: "Profile-RestaurantDetail", contentType: "restaurant", contentId: "\(restaurant.id)", customAttributes: nil)
+                RestaurantDetailViewController.push(self.navigationController, restaurant)
             }
-            DishDetailViewController.push(self.navigationController, submission.dish, restaurant)
         } else {
             if let restaurantId = submission.getRestaurantId() {
                 if let dishId = submission.dish?.dishId {

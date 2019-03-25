@@ -85,7 +85,7 @@ class SearchViewController: UIViewController {
     private func announcementsIfNeeded() {
         let savedAnnoucement = Defaults[.savedAnnoucement]
         Contest.fetchContest {
-            if let contest = Contest.shared, contest.isActive, Date() < contest.endTime {
+            if let contest = Contest.shared, contest.text != "" {
                 let currentAnnouncement: String? = contest.text
                 if currentAnnouncement != nil && currentAnnouncement != savedAnnoucement {
                     AnnouncementsViewController.push(self)
@@ -227,8 +227,12 @@ class SearchViewController: UIViewController {
                         var images: [String?] = []
                         if let minimenu = restaurantJSON["menu"].array {
                             for item in minimenu {
-                                if let imageUrl = item[1][0]["item_images"][0]["link"].string {
-                                    images.append(imageUrl)
+                                if let items = item[1].array {
+                                    for item in items {
+                                        if let imageUrl = item["item_images"][0]["link"].string {
+                                            images.append(imageUrl)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -258,7 +262,7 @@ class SearchViewController: UIViewController {
                 if let dishJSONs = json?.array {
                     self.searchResults.removeAll()
                     for dishJSON in dishJSONs {
-                        self.searchResults.append(SearchResult(dish: Dish(json: dishJSON)))
+                        self.searchResults.append(SearchResult(dish: Dish(json: dishJSON), restaurant: Restaurant(json: dishJSON["restaurant"])))
                     }
                     self.searchResultType = self.nextSearchResultType
                     self.tableView.reloadData()
@@ -316,7 +320,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 var titleText = ""
                 var imageString = ""
                 if searchResultType == .restaurant {
-                    titleText = "No results availble from your restaurant search.\nRestaurant submissions are coming soon!"
+                    titleText = "No results availble from your restaurant search.\nTap on the + tab to submit a restaurant!"
                     imageString = "dimsum"
                 } else {
                     titleText = "No results availble from your dish search."

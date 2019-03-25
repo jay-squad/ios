@@ -19,6 +19,7 @@ class ProfileSummaryTableViewCell: UITableViewCell {
 
     var profileModel: Profile?
 
+    lazy var stackView = UIStackView()
     lazy var profilePicImageView = UIImageView()
     lazy var nameLabel = UILabel()
     lazy var numberOfAcceptedDishesLabel = UILabel()
@@ -63,12 +64,28 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         setNumberOfPendingDishesLabel(numberOfDishes: pendingDishes)
         setNumberOfRejectedDishesLabel(numberOfDishes: rejectedDishes)
         setNumberOfPointsTotalLabel(numberOfPoints: profileModel.points)
-        setNumberOfPointsThisRoundLabel(numberOfPoints: profileModel.points - profileModel.lastRewardsPoints)
+        
+        if let contest = Contest.shared {
+            addPointsThisRoundLabelIfNeeded(contest: contest)
+        } else {
+            Contest.fetchContest {
+                if let contest = Contest.shared {
+                    self.addPointsThisRoundLabelIfNeeded(contest: contest)
+                }
+            }
+        }
         
         if let fbid = FBSDKAccessToken.current()?.userID, let url = URL(string: "https://graph.facebook.com/v3.2/\(fbid)/picture") {
             profilePicImageView.sd_setImage(with: url)
         }
         
+    }
+    
+    private func addPointsThisRoundLabelIfNeeded(contest: Contest) {
+        if contest.isActive, Date() < contest.endTime, let profileModel = self.profileModel {
+            stackView.addArrangedSubview(numberOfPointsThisRoundLabel)
+            setNumberOfPointsThisRoundLabel(numberOfPoints: profileModel.points - profileModel.lastRewardsPoints)
+        }
     }
 
     private func buildComponents() {
@@ -88,7 +105,6 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         externalContainerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         externalContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
 
-        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 2.0
@@ -142,7 +158,6 @@ class ProfileSummaryTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(numberOfPendingDishesLabel)
         stackView.addArrangedSubview(numberOfRejectedDishesLabel)
         stackView.addArrangedSubview(numberOfPointsTotalLabel)
-        stackView.addArrangedSubview(numberOfPointsThisRoundLabel)
     }
 
     private func setNumberOfAcceptedDishesLabel(numberOfDishes: Int) {

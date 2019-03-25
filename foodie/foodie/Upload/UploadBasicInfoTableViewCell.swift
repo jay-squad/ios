@@ -11,12 +11,18 @@ import TextFieldEffects
 import Validator
 import DropDown
 
+protocol UploadBasicInfoTableViewCellDelegate: class {
+    func onDishSectionDropDownShouldShow() -> Bool
+}
+
 class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     
     let dishSectionTextField = HoshiTextField()
     let dishSectionDropDown = DropDown()
     let dishTextField = SearchTextField()
     let priceTextField = HoshiTextField()
+    
+    weak var delegate: UploadBasicInfoTableViewCellDelegate?
     
     var isPreviousSelectedDishSectionCustom: Bool = false
     var amountTypedString: String = ""
@@ -43,6 +49,9 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
         } else {
             dishSectionDropDown.dataSource = []
             dishTextField.filterStrings([])
+        }
+        if dishSectionDropDown.dataSource.count == 0 {
+            dishSectionDropDown.dataSource.append(kNoSection)
         }
         dishSectionDropDown.dataSource.append("+ Add a Menu Section")
     }
@@ -213,7 +222,10 @@ class UploadBasicInfoTableViewCell: FormComponentTableViewCell {
     }
     
     @objc private func onDishSectionTextFieldTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-        dishSectionDropDown.show()
+        let shouldShow = delegate?.onDishSectionDropDownShouldShow() ?? true
+        if shouldShow {
+            dishSectionDropDown.show()
+        }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {

@@ -22,17 +22,10 @@ class SearchResult {
     // dish
     var dish: Dish?
     
-    init(dish: Dish?) {
+    init(dish: Dish?, restaurant: Restaurant?) {
         guard dish != nil else { return }
-        
         self.dish = dish
-        
-        // grab restaurant data
-        NetworkManager.shared.getRestaurant(restaurantId: self.dish!.restaurantId) { (json, _, _) in
-            if let restaurantJSON = json {
-                self.restaurant = Restaurant(json: restaurantJSON)
-            }
-        }
+        self.restaurant = restaurant
     }
     
     init(restaurant: Restaurant?, restaurantImages: [String?]) {

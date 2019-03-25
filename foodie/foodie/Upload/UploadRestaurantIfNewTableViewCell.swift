@@ -69,7 +69,6 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         locationManager.startUpdatingHeading()
         mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = false
-        addMapTrackingButton()
     }
     
     func configureCell(prefilledSubmission: Submission) {
@@ -103,7 +102,7 @@ class UploadRestaurantIfNewTableViewCell: FormComponentTableViewCell {
         super.buildComponents()
         clipsToBounds = false
         layer.zPosition = 99
-        setCellHeader(title: "Create a New Restaurant", subtitle: "Optionally fill out additional details about the restaurant.")
+        setCellHeader(title: "Create a New Restaurant", subtitle: "Fill out additional details about the restaurant.")
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -271,6 +270,7 @@ extension UploadRestaurantIfNewTableViewCell: MKMapViewDelegate {
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         if !didMapInitiallyRender {
             didMapInitiallyRender = true
+            addMapTrackingButton()
             if prefilledSubmission != nil, let restaurant = prefilledSubmission?.restaurant {
                 mapView.setRegion(MKCoordinateRegion(center: restaurant.location,
                                                      span: MKCoordinateSpan(latitudeDelta: kDefaultDelta, longitudeDelta: kDefaultDelta)),
